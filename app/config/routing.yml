@@ -1,0 +1,3 @@
+ganz_test:
+    resource: "@GanzTestBundle/Resources/config/routing.yml"
+    prefix:   /
