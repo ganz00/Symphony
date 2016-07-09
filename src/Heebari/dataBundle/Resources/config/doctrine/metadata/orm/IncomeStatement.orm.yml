@@ -1,0 +1,85 @@
+IncomeStatement:
+    type: entity
+    table: income_statement
+    indexes:
+        IDX_8740FF829122A03F:
+            columns:
+                - id_company
+    uniqueConstraints:
+        id_company_date_of_information:
+            columns:
+                - id_company
+                - date_of_information
+    id:
+        idIncomeStatement:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_income_statement
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateOfInformation:
+            type: date
+            nullable: false
+            column: date_of_information
+        incomeStatement:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: income_statement
+        sales:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        costOfGoodSold:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: cost_of_good_sold
+        grossProfit:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: gross_profit
+        sellingAdministrative:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: selling_administrative
+        depreciationAndAmortization:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: depreciation_and_amortization
+        ebit:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        interestAndFinancialCharges:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: interest_and_financial_charges
+    manyToOne:
+        idCompany:
+            targetEntity: Company
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_company
+            joinColumns:
+                id_company:
+                    referencedColumnName: id_company
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

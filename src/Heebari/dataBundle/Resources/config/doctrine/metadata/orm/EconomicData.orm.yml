@@ -1,0 +1,192 @@
+EconomicData:
+    type: entity
+    table: economic_data
+    indexes:
+        FK_economic_data_collectivity:
+            columns:
+                - id_collectivity
+        IDX_21E83CB28DEE6016:
+            columns:
+                - id_country
+    uniqueConstraints:
+        id_country_id_collectivity_date_of_informations:
+            columns:
+                - id_country
+                - id_collectivity
+                - date_of_informations
+    id:
+        idEconomicData:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_economic_data
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateOfInformations:
+            type: date
+            nullable: false
+            column: date_of_informations
+        privateInvestment:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: private_investment
+        publicInvestment:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 'somme de  foreign_direct_investment et national_investments'
+            column: public_investment
+        investment:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 'somme de id_economic_data et public_investment'
+        foreignDirectInvestment:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: foreign_direct_investment
+        nationalInvestments:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: national_investments
+        priceIndex:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: price_index
+        nationalPriceIndex:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: national_price_index
+        harmonisedPriceIndex:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: harmonised_price_index
+        debtLevel:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: debt_level
+        publiclyIssuedDebt:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: publicly_issued_debt
+        foreignInternationalAid:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: foreign_international_aid
+        fiscalRevenue:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: fiscal_revenue
+        publicExpenses:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: public_expenses
+        averageIncomeLevel:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: average_income_level
+        minimumWageLevel:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: minimum_wage_level
+        purchasingPowerParity:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: purchasing_power_parity
+        averageSavingsLevel:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: average_savings_level
+        top10ImportingIndustrie:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: top_10_importing_industrie
+        top10ExportingIndustrie:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: top_10_exporting_industrie
+        top10ExportedGoods:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: top_10_exported_goods
+        top10ImportedGoods:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: top_10_imported_goods
+        export:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        import:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+    manyToOne:
+        idCollectivity:
+            targetEntity: Collectivity
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_collectivity
+            joinColumns:
+                id_collectivity:
+                    referencedColumnName: id_collectivity
+            orphanRemoval: false
+        idCountry:
+            targetEntity: Country
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_country
+            joinColumns:
+                id_country:
+                    referencedColumnName: id_country
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

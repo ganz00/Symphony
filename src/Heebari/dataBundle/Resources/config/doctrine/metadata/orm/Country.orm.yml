@@ -1,0 +1,50 @@
+Country:
+    type: entity
+    table: country
+    indexes:
+        FK_country_population_parameter:
+            columns:
+                - id_population_parameter
+        FK_country_currency:
+            columns:
+                - id_currency
+    id:
+        idCountry:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_country
+            generator:
+                strategy: IDENTITY
+    fields:
+        countryName:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: country_name
+    manyToOne:
+        idCurrency:
+            targetEntity: Currency
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_currency
+            joinColumns:
+                id_currency:
+                    referencedColumnName: id_currency
+            orphanRemoval: false
+        idPopulationParameter:
+            targetEntity: PopulationParameter
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_population_parameter
+            joinColumns:
+                id_population_parameter:
+                    referencedColumnName: id_population_parameter
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

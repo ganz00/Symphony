@@ -1,0 +1,91 @@
+EconomicIndicator:
+    type: entity
+    table: economic_indicator
+    indexes:
+        IDX_CCCAAEDC9FC0EDD7:
+            columns:
+                - id_economic_data
+    uniqueConstraints:
+        id_economic_data_date_of_information:
+            columns:
+                - id_economic_data
+                - date_of_information
+    id:
+        idEconomicIndicator:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_economic_indicator
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateOfInformation:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: date_of_information
+        gdpGrowth:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: gdp_growth
+        priceIndexRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: inflation
+            column: price_index_rate
+        investmentRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: investment_rate
+        nationalConsumptionRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: national_consumption_rate
+        exportRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: export_rate
+        importRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: import_rate
+        incomeLevelRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: income_level_rate
+        debtLevelRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: debt_level_rate
+    manyToOne:
+        idEconomicData:
+            targetEntity: EconomicData
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_economic_data
+            joinColumns:
+                id_economic_data:
+                    referencedColumnName: id_economic_data
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

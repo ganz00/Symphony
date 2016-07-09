@@ -1,0 +1,58 @@
+ServiceLevelAgreement:
+    type: entity
+    table: service_level_agreement
+    indexes:
+        FK_service_level_agreement_proposed_services:
+            columns:
+                - id_service
+        IDX_8A3A51B16B3CA4B:
+            columns:
+                - id_user
+    uniqueConstraints:
+        id_user_id_service_service_started_date_service_ended_date:
+            columns:
+                - id_user
+                - id_service
+                - service_started_date
+                - service_ended_date
+    id:
+        idSla:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_sla
+            generator:
+                strategy: IDENTITY
+    fields:
+        serviceStartedDate:
+            type: date
+            nullable: false
+            column: service_started_date
+        serviceEndedDate:
+            type: date
+            nullable: false
+            column: service_ended_date
+    manyToOne:
+        idService:
+            targetEntity: ProposedServices
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_service
+            joinColumns:
+                id_service:
+                    referencedColumnName: id_service
+            orphanRemoval: false
+        idUser:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_user
+            joinColumns:
+                id_user:
+                    referencedColumnName: id_user
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

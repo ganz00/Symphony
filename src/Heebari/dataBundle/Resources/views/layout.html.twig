@@ -1,0 +1,19 @@
+{# src/Heebari/dataBundle/Resources/views/Heebari.html.twig #}
+
+{% extends "::Heebari.html.twig" %}
+
+{% block title %}
+  Annonces - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+  <h1>Annonces</h1>
+
+
+  {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+  {% block Heebari_body %}
+  {% endblock %}
+
+{% endblock %}

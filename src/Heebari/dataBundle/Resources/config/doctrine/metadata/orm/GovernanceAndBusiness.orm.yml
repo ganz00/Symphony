@@ -1,0 +1,83 @@
+GovernanceAndBusiness:
+    type: entity
+    table: governance_and_business
+    indexes:
+        IDX_849BEF478DEE6016:
+            columns:
+                - id_country
+    uniqueConstraints:
+        id_country_date_of_information:
+            columns:
+                - id_country
+                - date_of_information
+    id:
+        idGovernanceAndBusiness:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_governance_and_business
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateOfInformation:
+            type: date
+            nullable: false
+            column: date_of_information
+        politicalStabilityScore:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: political_stability_score
+        changeInpower:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+                comment: 'enumeration: bien pa bien, moyen'
+            column: change_inpower
+        transparency:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        ruleOfLaw:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+            column: rule_of_law
+        corruption:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        administrativeBurden:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+            column: administrative_burden
+        businessEnvirScore:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: 'business _envir_score'
+    manyToOne:
+        idCountry:
+            targetEntity: Country
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_country
+            joinColumns:
+                id_country:
+                    referencedColumnName: id_country
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

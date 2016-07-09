@@ -1,0 +1,87 @@
+PerformanceAndCredit:
+    type: entity
+    table: performance_and_credit
+    indexes:
+        IDX_1DD8E9929122A03F:
+            columns:
+                - id_company
+    uniqueConstraints:
+        id_company_date_of_information:
+            columns:
+                - id_company
+                - date_of_information
+    id:
+        idPerformanceCredit:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_performance_credit
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateOfInformation:
+            type: date
+            nullable: false
+            column: date_of_information
+        performanceAndCredit:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: performance_and_credit
+        returnOnEquity:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: return_on_equity
+        returnOnAsset:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: return_on_asset
+        riskAdjustedReturnOnCapital:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: risk_adjusted_return_on_capital
+        grossMargin:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: gross_margin
+        profitMargin:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: profit_margin
+        ebitdaMargin:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: ebitda_margin
+        quickRatio:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: quick_ratio
+    manyToOne:
+        idCompany:
+            targetEntity: Company
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_company
+            joinColumns:
+                id_company:
+                    referencedColumnName: id_company
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

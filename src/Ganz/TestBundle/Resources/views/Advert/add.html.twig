@@ -1,0 +1,26 @@
+
+{% extends "GanzTestBundle::layout.html.twig" %}
+
+{% block title %}
+  creer - {{ parent() }}
+{% endblock %}
+
+{% block Ganzplatform_body %}
+
+  <h2>creer une annonce</h2>
+
+  {{ include("GanzTestBundle:Advert:form.html.twig") }}
+
+  <p>
+    Vous Creer
+  </p>
+
+  <p>
+    <a href="{{ path('Ganz_platform_view', {'id': advert.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'annonce
+    </a>
+  </p>
+
+{% endblock %}
+

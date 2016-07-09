@@ -1,0 +1,33 @@
+ProposedServices:
+    type: entity
+    table: proposed_services
+    id:
+        idService:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_service
+            generator:
+                strategy: IDENTITY
+    fields:
+        serviceName:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+            column: service_name
+        price:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+        description:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

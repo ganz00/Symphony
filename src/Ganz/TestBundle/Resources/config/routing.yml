@@ -1,3 +1,33 @@
-hello_the_world:
-    path :    /hello-world
-    defaults: { _controller: GanzTestBundle:Advert:index }
+Ganz_platform_home:
+    path:      /{page}
+    defaults:
+        _controller: GanzTestBundle:Advert:index
+        page:        1
+    requirements:
+        page: \d*
+    
+Ganz_platform_view:
+    path:      /advert/{id}
+    defaults:
+        _controller: GanzTestBundle:Advert:view
+    requirements:
+        id: \d+
+
+Ganz_platform_add:
+    path:      /add
+    defaults:
+        _controller: GanzTestBundle:Advert:add
+
+Ganz_platform_edit:
+    path:      /edit/{id}
+    defaults:
+        _controller: GanzTestBundle:Advert:edit
+    requirements:
+        id: \d+
+
+Ganz_platform_delete:
+    path:      /delete/{id}
+    defaults:
+        _controller: GanzTestBundle:Advert:delete
+    requirements:
+        id: \d+

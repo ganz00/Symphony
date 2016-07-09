@@ -1,0 +1,88 @@
+PopulationDistribution:
+    type: entity
+    table: population_distribution
+    indexes:
+        IDX_F6FE3E7486F9E0F8:
+            columns:
+                - id_age_range
+    uniqueConstraints:
+        id_age_range_gender_date_of_information:
+            columns:
+                - id_age_range
+                - gender
+                - date_of_information
+    id:
+        idPopulationDistribution:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_population_distribution
+            generator:
+                strategy: IDENTITY
+    fields:
+        gender:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        dateOfInformation:
+            type: date
+            nullable: false
+            column: date_of_information
+        urbanisationRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: urbanisation_rate
+        activityRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: activity_rate
+        unemploymentRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: unemployment_rate
+        qualificationLevel:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: qualification_level
+        lifeExpectancy:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: life_expectancy
+        mortalityRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: mortality_rate
+        birthRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: birth_rate
+    manyToOne:
+        idAgeRange:
+            targetEntity: AgeRange
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_age_range
+            joinColumns:
+                id_age_range:
+                    referencedColumnName: id_age_range
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

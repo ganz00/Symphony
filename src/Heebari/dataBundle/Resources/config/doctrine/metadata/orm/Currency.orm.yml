@@ -1,0 +1,28 @@
+Currency:
+    type: entity
+    table: currency
+    id:
+        idCurrency:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_currency
+            generator:
+                strategy: IDENTITY
+    fields:
+        currency:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+        currencyCode:
+            type: string
+            nullable: false
+            length: 5
+            options:
+                fixed: false
+            column: currency_code
+    lifecycleCallbacks: {  }

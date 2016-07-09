@@ -1,0 +1,115 @@
+Company:
+    type: entity
+    table: company
+    indexes:
+        FK_company_company_sector:
+            columns:
+                - id_company_sector
+        FK_company_company_industry:
+            columns:
+                - id_company_industry
+        FK_company_business_field:
+            columns:
+                - id_business_field
+        IDX_4FBF094F8DEE6016:
+            columns:
+                - id_country
+    uniqueConstraints:
+        id_country_id_user_business_name:
+            columns:
+                - id_country
+                - id_user
+                - business_name
+    id:
+        idCompany:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_company
+            generator:
+                strategy: IDENTITY
+    fields:
+        idUser:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'user qui a enregistré l''entreprise dans heebari'
+            column: id_user
+        businessName:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                comment: 'Nom de l entreprise'
+            column: business_name
+        turnover:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 'chiffre aff'
+        numberOfEmployees:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: number_of_employees
+        performanceMeasurementScore:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: performance_measurement_score
+        estimatedEnterpriseValue:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            column: estimated_enterprise_value
+    manyToOne:
+        idBusinessField:
+            targetEntity: BusinessField
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_business_field:
+                    referencedColumnName: id_business_field
+            orphanRemoval: false
+        idCompanyIndustry:
+            targetEntity: CompanyIndustry
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_company_industry:
+                    referencedColumnName: id_company_industry
+            orphanRemoval: false
+        idCompanySector:
+            targetEntity: CompanySector
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_company_sector:
+                    referencedColumnName: id_company_sector
+            orphanRemoval: false
+        idCountry:
+            targetEntity: Country
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_country:
+                    referencedColumnName: id_country
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

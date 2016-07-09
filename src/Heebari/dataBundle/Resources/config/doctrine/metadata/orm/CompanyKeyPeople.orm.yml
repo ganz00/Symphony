@@ -1,0 +1,67 @@
+CompanyKeyPeople:
+    type: entity
+    table: company_key_people
+    indexes:
+        FK_company_key_people_company:
+            columns:
+                - id_company
+        FK_company_key_people_key_people_position:
+            columns:
+                - id_position
+    id:
+        idKeyPeople:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_key_people
+            generator:
+                strategy: IDENTITY
+    fields:
+        lastname:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        firstname:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        mail:
+            type: string
+            nullable: true
+            length: 30
+            options:
+                fixed: false
+        phone:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+    manyToOne:
+        idCompany:
+            targetEntity: Company
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_company:
+                    referencedColumnName: id_company
+            orphanRemoval: false
+        idPosition:
+            targetEntity: KeyPeoplePosition
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_position:
+                    referencedColumnName: id_position
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

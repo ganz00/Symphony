@@ -1,0 +1,67 @@
+BalanceSheet:
+    type: entity
+    table: balance_sheet
+    indexes:
+        FK_balance_sheet_balance_elements:
+            columns:
+                - id_element
+        IDX_194A20B09122A03F:
+            columns:
+                - id_company
+    uniqueConstraints:
+        id_company_sheet_date_id_element:
+            columns:
+                - id_company
+                - sheet_date
+                - id_element
+    id:
+        idBalanceSheet:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_balance_sheet
+            generator:
+                strategy: IDENTITY
+    fields:
+        sheetDate:
+            type: date
+            nullable: false
+            options:
+                comment: 'date du bilan'
+            column: sheet_date
+        elementType:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+            column: element_type
+        amount:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+    manyToOne:
+        idElement:
+            targetEntity: BalanceElements
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_element:
+                    referencedColumnName: id_element
+            orphanRemoval: false
+        idCompany:
+            targetEntity: Company
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_company:
+                    referencedColumnName: id_company
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

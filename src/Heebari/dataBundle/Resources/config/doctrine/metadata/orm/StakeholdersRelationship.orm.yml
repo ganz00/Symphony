@@ -1,0 +1,56 @@
+StakeholdersRelationship:
+    type: entity
+    table: stakeholders_relationship
+    indexes:
+        FK_stakeholders_relationship_company:
+            columns:
+                - id_company
+    uniqueConstraints:
+        id_container_id_company_type_container:
+            columns:
+                - id_container
+                - id_company
+                - type_container
+    id:
+        idContainer:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'id entreprise ou id actionnaire'
+            id: true
+            column: id_container
+    fields:
+        typeContainer:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                comment: 'USER une personne importante de l''entreprise, et COMP pour company'
+            column: type_container
+        pourcentage:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        startedDate:
+            type: date
+            nullable: false
+            column: started_date
+        endedDate:
+            type: date
+            nullable: true
+            column: ended_date
+    oneToOne:
+        idCompany:
+            targetEntity: Company
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_company:
+                    referencedColumnName: id_company
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,58 @@
+CashFlowStatement:
+    type: entity
+    table: cash_flow_statement
+    indexes:
+        IDX_BE6280F59122A03F:
+            columns:
+                - id_company
+    uniqueConstraints:
+        id_company_cash_flow_date:
+            columns:
+                - id_company
+                - cash_flow_date
+    id:
+        idCashFlow:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_cash_flow
+            generator:
+                strategy: IDENTITY
+    fields:
+        cashFlowDate:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: cash_flow_date
+        cashFlowStatement:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            column: cash_flow_statement
+        shortTermCashManagement:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            column: short_term_cash_management
+        budget:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+    manyToOne:
+        idCompany:
+            targetEntity: Company
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_company:
+                    referencedColumnName: id_company
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

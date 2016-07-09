@@ -1,0 +1,98 @@
+PopulationParameter:
+    type: entity
+    table: population_parameter
+    indexes:
+        FK_population_parameter_population_distribution:
+            columns:
+                - id_population_distribution
+        IDX_72904060B10D5473:
+            columns:
+                - id_locality
+    uniqueConstraints:
+        id_locality_date_of_information:
+            columns:
+                - id_locality
+                - date_of_information
+    id:
+        idPopulationParameter:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_population_parameter
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateOfInformation:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: date_of_information
+        typeLocality:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+                comment: 'pays, province, region,...'
+            column: type_locality
+        literacyRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 'taux alphabet'
+            column: literacy_rate
+        population:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 'nbre d''habitants de la localité'
+        averageWealth:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 'niveau moyen revenu'
+            column: average_wealth
+        density:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        fecondityRate:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 'taux de fecondite'
+            column: fecondity_rate
+    manyToOne:
+        idLocality:
+            targetEntity: Collectivity
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_locality
+            joinColumns:
+                id_locality:
+                    referencedColumnName: id_collectivity
+            orphanRemoval: false
+        idPopulationDistribution:
+            targetEntity: PopulationDistribution
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_population_distribution
+            joinColumns:
+                id_population_distribution:
+                    referencedColumnName: id_population_distribution
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

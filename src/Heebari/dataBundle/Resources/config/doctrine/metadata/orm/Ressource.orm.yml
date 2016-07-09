@@ -1,0 +1,55 @@
+Ressource:
+    type: entity
+    table: ressource
+    indexes:
+        FK_ressource_ressource_categorie:
+            columns:
+                - id_ressource_categorie
+    id:
+        idRessource:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_ressource
+            generator:
+                strategy: IDENTITY
+    fields:
+        ressourceName:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: ressource_name
+    manyToOne:
+        idRessourceCategorie:
+            targetEntity: RessourceCategorie
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: id_ressource_categorie
+            joinColumns:
+                id_ressource_categorie:
+                    referencedColumnName: id_ressource_categorie
+            orphanRemoval: false
+    manyToMany:
+        idCollectivity:
+            targetEntity: Collectivity
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: idResource
+            joinTable:
+                name: resource_collectivity
+                joinColumns:
+                    -
+                        name: id_resource
+                        referencedColumnName: id_ressource
+                inverseJoinColumns:
+                    -
+                        name: id_collectivity
+                        referencedColumnName: id_collectivity
+            orderBy: null
+    lifecycleCallbacks: {  }

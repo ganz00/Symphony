@@ -1,0 +1,46 @@
+Billing:
+    type: entity
+    table: billing
+    indexes:
+        IDX_EC224CAA6B3CA4B:
+            columns:
+                - id_user
+    uniqueConstraints:
+        id_user_biling_date:
+            columns:
+                - id_user
+                - biling_date
+    id:
+        idBiling:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_biling
+            generator:
+                strategy: IDENTITY
+    fields:
+        bilingDate:
+            type: date
+            nullable: false
+            column: biling_date
+        paymentMethod:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+            column: payment_method
+    manyToOne:
+        idUser:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_user:
+                    referencedColumnName: id_user
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

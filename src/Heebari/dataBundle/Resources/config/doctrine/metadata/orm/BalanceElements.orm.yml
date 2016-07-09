@@ -1,0 +1,22 @@
+BalanceElements:
+    type: entity
+    table: balance_elements
+    id:
+        idElement:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_element
+            generator:
+                strategy: IDENTITY
+    fields:
+        elemenntName:
+            type: string
+            nullable: false
+            length: 200
+            options:
+                fixed: false
+            column: elemennt_name
+    lifecycleCallbacks: {  }

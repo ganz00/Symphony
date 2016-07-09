@@ -1,0 +1,21 @@
+KeyPeoplePosition:
+    type: entity
+    table: key_people_position
+    id:
+        idPosition:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_position
+            generator:
+                strategy: IDENTITY
+    fields:
+        position:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

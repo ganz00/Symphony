@@ -1,0 +1,22 @@
+AgeRange:
+    type: entity
+    table: age_range
+    id:
+        idAgeRange:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_age_range
+            generator:
+                strategy: IDENTITY
+    fields:
+        ageRange:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+            column: age_range
+    lifecycleCallbacks: {  }
