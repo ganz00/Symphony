@@ -32,7 +32,7 @@ Country:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_currency
+            inversedBy: null
             joinColumns:
                 id_currency:
                     referencedColumnName: id_currency
@@ -42,7 +42,7 @@ Country:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_population_parameter
+            inversedBy: null
             joinColumns:
                 id_population_parameter:
                     referencedColumnName: id_population_parameter

@@ -75,7 +75,7 @@ GovernanceAndBusiness:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_country
+            inversedBy: null
             joinColumns:
                 id_country:
                     referencedColumnName: id_country

@@ -83,7 +83,7 @@ EconomicIndicator:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_economic_data
+            inversedBy: null
             joinColumns:
                 id_economic_data:
                     referencedColumnName: id_economic_data

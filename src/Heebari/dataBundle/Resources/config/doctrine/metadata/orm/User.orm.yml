@@ -18,6 +18,12 @@ User:
             options:
                 unsigned: false
             column: id_country
+        userName:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: user_name
         firstName:
             type: string
             nullable: false

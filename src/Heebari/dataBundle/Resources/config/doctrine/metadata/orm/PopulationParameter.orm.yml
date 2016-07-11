@@ -80,7 +80,7 @@ PopulationParameter:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_locality
+            inversedBy: null
             joinColumns:
                 id_locality:
                     referencedColumnName: id_collectivity
@@ -90,7 +90,7 @@ PopulationParameter:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_population_distribution
+            inversedBy: null
             joinColumns:
                 id_population_distribution:
                     referencedColumnName: id_population_distribution

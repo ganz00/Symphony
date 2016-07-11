@@ -80,7 +80,7 @@ PopulationDistribution:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_age_range
+            inversedBy: null
             joinColumns:
                 id_age_range:
                     referencedColumnName: id_age_range

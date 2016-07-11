@@ -41,13 +41,4 @@ Collectivity:
                 id_country:
                     referencedColumnName: id_country
             orphanRemoval: false
-    manyToMany:
-        idResource:
-            targetEntity: Ressource
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: idCollectivity
-            inversedBy: null
-            joinTable: null
-            orderBy: null
     lifecycleCallbacks: {  }

@@ -45,20 +45,6 @@ class Collectivity
      */
     private $idCountry;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Ressource", mappedBy="idCollectivity")
-     */
-    private $idResource;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idResource = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 
     /**
@@ -141,39 +127,5 @@ class Collectivity
     public function getIdCountry()
     {
         return $this->idCountry;
-    }
-
-    /**
-     * Add idResource
-     *
-     * @param \Heebari\dataBundle\Entity\Ressource $idResource
-     *
-     * @return Collectivity
-     */
-    public function addIdResource(\Heebari\dataBundle\Entity\Ressource $idResource)
-    {
-        $this->idResource[] = $idResource;
-
-        return $this;
-    }
-
-    /**
-     * Remove idResource
-     *
-     * @param \Heebari\dataBundle\Entity\Ressource $idResource
-     */
-    public function removeIdResource(\Heebari\dataBundle\Entity\Ressource $idResource)
-    {
-        $this->idResource->removeElement($idResource);
-    }
-
-    /**
-     * Get idResource
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIdResource()
-    {
-        return $this->idResource;
     }
 }

@@ -40,7 +40,7 @@ ServiceLevelAgreement:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_service
+            inversedBy: null
             joinColumns:
                 id_service:
                     referencedColumnName: id_service
@@ -50,7 +50,7 @@ ServiceLevelAgreement:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_user
+            inversedBy: null
             joinColumns:
                 id_user:
                     referencedColumnName: id_user

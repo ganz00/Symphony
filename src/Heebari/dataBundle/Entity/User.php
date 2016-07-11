@@ -1,4 +1,5 @@
 <?php
+
 namespace Heebari\dataBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
@@ -49,12 +50,7 @@ class User extends BaseUser
      */
     private $birthDate;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email_adress", type="string", length=50, nullable=false)
-     */
-    private $emailAdress;
+   
 
     /**
      * @var string
@@ -63,12 +59,7 @@ class User extends BaseUser
      */
     private $profession;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=26, nullable=false)
-     */
-    //private $password;
+
 
 
 
@@ -105,6 +96,8 @@ class User extends BaseUser
     {
         return $this->idCountry;
     }
+
+   
 
     /**
      * Set firstName
@@ -178,29 +171,7 @@ class User extends BaseUser
         return $this->birthDate;
     }
 
-    /**
-     * Set emailAdress
-     *
-     * @param string $emailAdress
-     *
-     * @return User
-     */
-    public function setEmailAdress($emailAdress)
-    {
-        $this->emailAdress = $emailAdress;
-
-        return $this;
-    }
-
-    /**
-     * Get emailAdress
-     *
-     * @return string
-     */
-    public function getEmailAdress()
-    {
-        return $this->emailAdress;
-    }
+    
 
     /**
      * Set profession

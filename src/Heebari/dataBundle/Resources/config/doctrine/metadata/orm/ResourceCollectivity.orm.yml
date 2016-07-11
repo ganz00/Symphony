@@ -1,0 +1,53 @@
+ResourceCollectivity:
+    type: entity
+    table: resource_collectivity
+    indexes:
+        FK_resource_collectivity_collectivity:
+            columns:
+                - id_collectivity
+        IDX_5EC4DF08EC4A1883:
+            columns:
+                - id_resource
+    uniqueConstraints:
+        id_resource_id_collectivity:
+            columns:
+                - id_resource
+                - id_collectivity
+    id:
+        idResourceCollec:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: id_resource_collec
+            generator:
+                strategy: IDENTITY
+    fields:
+        quantity:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+    manyToOne:
+        idCollectivity:
+            targetEntity: Collectivity
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_collectivity:
+                    referencedColumnName: id_collectivity
+            orphanRemoval: false
+        idResource:
+            targetEntity: Ressource
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_resource:
+                    referencedColumnName: id_ressource
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

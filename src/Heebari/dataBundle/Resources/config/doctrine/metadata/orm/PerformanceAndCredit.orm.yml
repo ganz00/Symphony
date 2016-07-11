@@ -79,7 +79,7 @@ PerformanceAndCredit:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_company
+            inversedBy: null
             joinColumns:
                 id_company:
                     referencedColumnName: id_company

@@ -29,27 +29,9 @@ Ressource:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: id_ressource_categorie
+            inversedBy: null
             joinColumns:
                 id_ressource_categorie:
                     referencedColumnName: id_ressource_categorie
             orphanRemoval: false
-    manyToMany:
-        idCollectivity:
-            targetEntity: Collectivity
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: idResource
-            joinTable:
-                name: resource_collectivity
-                joinColumns:
-                    -
-                        name: id_resource
-                        referencedColumnName: id_ressource
-                inverseJoinColumns:
-                    -
-                        name: id_collectivity
-                        referencedColumnName: id_collectivity
-            orderBy: null
     lifecycleCallbacks: {  }

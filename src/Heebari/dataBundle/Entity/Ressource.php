@@ -38,28 +38,6 @@ class Ressource
      */
     private $idRessourceCategorie;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Collectivity", inversedBy="idResource")
-     * @ORM\JoinTable(name="resource_collectivity",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_resource", referencedColumnName="id_ressource")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_collectivity", referencedColumnName="id_collectivity")
-     *   }
-     * )
-     */
-    private $idCollectivity;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idCollectivity = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 
     /**
@@ -118,39 +96,5 @@ class Ressource
     public function getIdRessourceCategorie()
     {
         return $this->idRessourceCategorie;
-    }
-
-    /**
-     * Add idCollectivity
-     *
-     * @param \Heebari\dataBundle\Entity\Collectivity $idCollectivity
-     *
-     * @return Ressource
-     */
-    public function addIdCollectivity(\Heebari\dataBundle\Entity\Collectivity $idCollectivity)
-    {
-        $this->idCollectivity[] = $idCollectivity;
-
-        return $this;
-    }
-
-    /**
-     * Remove idCollectivity
-     *
-     * @param \Heebari\dataBundle\Entity\Collectivity $idCollectivity
-     */
-    public function removeIdCollectivity(\Heebari\dataBundle\Entity\Collectivity $idCollectivity)
-    {
-        $this->idCollectivity->removeElement($idCollectivity);
-    }
-
-    /**
-     * Get idCollectivity
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIdCollectivity()
-    {
-        return $this->idCollectivity;
     }
 }
