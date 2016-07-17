@@ -1,0 +1,70 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+
+<div class="login-form">
+  {{ form_errors(form) }}
+    
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.firstName, 'form.first_name'|trans ,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.firstName) }}
+        {{ form_widget(form.firstName, {'attr': {'class': 'input'} }) }}
+    </div>
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.lastName,'form.last_name'|trans,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.lastName) }}
+        {{ form_widget(form.lastName, {'attr': {'class': 'input'} }) }}
+    </div>
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.idCountry,'form.country'|trans,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.idCountry) }}
+        {{ form_widget(form.idCountry, {'attr': {'class': 'input'} }) }}
+    </div>
+    <div class="group">
+    {{form_label(form.birthDate,'form.birth_date'|trans,{'label_attr': {'class': 'label'} }) }}
+    {{ form_errors(form.birthDate) }}
+    {{ form_widget(form.birthDate,{'attr': {'class': 'date'} }) }}
+    </div>
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.profession,'form.profession'|trans,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.profession) }}
+        {{ form_widget(form.profession, {'attr': {'class': 'input'} }) }}
+    </div>
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.email,'form.email_adress'|trans,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.email)}}
+        {{ form_widget(form.email,{'attr': {'class': 'input'} }) }}
+    </div>
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.username,'form.username'|trans,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.username)}}
+        {{ form_widget(form.username,{'attr': {'class': 'input'} }) }}
+    </div>
+    
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.plainPassword.first,'form.password'|trans,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'input'} }) }}
+    </div> 
+    <div class="group">
+        {# Génération du label. #}
+        {{ form_label(form.plainPassword.second,'form.password_confirmation'|trans,{'label_attr': {'class': 'label'} }) }}
+        {{ form_errors(form.plainPassword.second) }}
+        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'input'} }) }}
+    </div>
+    <div class="group">
+        <input type="submit" class="button" value="{{ 'registration.submit'|trans }}">
+    </div>
+    <div class="hr"></div>
+    <div class="foot-lnk">
+        <a href="{{ path('fos_user_security_login') }}">Alaready member?</a>
+    </div>
+</div>
+{{ form_end(form) }}

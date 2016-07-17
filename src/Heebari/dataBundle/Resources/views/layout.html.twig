@@ -1,14 +1,6 @@
-{# src/Heebari/dataBundle/Resources/views/Heebari.html.twig #}
+{# src/Heebari/dataBundle/Resources/views/layout.html.twig #}
 
 {% extends "::Heebari.html.twig" %}
-{% block title %}
-  {{ parent() }}
-{% endblock %}
-
-{% block stylesheets %}
- {{ parent() }}
- <link href="../CSS/connection.css" rel="stylesheet" type="text/css"/>
- {% endblock %}
-{% block body %}
-
-{% endblock %}
+{% block nav_content %}
+{% include "@template/navbar.html.twig" %}
+{% endblock nav_content %}

@@ -20,7 +20,7 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idUser;
+    Protected $idUser;
 
     /**
      * @var integer
