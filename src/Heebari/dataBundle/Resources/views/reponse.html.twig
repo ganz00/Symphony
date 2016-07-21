@@ -1,0 +1,64 @@
+{# src/Heebari/dataBundle/Resources/views/accueil.html.twig #}
+{% extends "::Heebari.html.twig" %}
+{% block stylesheets %}
+    <link  href="{{ asset('bundles/Heebaridata/common.css') }}" rel="stylesheet"/>
+    <link  href="{{ asset('bundles/Heebaridata/custum.css') }}" rel="stylesheet"/>
+    <link  href="{{ asset('bundles/Heebaridata/index.css') }}" rel="stylesheet"/>
+    <link  href="{{ asset('bundles/Heebaridata/aside.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+{% endblock stylesheets%}
+{% block page_content %}
+    <div class="main-block">
+        <nav class="navbar navbar-default " role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="{{ path('heebaridata_homepage') }}">Heebari</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                </ul>
+                <form class="navbar-form navbar-left"  role="search"    method="get">
+                    <div class="form-group">
+                        <input type="text" name="seach" class="form-control" placeholder="Search" onclick="">
+                    </div>
+                    <button type="submit" class="btn btn-default">{{ 'seach.seek'|trans({}, 'FOSUserBundle')}}</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li style="margin-top: 10px">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} | <a style="display: inline" href="{{ path('fos_user_security_logout') }}"> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        {% endif %}
+                </ul>
+            </div>	
+        </nav>
+        <div class="header_nav">Bonjour {{ app.user.username }}</div>
+        <div class="content ">
+            <div class="aside col-lg-3 col-xs-3">
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }} label-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}   
+                <div class="aside_item "><a href="{{ path('heebaridata_homepage') }}">Home</a></div>
+                <div class="aside_item "><a href="{{ path('fos_user_profile_show') }}">Profile</a></div>
+                <div class="aside_item "><a href="{{ path('fos_user_profile_edit') }}">Editer profil</a></div>
+                <div class="aside_item "><a href="{{ path('heebaridata_goseach')  }}">Faire une recherche</a></div>
+                <div class="aside_item "><a href="#">Historique recherche</a></div>
+            </div>
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+    <div class="footer">Copyright Heebari 2016 - all right reserved</div>
+</div>
+{% endblock page_content %}
