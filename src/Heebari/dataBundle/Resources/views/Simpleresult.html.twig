@@ -1,0 +1,17 @@
+{# src/Heebari/dataBundle/Resources/views/result.html.twig #}
+{% extends "@template/result.html.twig" %}
+{%block titre %}
+    toto est malade depuis hier
+{% endblock titre %}
+
+{% block resultat %}
+    
+    {{dump(group1) }}
+    {{dump(liste) }}
+    
+{% endblock resultat %}
+{% block Script %} 
+    <script src="{{ asset('bundles/Heebaridata/Script/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/Script/scripts.js') }}" type="text/javascript"></script>
+{% endblock Script %}
+

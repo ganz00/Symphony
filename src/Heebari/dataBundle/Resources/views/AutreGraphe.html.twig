@@ -1,0 +1,41 @@
+{# src/Heebari/dataBundle/Resources/views/AutreGraphe.html.twig #}
+{% extends "@template/result.html.twig" %}
+{% block resultat %}
+    <script src="{{ asset('bundles/Heebaridata/Script/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/Script/graphe.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+       
+    </script>
+    <div class="col-lg-5 col-xs-5">
+        {% block titre %} 
+            <label class="label"> </label>
+        {% endblock titre %}   
+    </div>
+    <div class="col-lg-7 col-xs-7">
+        {% block graph %} 
+                <div id="chart1"> </div>
+        {% endblock graph %}   
+    </div>
+{% endblock resultat %}
+{% block Script %} 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{{ asset('bundles/Heebaridata/Script/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/Script/scripts.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/jquery.jqplot/jquery.jqplot.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/jquery.jqplot/plugins/jqplot.barRenderer.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/jquery.jqplot/plugins/jqplot.categoryAxisRenderer.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/jquery.jqplot/plugins/jqplot.pieRenderer.js') }}" type="text/javascript"></script>
+    <script src="{{asset('bundles/Heebaridata/jquery.jqplot/plugins/jqplot.pointLabels.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/jquery.jqplot/jquery.jqplot.css') }}" type="text/javascript"></script>
+{% endblock Script %}
+
+<div class="col-lg-5 col-xs-5">
+                           {% block titre %} 
+                          
+                           {% endblock titre %}   
+                        </div>
+                        <div class="col-lg-7 col-xs-7">
+                               {% block graph %} 
+                          
+                                {% endblock graph %}   
+                        </div>
