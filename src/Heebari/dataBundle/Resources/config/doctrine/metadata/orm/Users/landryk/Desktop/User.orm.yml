@@ -1,0 +1,56 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="user")
+ */
+class User
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_user", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idUser;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, name="id_country", options={})
+     */
+    private $idCountry;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, name="user_name", options={})
+     */
+    private $userName;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="first_name", options={"fixed":false})
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="last_name", options={"fixed":false})
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="birth_date")
+     */
+    private $birthDate;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="email_adress", options={"fixed":false})
+     */
+    private $emailAdress;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, options={"fixed":false})
+     */
+    private $profession;
+
+    /**
+     * @ORM\Column(type="string", length=26, nullable=false, options={"fixed":false})
+     */
+    private $password;
+}

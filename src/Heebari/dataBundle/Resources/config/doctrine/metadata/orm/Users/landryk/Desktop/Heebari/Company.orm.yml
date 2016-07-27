@@ -1,0 +1,90 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="company",
+ *     indexes={
+ *         @ORM\Index(name="FK_company_company_sector", columns={"id_company_sector"}),
+ *         @ORM\Index(name="FK_company_company_industry", columns={"id_company_industry"}),
+ *         @ORM\Index(name="FK_company_business_field", columns={"id_business_field"}),
+ *         @ORM\Index(name="IDX_4FBF094F8DEE6016", columns={"id_country"})
+ *     },
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_country_id_user_business_name", columns={"id_country","id_user","business_name"})}
+ * )
+ */
+class Company
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_company", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCompany;
+
+    /**
+     * @ORM\Column(
+     *     type="integer",
+     *     nullable=false,
+     *     name="id_user",
+     *     options={"comment":"user qui a enregistré l'entreprise dans heebari"}
+     * )
+     */
+    private $idUser;
+
+    /**
+     * @ORM\Column(
+     *     type="string",
+     *     length=50,
+     *     nullable=false,
+     *     name="business_name",
+     *     options={"fixed":false,"comment":"Nom de l entreprise"}
+     * )
+     */
+    private $businessName;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, options={"comment":"chiffre aff"})
+     */
+    private $turnover;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, name="number_of_employees", options={})
+     */
+    private $numberOfEmployees;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="performance_measurement_score")
+     */
+    private $performanceMeasurementScore;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="estimated_enterprise_value")
+     */
+    private $estimatedEnterpriseValue;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="BusinessField", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_business_field", referencedColumnName="id_business_field")
+     */
+    private $idBusinessField;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CompanyIndustry", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company_industry", referencedColumnName="id_company_industry")
+     */
+    private $idCompanyIndustry;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CompanySector", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company_sector", referencedColumnName="id_company_sector")
+     */
+    private $idCompanySector;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Country", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_country", referencedColumnName="id_country")
+     */
+    private $idCountry;
+}

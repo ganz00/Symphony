@@ -1,0 +1,14 @@
+Heebari\dtatBundle\Entity\Groupemotclef:
+  type: entity
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    Value:
+      nullable: true
+  oneToMany:
+    motclef:
+      targetEntity: Heebari\dataBundle\Entity\Motclef
+      mappedBy: groupemotclef

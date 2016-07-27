@@ -1,0 +1,40 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="resource_collectivity",
+ *     indexes={
+ *         @ORM\Index(name="FK_resource_collectivity_collectivity", columns={"id_collectivity"}),
+ *         @ORM\Index(name="IDX_5EC4DF08EC4A1883", columns={"id_resource"})
+ *     },
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_resource_id_collectivity", columns={"id_resource","id_collectivity"})}
+ * )
+ */
+class ResourceCollectivity
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_resource_collec", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idResourceCollec;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $quantity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Collectivity", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_collectivity", referencedColumnName="id_collectivity")
+     */
+    private $idCollectivity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Ressource", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_resource", referencedColumnName="id_ressource")
+     */
+    private $idResource;
+}

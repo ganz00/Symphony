@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EconomicData
  *
  * @ORM\Table(name="economic_data", uniqueConstraints={@ORM\UniqueConstraint(name="id_country_id_collectivity_date_of_informations", columns={"id_country", "id_collectivity", "date_of_informations"})}, indexes={@ORM\Index(name="FK_economic_data_collectivity", columns={"id_collectivity"}), @ORM\Index(name="IDX_21E83CB28DEE6016", columns={"id_country"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Heebari\dataBundle\Entity\EconomicDataRepository")
  */
 class EconomicData
 {

@@ -1,0 +1,71 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="governance_and_business",
+ *     indexes={@ORM\Index(name="IDX_849BEF478DEE6016", columns={"id_country"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_country_date_of_information", columns={"id_country","date_of_information"})}
+ * )
+ */
+class GovernanceAndBusiness
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_governance_and_business", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idGovernanceAndBusiness;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date_of_information")
+     */
+    private $dateOfInformation;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="political_stability_score")
+     */
+    private $politicalStabilityScore;
+
+    /**
+     * @ORM\Column(
+     *     type="string",
+     *     nullable=true,
+     *     name="change_inpower",
+     *     options={"fixed":false,"comment":"enumeration: bien pa bien, moyen"}
+     * )
+     */
+    private $changeInpower;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $transparency;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="rule_of_law", options={"fixed":false})
+     */
+    private $ruleOfLaw;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $corruption;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="administrative_burden", options={"fixed":false})
+     */
+    private $administrativeBurden;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="business _envir_score")
+     */
+    private $businessEnvirScore;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Country", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_country", referencedColumnName="id_country")
+     */
+    private $idCountry;
+}

@@ -1,0 +1,21 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="key_people_position")
+ */
+class KeyPeoplePosition
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_position", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idPosition;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, options={"fixed":false})
+     */
+    private $position;
+}

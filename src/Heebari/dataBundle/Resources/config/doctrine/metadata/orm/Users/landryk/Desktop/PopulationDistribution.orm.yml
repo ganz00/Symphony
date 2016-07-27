@@ -1,0 +1,74 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="population_distribution",
+ *     indexes={@ORM\Index(name="IDX_F6FE3E7486F9E0F8", columns={"id_age_range"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(
+ *             name="id_age_range_gender_date_of_information",
+ *             columns={"id_age_range","gender","date_of_information"}
+ *         )}
+ * )
+ */
+class PopulationDistribution
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_population_distribution", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idPopulationDistribution;
+
+    /**
+     * @ORM\Column(type="string", nullable=false, options={"fixed":false})
+     */
+    private $gender;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date_of_information")
+     */
+    private $dateOfInformation;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="urbanisation_rate")
+     */
+    private $urbanisationRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="activity_rate")
+     */
+    private $activityRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="unemployment_rate")
+     */
+    private $unemploymentRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="qualification_level")
+     */
+    private $qualificationLevel;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="life_expectancy")
+     */
+    private $lifeExpectancy;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="mortality_rate")
+     */
+    private $mortalityRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="birth_rate")
+     */
+    private $birthRate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AgeRange", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_age_range", referencedColumnName="id_age_range")
+     */
+    private $idAgeRange;
+}

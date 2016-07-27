@@ -1,0 +1,81 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="economic_indicator",
+ *     indexes={@ORM\Index(name="IDX_CCCAAEDC9FC0EDD7", columns={"id_economic_data"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(
+ *             name="id_economic_data_date_of_information",
+ *             columns={"id_economic_data","date_of_information"}
+ *         )}
+ * )
+ */
+class EconomicIndicator
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_economic_indicator", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idEconomicIndicator;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, name="date_of_information", options={})
+     */
+    private $dateOfInformation;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="gdp_growth")
+     */
+    private $gdpGrowth;
+
+    /**
+     * @ORM\Column(
+     *     type="float",
+     *     nullable=true,
+     *     precision=10,
+     *     scale=0,
+     *     name="price_index_rate",
+     *     options={"comment":"inflation"}
+     * )
+     */
+    private $priceIndexRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="investment_rate")
+     */
+    private $investmentRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="national_consumption_rate")
+     */
+    private $nationalConsumptionRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="export_rate")
+     */
+    private $exportRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="import_rate")
+     */
+    private $importRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="income_level_rate")
+     */
+    private $incomeLevelRate;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="debt_level_rate")
+     */
+    private $debtLevelRate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="EconomicData", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_economic_data", referencedColumnName="id_economic_data")
+     */
+    private $idEconomicData;
+}

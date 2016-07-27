@@ -1,0 +1,21 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="age_range")
+ */
+class AgeRange
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_age_range", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idAgeRange;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="age_range", options={"fixed":false})
+     */
+    private $ageRange;
+}

@@ -1,0 +1,102 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="population_parameter",
+ *     indexes={
+ *         @ORM\Index(name="FK_population_parameter_population_distribution", columns={"id_population_distribution"}),
+ *         @ORM\Index(name="IDX_72904060B10D5473", columns={"id_locality"})
+ *     },
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_locality_date_of_information", columns={"id_locality","date_of_information"})}
+ * )
+ */
+class PopulationParameter
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_population_parameter", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idPopulationParameter;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, name="date_of_information", options={})
+     */
+    private $dateOfInformation;
+
+    /**
+     * @ORM\Column(
+     *     type="string",
+     *     nullable=true,
+     *     name="type_locality",
+     *     options={"fixed":false,"comment":"pays, province, region,..."}
+     * )
+     */
+    private $typeLocality;
+
+    /**
+     * @ORM\Column(
+     *     type="float",
+     *     nullable=true,
+     *     precision=10,
+     *     scale=0,
+     *     name="literacy_rate",
+     *     options={"comment":"taux alphabet"}
+     * )
+     */
+    private $literacyRate;
+
+    /**
+     * @ORM\Column(
+     *     type="float",
+     *     nullable=true,
+     *     precision=10,
+     *     scale=0,
+     *     options={"comment":"nbre d'habitants de la localité"}
+     * )
+     */
+    private $population;
+
+    /**
+     * @ORM\Column(
+     *     type="float",
+     *     nullable=true,
+     *     precision=10,
+     *     scale=0,
+     *     name="average_wealth",
+     *     options={"comment":"niveau moyen revenu"}
+     * )
+     */
+    private $averageWealth;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $density;
+
+    /**
+     * @ORM\Column(
+     *     type="float",
+     *     nullable=true,
+     *     precision=10,
+     *     scale=0,
+     *     name="fecondity_rate",
+     *     options={"comment":"taux de fecondite"}
+     * )
+     */
+    private $fecondityRate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Collectivity", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_locality", referencedColumnName="id_collectivity")
+     */
+    private $idLocality;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PopulationDistribution", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_population_distribution", referencedColumnName="id_population_distribution")
+     */
+    private $idPopulationDistribution;
+}

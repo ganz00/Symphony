@@ -1,0 +1,23 @@
+Heebari\dataBundle\Entity\Motclef:
+  type: entity
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    value:
+      type: string
+      length: 255
+      nullable: true
+  oneToMany:
+    stakeholdersRelationship:
+      targetEntity: StakeholdersRelationship
+      mappedBy: motclef
+  manyToOne:
+    groupemotclef:
+      targetEntity: Heebari\dtatBundle\Entity\Groupemotclef
+      inversedBy: motclef
+      joinColumns:
+        groupemotclef_id:
+          referencedColumnName: id

@@ -1,0 +1,21 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="balance_elements")
+ */
+class BalanceElements
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_element", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idElement;
+
+    /**
+     * @ORM\Column(type="string", length=200, nullable=false, name="elemennt_name", options={"fixed":false})
+     */
+    private $elemenntName;
+}

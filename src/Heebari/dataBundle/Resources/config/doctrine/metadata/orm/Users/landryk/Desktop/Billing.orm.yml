@@ -1,0 +1,36 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="billing",
+ *     indexes={@ORM\Index(name="IDX_EC224CAA6B3CA4B", columns={"id_user"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_user_biling_date", columns={"id_user","biling_date"})}
+ * )
+ */
+class Billing
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_biling", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idBiling;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="biling_date")
+     */
+    private $bilingDate;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="payment_method", options={"fixed":false})
+     */
+    private $paymentMethod;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
+     */
+    private $idUser;
+}

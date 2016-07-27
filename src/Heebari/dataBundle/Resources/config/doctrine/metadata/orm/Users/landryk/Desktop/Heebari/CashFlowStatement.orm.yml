@@ -1,0 +1,46 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="cash_flow_statement",
+ *     indexes={@ORM\Index(name="IDX_BE6280F59122A03F", columns={"id_company"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_company_cash_flow_date", columns={"id_company","cash_flow_date"})}
+ * )
+ */
+class CashFlowStatement
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_cash_flow", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCashFlow;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, name="cash_flow_date", options={})
+     */
+    private $cashFlowDate;
+
+    /**
+     * @ORM\Column(type="float", nullable=false, precision=10, scale=0, name="cash_flow_statement")
+     */
+    private $cashFlowStatement;
+
+    /**
+     * @ORM\Column(type="float", nullable=false, precision=10, scale=0, name="short_term_cash_management")
+     */
+    private $shortTermCashManagement;
+
+    /**
+     * @ORM\Column(type="float", nullable=false, precision=10, scale=0)
+     */
+    private $budget;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Company", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company", referencedColumnName="id_company")
+     */
+    private $idCompany;
+}

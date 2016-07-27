@@ -1,0 +1,74 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="colectivity_parameters",
+ *     indexes={@ORM\Index(name="IDX_609F352EF864219C", columns={"id_collectivity"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(
+ *             name="id_collectivity_date_of_information_type_collectivity",
+ *             columns={"id_collectivity","date_of_information","type_collectivity"}
+ *         )}
+ * )
+ */
+class ColectivityParameters
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_collectivite_params", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCollectiviteParams;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date_of_information")
+     */
+    private $dateOfInformation;
+
+    /**
+     * @ORM\Column(
+     *     type="string",
+     *     nullable=false,
+     *     name="type_collectivity",
+     *     options={"fixed":false,"comment":"pays, provinces, region"}
+     * )
+     */
+    private $typeCollectivity;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="average_local_density")
+     */
+    private $averageLocalDensity;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="local_surface")
+     */
+    private $localSurface;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="average_local_qualification_lev")
+     */
+    private $averageLocalQualificationLev;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="average_local_cost_labour")
+     */
+    private $averageLocalCostLabour;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="local_temperature")
+     */
+    private $localTemperature;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="gross_domestic_product")
+     */
+    private $grossDomesticProduct;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Collectivity", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_collectivity", referencedColumnName="id_collectivity")
+     */
+    private $idCollectivity;
+}

@@ -1,13 +1,11 @@
 {# src/Heebari/dataBundle/Resources/views/result.html.twig #}
 {% extends "@template/result.html.twig" %}
 {%block titre %}
-    toto est malade depuis hier
+    <h2>{{ valeur | lower }} : {{ group1 | raw }} </h2>
 {% endblock titre %}
-
 {% block resultat %}
     
-    {{dump(group1) }}
-    {{dump(liste) }}
+    <strong style="margin-left: 200px"> </strong>
     
 {% endblock resultat %}
 {% block Script %} 

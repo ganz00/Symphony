@@ -1,0 +1,54 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="company_key_people",
+ *     indexes={
+ *         @ORM\Index(name="FK_company_key_people_company", columns={"id_company"}),
+ *         @ORM\Index(name="FK_company_key_people_key_people_position", columns={"id_position"})
+ *     }
+ * )
+ */
+class CompanyKeyPeople
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_key_people", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idKeyPeople;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, options={"fixed":false})
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, options={"fixed":false})
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true, options={"fixed":false})
+     */
+    private $mail;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true, options={"fixed":false})
+     */
+    private $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Company", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company", referencedColumnName="id_company")
+     */
+    private $idCompany;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KeyPeoplePosition", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_position", referencedColumnName="id_position")
+     */
+    private $idPosition;
+}

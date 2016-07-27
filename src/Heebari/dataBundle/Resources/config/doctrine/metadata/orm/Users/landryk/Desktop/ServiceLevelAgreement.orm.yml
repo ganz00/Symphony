@@ -1,0 +1,48 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="service_level_agreement",
+ *     indexes={
+ *         @ORM\Index(name="FK_service_level_agreement_proposed_services", columns={"id_service"}),
+ *         @ORM\Index(name="IDX_8A3A51B16B3CA4B", columns={"id_user"})
+ *     },
+ *     uniqueConstraints={@ORM\UniqueConstraint(
+ *             name="id_user_id_service_service_started_date_service_ended_date",
+ *             columns={"id_user","id_service","service_started_date","service_ended_date"}
+ *         )}
+ * )
+ */
+class ServiceLevelAgreement
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_sla", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idSla;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="service_started_date")
+     */
+    private $serviceStartedDate;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="service_ended_date")
+     */
+    private $serviceEndedDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ProposedServices", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_service", referencedColumnName="id_service")
+     */
+    private $idService;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
+     */
+    private $idUser;
+}

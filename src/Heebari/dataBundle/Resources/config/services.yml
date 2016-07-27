@@ -4,5 +4,9 @@ services:
         arguments: ["@router"]
         tags:
             - { name: kernel.event_subscriber }
-
+          
+    Heebari_user.registration.form.type:
+        class: Heebari\dataBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: Heebari_user_registration }
       

@@ -1,0 +1,60 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="stakeholders_relationship",
+ *     indexes={@ORM\Index(name="FK_stakeholders_relationship_company", columns={"id_company"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(
+ *             name="id_container_id_company_type_container",
+ *             columns={"id_container","id_company","type_container"}
+ *         )}
+ * )
+ */
+class StakeholdersRelationship
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_container", options={"comment":"id entreprise ou id actionnaire"})
+     */
+    private $idContainer;
+
+    /**
+     * @ORM\Column(
+     *     type="string",
+     *     length=50,
+     *     nullable=false,
+     *     name="type_container",
+     *     options={"fixed":false,"comment":"USER une personne importante de l'entreprise, et COMP pour company"}
+     * )
+     */
+    private $typeContainer;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $pourcentage;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="started_date")
+     */
+    private $startedDate;
+
+    /**
+     * @ORM\Column(type="date", nullable=true, name="ended_date")
+     */
+    private $endedDate;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Company", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company", referencedColumnName="id_company", unique=true)
+     */
+    private $idCompany;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Heebari\dataBundle\Entity\Motclef", inversedBy="stakeholdersRelationship")
+     * @ORM\JoinColumn(name="motclef_id", referencedColumnName="id")
+     */
+    private $motclef;
+}

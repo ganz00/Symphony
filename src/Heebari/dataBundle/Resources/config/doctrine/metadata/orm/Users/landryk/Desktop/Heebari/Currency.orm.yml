@@ -1,0 +1,26 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="currency")
+ */
+class Currency
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_currency", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCurrency;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=false, options={"fixed":false})
+     */
+    private $currency;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=false, name="currency_code", options={"fixed":false})
+     */
+    private $currencyCode;
+}

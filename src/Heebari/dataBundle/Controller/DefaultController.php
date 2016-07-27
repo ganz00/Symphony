@@ -8,6 +8,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('HeebaridataBundle:Default:index.html.twig');
+        return $this->render('HeebaridataBundle:index:layout.html.twig');
     }
+    
 }

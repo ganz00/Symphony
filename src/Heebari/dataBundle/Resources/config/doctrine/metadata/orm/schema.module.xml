@@ -1,0 +1,1900 @@
+<?xml version="1.0"?>
+<skipper version="3.2.6.1309" mvc="Symfony2" orm="Doctrine2">
+  <module name="\Module" local-name="Module" namespace="\" export-format="Doctrine2Php" export-path="../../../../../../../../../../../../../Users/landryk/Desktop/Heebari" uuid="7bb28e93-b45c-4682-8e72-4e0516271669">
+    <entity name="\AgeRange" local-name="AgeRange" namespace="\" uuid="7b539ba1-fd33-43c7-bdee-cefa18ad87c6">
+      <field name="idAgeRange" type="integer" required="true" primary="true" uuid="ec0c1741-1591-4678-9a84-77c180151a09">
+        <orm-attributes>
+          <attribute name="column">id_age_range</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="ageRange" type="string" size="50" required="true" uuid="1e5aa5d3-fa42-42bc-889f-7a6c74c7f843">
+        <orm-attributes>
+          <attribute name="column">age_range</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">age_range</attribute>
+        <attribute name="export-file-name">AgeRange.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\BalanceElements" local-name="BalanceElements" namespace="\" uuid="e6afdb79-108d-4ae3-ae8b-31088c4892d7">
+      <field name="idElement" type="integer" required="true" primary="true" uuid="eb54331a-d1f8-4e69-b096-222dcc141b2c">
+        <orm-attributes>
+          <attribute name="column">id_element</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="elemenntName" type="string" size="200" required="true" uuid="03dccc32-e0fa-4c3f-a555-b6f1f9a627a3">
+        <orm-attributes>
+          <attribute name="column">elemennt_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">balance_elements</attribute>
+        <attribute name="export-file-name">BalanceElements.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\BalanceSheet" local-name="BalanceSheet" namespace="\" uuid="b41f1695-deb7-4ec3-a407-a63e3562fb51">
+      <field name="idBalanceSheet" type="integer" required="true" primary="true" uuid="06214125-3923-4fc6-90ec-5bca8ea31995">
+        <orm-attributes>
+          <attribute name="column">id_balance_sheet</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="sheetDate" type="date" required="true" uuid="f967a6eb-ffed-4c3f-88e5-25e5ca015e05">
+        <orm-attributes>
+          <attribute name="column">sheet_date</attribute>
+          <attribute name="options">
+            <attribute name="comment">date du bilan</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="elementType" type="string" required="true" uuid="010ec8cc-244f-4858-a01f-8bb6fa6a1c27">
+        <orm-attributes>
+          <attribute name="column">element_type</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="amount" type="float" required="true" uuid="2529e66a-ff7e-42df-95dc-c25339190454">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_element" uuid="d6fed0e0-bb14-49b2-961b-70f8638b9e8f"/>
+      <field name="id_company" uuid="08542e63-1edc-4512-8b05-fd3e5e0f4ea5"/>
+      <index name="FK_balance_sheet_balance_elements">
+        <index-field name="id_element"/>
+      </index>
+      <index name="IDX_194A20B09122A03F">
+        <index-field name="id_company"/>
+      </index>
+      <index name="id_company_sheet_date_id_element" unique="true">
+        <index-field name="id_company"/>
+        <index-field name="sheetDate"/>
+        <index-field name="id_element"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">balance_sheet</attribute>
+        <attribute name="export-file-name">BalanceSheet.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\BalanceSheet" to="\BalanceElements" owner-alias="" inverse-alias="idElement" many-owner="true" many-inverse="false" uuid="e1df00fe-4b1d-4b90-9d25-75b15fb51a77">
+      <association-field from="id_element" to="idElement"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\BalanceSheet" to="\Company" owner-alias="" inverse-alias="idCompany" many-owner="true" many-inverse="false" uuid="7314cd42-aa2e-4527-b05c-c6ec74df46ae">
+      <association-field from="id_company" to="idCompany"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\Billing" local-name="Billing" namespace="\" uuid="cb80c343-487c-4909-aab9-8b5e0161f862">
+      <field name="idBiling" type="integer" required="true" primary="true" uuid="358e9bd6-b6cd-4afa-8ae0-7ba110a8c253">
+        <orm-attributes>
+          <attribute name="column">id_biling</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="bilingDate" type="date" required="true" uuid="456a6f4a-454a-4ed2-bb1f-d8efdcf18612">
+        <orm-attributes>
+          <attribute name="column">biling_date</attribute>
+        </orm-attributes>
+      </field>
+      <field name="paymentMethod" type="string" uuid="a3920279-46aa-478f-8e21-0647fc7d4494">
+        <orm-attributes>
+          <attribute name="column">payment_method</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_user" uuid="af417691-4171-4927-989c-6772c7559068"/>
+      <index name="IDX_EC224CAA6B3CA4B">
+        <index-field name="id_user"/>
+      </index>
+      <index name="id_user_biling_date" unique="true">
+        <index-field name="id_user"/>
+        <index-field name="bilingDate"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">billing</attribute>
+        <attribute name="export-file-name">Billing.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\Billing" to="\User" owner-alias="" inverse-alias="idUser" many-owner="true" many-inverse="false" uuid="d7c0f064-aaf5-4c32-97ab-318a2ad48feb">
+      <association-field from="id_user" to="idUser"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\BusinessField" local-name="BusinessField" namespace="\" uuid="851f31bb-1188-4dae-b3aa-ad26c4945c07">
+      <field name="idBusinessField" type="integer" required="true" primary="true" uuid="81bb38dc-3b44-4fe2-931a-eb494307e151">
+        <orm-attributes>
+          <attribute name="column">id_business_field</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="businessFieldName" type="string" size="50" required="true" uuid="cdb4e769-945e-4cb6-ac76-8596bb87aa73">
+        <orm-attributes>
+          <attribute name="column">business_field_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">business_field</attribute>
+        <attribute name="export-file-name">BusinessField.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\CashFlowStatement" local-name="CashFlowStatement" namespace="\" uuid="171f6f56-ea26-4640-9d73-35b29cd848ee">
+      <field name="idCashFlow" type="integer" required="true" primary="true" uuid="87b20c86-45f1-4876-b66e-e2161dc7b529">
+        <orm-attributes>
+          <attribute name="column">id_cash_flow</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="cashFlowDate" type="integer" required="true" uuid="f5c32bf5-6cef-45e4-aeaf-8a381fe7d29e">
+        <orm-attributes>
+          <attribute name="column">cash_flow_date</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="cashFlowStatement" type="float" required="true" uuid="3993450d-620e-46fd-a389-0e62388fbe93">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">cash_flow_statement</attribute>
+        </orm-attributes>
+      </field>
+      <field name="shortTermCashManagement" type="float" required="true" uuid="f6ab352a-5db0-41a6-aa94-832d168ffec9">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">short_term_cash_management</attribute>
+        </orm-attributes>
+      </field>
+      <field name="budget" type="float" required="true" uuid="167de511-81af-4c82-86a1-63512ad8cbfa">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_company" uuid="4453d52a-1b53-4451-94c9-0434753b2272"/>
+      <index name="IDX_BE6280F59122A03F">
+        <index-field name="id_company"/>
+      </index>
+      <index name="id_company_cash_flow_date" unique="true">
+        <index-field name="id_company"/>
+        <index-field name="cashFlowDate"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">cash_flow_statement</attribute>
+        <attribute name="export-file-name">CashFlowStatement.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\CashFlowStatement" to="\Company" owner-alias="" inverse-alias="idCompany" many-owner="true" many-inverse="false" uuid="0cc11f28-3e2b-4822-8014-b3ae703490ad">
+      <association-field from="id_company" to="idCompany"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\ColectivityParameters" local-name="ColectivityParameters" namespace="\" uuid="de401295-4869-4e76-a9ed-2c5ccf5a4397">
+      <field name="idCollectiviteParams" type="integer" required="true" primary="true" uuid="c26d1015-83ab-49cf-bdc8-1e636c4264f0">
+        <orm-attributes>
+          <attribute name="column">id_collectivite_params</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformation" type="date" required="true" uuid="395e550f-492e-4a4b-8cde-fba069e470f2">
+        <orm-attributes>
+          <attribute name="column">date_of_information</attribute>
+        </orm-attributes>
+      </field>
+      <field name="typeCollectivity" type="string" required="true" uuid="a0f6672b-f3eb-4226-a343-ddb2e7cfac7b">
+        <orm-attributes>
+          <attribute name="column">type_collectivity</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+            <attribute name="comment">pays, provinces, region</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="averageLocalDensity" type="float" uuid="42b06c24-1a83-4467-be14-14c9d8f26724">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">average_local_density</attribute>
+        </orm-attributes>
+      </field>
+      <field name="localSurface" type="float" uuid="9c0b5f74-f35c-4186-8c38-3ed544a28b40">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">local_surface</attribute>
+        </orm-attributes>
+      </field>
+      <field name="averageLocalQualificationLev" type="float" uuid="f0c465cc-64ac-432e-9674-8d314afd18f6">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">average_local_qualification_lev</attribute>
+        </orm-attributes>
+      </field>
+      <field name="averageLocalCostLabour" type="float" uuid="80bba925-6671-466c-bfca-a5feb101f656">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">average_local_cost_labour</attribute>
+        </orm-attributes>
+      </field>
+      <field name="localTemperature" type="float" uuid="545c5e90-0ebe-4649-b64f-413280ae8e08">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">local_temperature</attribute>
+        </orm-attributes>
+      </field>
+      <field name="grossDomesticProduct" type="float" uuid="f4b0b6f7-2728-416d-b576-09ee9407d224">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">gross_domestic_product</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_collectivity" uuid="43feb576-2d02-4128-8434-c2277423378c"/>
+      <index name="IDX_609F352EF864219C">
+        <index-field name="id_collectivity"/>
+      </index>
+      <index name="id_collectivity_date_of_information_type_collectivity" unique="true">
+        <index-field name="id_collectivity"/>
+        <index-field name="dateOfInformation"/>
+        <index-field name="typeCollectivity"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">colectivity_parameters</attribute>
+        <attribute name="export-file-name">ColectivityParameters.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\ColectivityParameters" to="\Collectivity" owner-alias="" inverse-alias="idCollectivity" many-owner="true" many-inverse="false" uuid="9044b60c-6b98-4554-bbf2-4716417cdcb8">
+      <association-field from="id_collectivity" to="idCollectivity"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\Collectivity" local-name="Collectivity" namespace="\" uuid="f548b523-10a9-454b-8c61-4f08e374527d">
+      <field name="idCollectivity" type="integer" required="true" primary="true" uuid="9cf5563f-4d50-404d-9e35-e3b9d4861387">
+        <orm-attributes>
+          <attribute name="column">id_collectivity</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="collectivityName" type="string" size="50" required="true" uuid="3d43543a-ba8d-456a-9b39-10a0309fdc50">
+        <orm-attributes>
+          <attribute name="column">collectivity_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="typeCollectivity" type="string" size="50" required="true" uuid="7b20babe-c0c2-4702-be46-23dbb1e9cde2">
+        <orm-attributes>
+          <attribute name="column">type_collectivity</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_country" uuid="6b74a5d2-515c-4fa0-a69e-568eed800da0"/>
+      <index name="FK_collectivity_country">
+        <index-field name="id_country"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">collectivity</attribute>
+        <attribute name="export-file-name">Collectivity.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\Collectivity" to="\Country" owner-alias="" inverse-alias="idCountry" many-owner="true" many-inverse="false" uuid="3eee2d7e-18ad-4732-8ac8-336d4daa80d2">
+      <association-field from="id_country" to="idCountry"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\Company" local-name="Company" namespace="\" uuid="3cbb2f85-e7d2-424d-9584-7cd03d3cdda5">
+      <field name="idCompany" type="integer" required="true" primary="true" uuid="e4eb8dc0-a32b-45b6-ad3a-f441a3ceeeda">
+        <orm-attributes>
+          <attribute name="column">id_company</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="idUser" type="integer" required="true" uuid="f564172c-97a5-43d8-b01f-f787265234b4">
+        <orm-attributes>
+          <attribute name="column">id_user</attribute>
+          <attribute name="options">
+            <attribute name="comment">user qui a enregistr&#xE9; l'entreprise dans heebari</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="businessName" type="string" size="50" required="true" uuid="97bc4c4e-81bd-4164-906f-8af3c8efd14e">
+        <orm-attributes>
+          <attribute name="column">business_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+            <attribute name="comment">Nom de l entreprise</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="turnover" type="float" uuid="01f5319b-41b8-4052-ac60-cdae6d37ec40">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="options">
+            <attribute name="comment">chiffre aff</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="numberOfEmployees" type="integer" uuid="2ca16ffc-129a-4ef5-9e1e-78843233dc66">
+        <orm-attributes>
+          <attribute name="column">number_of_employees</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="performanceMeasurementScore" type="float" uuid="50d472a5-d7e1-47df-856d-1488843ef394">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">performance_measurement_score</attribute>
+        </orm-attributes>
+      </field>
+      <field name="estimatedEnterpriseValue" type="float" uuid="b3980796-1337-4e90-a44b-0dd9e55e8bec">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">estimated_enterprise_value</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_business_field" uuid="fa038024-bb08-4664-8f3b-41e47729e9f6"/>
+      <field name="id_company_industry" uuid="77eb2c92-8f58-402f-b6db-959698d4ff23"/>
+      <field name="id_company_sector" uuid="9d7bc4e9-1928-4d5c-aeeb-4ad3871a8ac3"/>
+      <field name="id_country" uuid="68b09a1a-c2c4-4a0c-b492-b73decc6cdbd"/>
+      <index name="FK_company_company_sector">
+        <index-field name="id_company_sector"/>
+      </index>
+      <index name="FK_company_company_industry">
+        <index-field name="id_company_industry"/>
+      </index>
+      <index name="FK_company_business_field">
+        <index-field name="id_business_field"/>
+      </index>
+      <index name="IDX_4FBF094F8DEE6016">
+        <index-field name="id_country"/>
+      </index>
+      <index name="id_country_id_user_business_name" unique="true">
+        <index-field name="id_country"/>
+        <index-field name="idUser"/>
+        <index-field name="businessName"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">company</attribute>
+        <attribute name="export-file-name">Company.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\Company" to="\BusinessField" owner-alias="" inverse-alias="idBusinessField" many-owner="true" many-inverse="false" uuid="44b04450-d286-4e0d-8944-def9b4b800d1">
+      <association-field from="id_business_field" to="idBusinessField"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\Company" to="\CompanyIndustry" owner-alias="" inverse-alias="idCompanyIndustry" many-owner="true" many-inverse="false" uuid="e930360d-7d66-430f-8ca4-3526f4884bb5">
+      <association-field from="id_company_industry" to="idCompanyIndustry"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\Company" to="\CompanySector" owner-alias="" inverse-alias="idCompanySector" many-owner="true" many-inverse="false" uuid="5e7000eb-88d3-4f8e-ae5f-ed46e7684a07">
+      <association-field from="id_company_sector" to="idCompanySector"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\Company" to="\Country" owner-alias="" inverse-alias="idCountry" many-owner="true" many-inverse="false" uuid="e7dd7ad5-c478-440b-920d-8eaf5df2074c">
+      <association-field from="id_country" to="idCountry"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\CompanyIndustry" local-name="CompanyIndustry" namespace="\" uuid="0f21f609-a8ec-4c8a-b5cf-19cc329cf50d">
+      <field name="idCompanyIndustry" type="integer" required="true" primary="true" uuid="79bbd931-4f73-4814-82a7-79ea0ce3b152">
+        <orm-attributes>
+          <attribute name="column">id_company_industry</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="industryName" type="string" size="50" required="true" uuid="c4c9df66-3146-4297-a2ba-de04d10f5953">
+        <orm-attributes>
+          <attribute name="column">industry_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">company_industry</attribute>
+        <attribute name="export-file-name">CompanyIndustry.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\CompanyKeyPeople" local-name="CompanyKeyPeople" namespace="\" uuid="9cb9e2d7-1acf-489d-bd9b-27444cce26de">
+      <field name="idKeyPeople" type="integer" required="true" primary="true" uuid="e0ecdaec-977a-4865-ad1a-1b773a5dc19b">
+        <orm-attributes>
+          <attribute name="column">id_key_people</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="lastname" type="string" size="50" required="true" uuid="85476f66-1009-4087-af45-50bce63b3527">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="firstname" type="string" size="50" required="true" uuid="2ce6726f-d2f6-4f1d-8300-574d4cb01ec7">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="mail" type="string" size="30" uuid="c2cae9fd-48da-4c6a-ae8f-61475cb911c3">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="phone" type="string" size="20" uuid="165ac7a7-2023-4ef5-a8e0-e133aa16f909">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_company" uuid="a22ca96d-de30-4734-a48e-07c067eaae8c"/>
+      <field name="id_position" uuid="33d4df42-0753-4fb1-8375-7b5aab723e13"/>
+      <index name="FK_company_key_people_company">
+        <index-field name="id_company"/>
+      </index>
+      <index name="FK_company_key_people_key_people_position">
+        <index-field name="id_position"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">company_key_people</attribute>
+        <attribute name="export-file-name">CompanyKeyPeople.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\CompanyKeyPeople" to="\Company" owner-alias="" inverse-alias="idCompany" many-owner="true" many-inverse="false" uuid="5c696db1-6b2c-4639-a9ce-526f1d04513c">
+      <association-field from="id_company" to="idCompany"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\CompanyKeyPeople" to="\KeyPeoplePosition" owner-alias="" inverse-alias="idPosition" many-owner="true" many-inverse="false" uuid="a5a39c44-65a1-4304-bfe1-f5227c399ac1">
+      <association-field from="id_position" to="idPosition"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\CompanySector" local-name="CompanySector" namespace="\" uuid="adebcd30-fb02-4b09-8f7d-d55b0add487c">
+      <field name="idCompanySector" type="integer" required="true" primary="true" uuid="26784cc4-d870-4f40-813a-73cc9f6db312">
+        <orm-attributes>
+          <attribute name="column">id_company_sector</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="sectorName" type="string" size="50" required="true" uuid="f817c48f-8e32-49b9-bbcb-91d704d469a7">
+        <orm-attributes>
+          <attribute name="column">sector_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">company_sector</attribute>
+        <attribute name="export-file-name">CompanySector.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\Country" local-name="Country" namespace="\" uuid="dcd2e182-d169-4c4a-b9bc-4d84aa3a4d92">
+      <field name="idCountry" type="integer" required="true" primary="true" uuid="84b3d219-412f-49cb-9992-d87ea3f25c92">
+        <orm-attributes>
+          <attribute name="column">id_country</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="countryName" type="string" size="50" required="true" uuid="3aa21958-3b5b-47b8-ad9d-888919140fe3">
+        <orm-attributes>
+          <attribute name="column">country_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_currency" uuid="98933012-c9d5-448c-9a43-a177f28245bf"/>
+      <field name="id_population_parameter" uuid="e36420ec-b0f1-44a8-a422-5d5158cec817"/>
+      <index name="FK_country_population_parameter">
+        <index-field name="id_population_parameter"/>
+      </index>
+      <index name="FK_country_currency">
+        <index-field name="id_currency"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">country</attribute>
+        <attribute name="export-file-name">Country.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\Country" to="\Currency" owner-alias="" inverse-alias="idCurrency" many-owner="true" many-inverse="false" uuid="3856c856-3aec-4acb-b75a-3c4f3b6ee14b">
+      <association-field from="id_currency" to="idCurrency"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\Country" to="\PopulationParameter" owner-alias="" inverse-alias="idPopulationParameter" many-owner="true" many-inverse="false" uuid="edaa884f-bd0a-45d2-87b9-a7c978824799">
+      <association-field from="id_population_parameter" to="idPopulationParameter"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\Currency" local-name="Currency" namespace="\" uuid="81df58f0-f250-4c66-8cc1-c82edca60895">
+      <field name="idCurrency" type="integer" required="true" primary="true" uuid="0abdd391-d89d-4dff-ab90-29a3c9f457da">
+        <orm-attributes>
+          <attribute name="column">id_currency</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="currency" type="string" size="100" required="true" uuid="c4996ba7-3ded-4787-98b1-78d2ef8e4a06">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="currencyCode" type="string" size="5" required="true" uuid="10d475db-cda8-4253-9199-1eeffe6bcd18">
+        <orm-attributes>
+          <attribute name="column">currency_code</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">currency</attribute>
+        <attribute name="export-file-name">Currency.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\EconomicData" local-name="EconomicData" namespace="\" uuid="7a47b0ad-90bd-41c7-9330-43b93804ed18">
+      <field name="idEconomicData" type="integer" required="true" primary="true" uuid="8f48d780-4021-4cfa-9f24-573ad02142e3">
+        <orm-attributes>
+          <attribute name="column">id_economic_data</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformations" type="date" required="true" uuid="415fc736-3575-4f59-a6f7-f2981266fb04">
+        <orm-attributes>
+          <attribute name="column">date_of_informations</attribute>
+        </orm-attributes>
+      </field>
+      <field name="privateInvestment" type="float" uuid="fe1b7b9c-4fc6-4356-8359-93d2dbe30eb5">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">private_investment</attribute>
+        </orm-attributes>
+      </field>
+      <field name="publicInvestment" type="float" uuid="f7023ee4-5b54-44ab-bd2f-e37955d34c5b">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">public_investment</attribute>
+          <attribute name="options">
+            <attribute name="comment">somme de  foreign_direct_investment et national_investments</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="investment" type="float" uuid="3b74ee14-f0c3-4337-9a67-9762b056b5de">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="options">
+            <attribute name="comment">somme de id_economic_data et public_investment</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="foreignDirectInvestment" type="float" uuid="a52dfb38-0880-4b28-afa8-ac04318cf002">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">foreign_direct_investment</attribute>
+        </orm-attributes>
+      </field>
+      <field name="nationalInvestments" type="float" uuid="73bef07f-af16-4be6-96f2-8d655692d354">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">national_investments</attribute>
+        </orm-attributes>
+      </field>
+      <field name="priceIndex" type="float" uuid="c508e1cc-3911-4e99-a3cd-b46cb7db8557">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">price_index</attribute>
+        </orm-attributes>
+      </field>
+      <field name="nationalPriceIndex" type="float" uuid="b0f60734-272b-40e9-b36a-f80cd7fd0f82">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">national_price_index</attribute>
+        </orm-attributes>
+      </field>
+      <field name="harmonisedPriceIndex" type="float" uuid="1fb0bf37-bab9-4ec5-a9c3-1048d659e7a9">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">harmonised_price_index</attribute>
+        </orm-attributes>
+      </field>
+      <field name="debtLevel" type="float" uuid="410de2b7-e689-4332-8875-81c358c088b1">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">debt_level</attribute>
+        </orm-attributes>
+      </field>
+      <field name="publiclyIssuedDebt" type="float" uuid="6849823f-38a7-4c63-9e0b-d8a2c5b29aeb">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">publicly_issued_debt</attribute>
+        </orm-attributes>
+      </field>
+      <field name="foreignInternationalAid" type="float" uuid="87be7be0-7ef3-4202-8ec2-326d182b8c1f">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">foreign_international_aid</attribute>
+        </orm-attributes>
+      </field>
+      <field name="fiscalRevenue" type="float" uuid="28b1adce-f9bb-44e1-abae-b29782b15fb3">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">fiscal_revenue</attribute>
+        </orm-attributes>
+      </field>
+      <field name="publicExpenses" type="float" uuid="d8d50120-66d9-4f46-8dcf-2f5f363965b0">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">public_expenses</attribute>
+        </orm-attributes>
+      </field>
+      <field name="averageIncomeLevel" type="float" uuid="dee65bf4-209a-40b7-aaf8-d06f7f79df4a">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">average_income_level</attribute>
+        </orm-attributes>
+      </field>
+      <field name="minimumWageLevel" type="float" uuid="5c076bcf-93f9-486e-8e67-501c7937f861">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">minimum_wage_level</attribute>
+        </orm-attributes>
+      </field>
+      <field name="purchasingPowerParity" type="float" uuid="0ac7dc23-0a54-4337-90a8-b8d180a8dd50">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">purchasing_power_parity</attribute>
+        </orm-attributes>
+      </field>
+      <field name="averageSavingsLevel" type="float" uuid="bc1fc649-5a86-42a6-8c70-7d442bab3822">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">average_savings_level</attribute>
+        </orm-attributes>
+      </field>
+      <field name="top10ImportingIndustrie" type="integer" uuid="44a16d83-a686-46f0-832a-c4a1be3abe59">
+        <orm-attributes>
+          <attribute name="column">top_10_importing_industrie</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="top10ExportingIndustrie" type="integer" uuid="7e4cc888-9ceb-4c4e-953b-f39caa4c252e">
+        <orm-attributes>
+          <attribute name="column">top_10_exporting_industrie</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="top10ExportedGoods" type="integer" uuid="b328ebc3-33f1-45f7-8f36-4322ce3e4788">
+        <orm-attributes>
+          <attribute name="column">top_10_exported_goods</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="top10ImportedGoods" type="integer" uuid="3422ea1e-d91b-4e41-bb83-3dff2c095605">
+        <orm-attributes>
+          <attribute name="column">top_10_imported_goods</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="export" type="float" uuid="5b6a86cf-a88b-4fe1-a993-929ba5dcd86b">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="import" type="float" uuid="15ebdf1e-4cc7-4bb4-aded-dce977d6a1b0">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_collectivity" uuid="66332227-db98-4b3c-a86d-33c1d6d14036"/>
+      <field name="id_country" uuid="53ceb727-f655-4062-b2df-a24486b6ebc5"/>
+      <index name="FK_economic_data_collectivity">
+        <index-field name="id_collectivity"/>
+      </index>
+      <index name="IDX_21E83CB28DEE6016">
+        <index-field name="id_country"/>
+      </index>
+      <index name="id_country_id_collectivity_date_of_informations" unique="true">
+        <index-field name="id_country"/>
+        <index-field name="id_collectivity"/>
+        <index-field name="dateOfInformations"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">economic_data</attribute>
+        <attribute name="export-file-name">EconomicData.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\EconomicData" to="\Collectivity" owner-alias="" inverse-alias="idCollectivity" many-owner="true" many-inverse="false" uuid="c33ad9d6-5638-41c7-9ec9-267afe8ccdd5">
+      <association-field from="id_collectivity" to="idCollectivity"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\EconomicData" to="\Country" owner-alias="" inverse-alias="idCountry" many-owner="true" many-inverse="false" uuid="039ba927-1957-4873-9f83-03885473ad4d">
+      <association-field from="id_country" to="idCountry"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\EconomicIndicator" local-name="EconomicIndicator" namespace="\" uuid="f178d4ae-b636-433b-b65e-10631ee96e7c">
+      <field name="idEconomicIndicator" type="integer" required="true" primary="true" uuid="2a0001dd-6e68-4448-ab5c-06e6ef730943">
+        <orm-attributes>
+          <attribute name="column">id_economic_indicator</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformation" type="integer" required="true" uuid="c927efbe-7381-45ae-9252-cc2a1bbe4497">
+        <orm-attributes>
+          <attribute name="column">date_of_information</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="gdpGrowth" type="float" uuid="09ca2df1-8392-4109-bc5b-f575c0e26e9e">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">gdp_growth</attribute>
+        </orm-attributes>
+      </field>
+      <field name="priceIndexRate" type="float" uuid="fd64edb6-dc35-49a8-85c9-c66621ea0dea">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">price_index_rate</attribute>
+          <attribute name="options">
+            <attribute name="comment">inflation</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="investmentRate" type="float" uuid="71bd61cc-36b1-4c6f-9a67-575a531aa407">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">investment_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="nationalConsumptionRate" type="float" uuid="7ae12c45-7507-4b54-a18f-94ad9e73fa73">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">national_consumption_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="exportRate" type="float" uuid="f24d1627-74bf-4e17-acf9-df416c7f43c9">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">export_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="importRate" type="float" uuid="2964e991-1def-4f48-b096-165e80131d4a">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">import_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="incomeLevelRate" type="float" uuid="9634988f-33cd-4c04-990e-233bf6155515">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">income_level_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="debtLevelRate" type="float" uuid="02cbc9fc-3276-4194-b743-90b361501df0">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">debt_level_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_economic_data" uuid="ddf04b22-0929-4884-9048-520e15f7a878"/>
+      <index name="IDX_CCCAAEDC9FC0EDD7">
+        <index-field name="id_economic_data"/>
+      </index>
+      <index name="id_economic_data_date_of_information" unique="true">
+        <index-field name="id_economic_data"/>
+        <index-field name="dateOfInformation"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">economic_indicator</attribute>
+        <attribute name="export-file-name">EconomicIndicator.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\EconomicIndicator" to="\EconomicData" owner-alias="" inverse-alias="idEconomicData" many-owner="true" many-inverse="false" uuid="46c5ca11-7478-4688-b5d0-f6d957cd3182">
+      <association-field from="id_economic_data" to="idEconomicData"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\GovernanceAndBusiness" local-name="GovernanceAndBusiness" namespace="\" uuid="57e3be1c-b25e-4e01-aa39-f3fd1100332b">
+      <field name="idGovernanceAndBusiness" type="integer" required="true" primary="true" uuid="9cf5634f-b53d-49eb-8b85-1f366aaf1955">
+        <orm-attributes>
+          <attribute name="column">id_governance_and_business</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformation" type="date" required="true" uuid="83d71d45-2e75-410a-82e8-852da6421537">
+        <orm-attributes>
+          <attribute name="column">date_of_information</attribute>
+        </orm-attributes>
+      </field>
+      <field name="politicalStabilityScore" type="float" uuid="a1e80104-146b-450b-8a3a-9adc11f6ac43">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">political_stability_score</attribute>
+        </orm-attributes>
+      </field>
+      <field name="changeInpower" type="string" uuid="cc5cc518-9433-4df8-bc4d-ccb2e8bd422e">
+        <orm-attributes>
+          <attribute name="column">change_inpower</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+            <attribute name="comment">enumeration: bien pa bien, moyen</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="transparency" type="float" uuid="cf2ef49d-a2ae-4323-a2cd-8ea8f34bcf42">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="ruleOfLaw" type="string" uuid="6b6e4c8d-3f60-43f8-ae43-38ac924ad795">
+        <orm-attributes>
+          <attribute name="column">rule_of_law</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="corruption" type="float" uuid="53dadf16-3d70-4fe5-852f-3bc1a6507774">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="administrativeBurden" type="string" uuid="5156ffb0-1a36-4ab6-a5d0-6044a36682e6">
+        <orm-attributes>
+          <attribute name="column">administrative_burden</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="businessEnvirScore" type="float" uuid="374c7c54-cde7-40ac-91c9-6f5bd4f4f389">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">business _envir_score</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_country" uuid="5d687384-0e50-4e0e-b22f-71156ee698d5"/>
+      <index name="IDX_849BEF478DEE6016">
+        <index-field name="id_country"/>
+      </index>
+      <index name="id_country_date_of_information" unique="true">
+        <index-field name="id_country"/>
+        <index-field name="dateOfInformation"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">governance_and_business</attribute>
+        <attribute name="export-file-name">GovernanceAndBusiness.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\GovernanceAndBusiness" to="\Country" owner-alias="" inverse-alias="idCountry" many-owner="true" many-inverse="false" uuid="797fcbf0-6638-4197-a9e0-d58fe841df00">
+      <association-field from="id_country" to="idCountry"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\IncomeStatement" local-name="IncomeStatement" namespace="\" uuid="6686abda-5a7c-4957-a02e-824fb4a9e587">
+      <field name="idIncomeStatement" type="integer" required="true" primary="true" uuid="bdc86bcc-1149-4ebd-b1a1-0fdf3b86c01e">
+        <orm-attributes>
+          <attribute name="column">id_income_statement</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformation" type="date" required="true" uuid="1630573b-5ad9-41cd-a7bb-60086d482a2a">
+        <orm-attributes>
+          <attribute name="column">date_of_information</attribute>
+        </orm-attributes>
+      </field>
+      <field name="incomeStatement" type="float" uuid="77742515-367b-4c30-88df-5a7611269c43">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">income_statement</attribute>
+        </orm-attributes>
+      </field>
+      <field name="sales" type="float" uuid="c1e2cd7e-9b2b-48d2-9cad-1b1f78884720">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="costOfGoodSold" type="float" uuid="711adf2a-fc78-4f4f-884f-03b9d8156c5e">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">cost_of_good_sold</attribute>
+        </orm-attributes>
+      </field>
+      <field name="grossProfit" type="float" uuid="b663ee8f-cc4b-4700-b451-fe301992fb26">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">gross_profit</attribute>
+        </orm-attributes>
+      </field>
+      <field name="sellingAdministrative" type="float" uuid="9799e8a1-4d45-4da8-9fa5-3100be732c91">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">selling_administrative</attribute>
+        </orm-attributes>
+      </field>
+      <field name="depreciationAndAmortization" type="float" uuid="8fcf79f7-ff5a-4192-9497-85cf80766846">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">depreciation_and_amortization</attribute>
+        </orm-attributes>
+      </field>
+      <field name="ebit" type="float" uuid="fa78c731-5613-4303-b134-447adf5e3642">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="interestAndFinancialCharges" type="float" uuid="7059f99e-6803-4215-a49f-b27fff73226f">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">interest_and_financial_charges</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_company" uuid="fb9b3766-904f-4b6d-9755-3f6a165fc79c"/>
+      <index name="IDX_8740FF829122A03F">
+        <index-field name="id_company"/>
+      </index>
+      <index name="id_company_date_of_information" unique="true">
+        <index-field name="id_company"/>
+        <index-field name="dateOfInformation"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">income_statement</attribute>
+        <attribute name="export-file-name">IncomeStatement.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\IncomeStatement" to="\Company" owner-alias="" inverse-alias="idCompany" many-owner="true" many-inverse="false" uuid="1f045550-5147-4f82-89a7-ab8241cfc967">
+      <association-field from="id_company" to="idCompany"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\KeyPeoplePosition" local-name="KeyPeoplePosition" namespace="\" uuid="72567319-9b1a-41b0-836e-15e58fc9934b">
+      <field name="idPosition" type="integer" required="true" primary="true" uuid="efc21a73-be3e-4537-9f47-07931ff29e59">
+        <orm-attributes>
+          <attribute name="column">id_position</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="position" type="string" size="50" required="true" uuid="1b72ced1-e00c-402b-8ee9-ff6686921e5d">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">key_people_position</attribute>
+        <attribute name="export-file-name">KeyPeoplePosition.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\PerformanceAndCredit" local-name="PerformanceAndCredit" namespace="\" uuid="3c0ebef0-ad5b-4627-b311-8e1951d51f79">
+      <field name="idPerformanceCredit" type="integer" required="true" primary="true" uuid="5210bb28-1feb-4569-a22e-45811b37406b">
+        <orm-attributes>
+          <attribute name="column">id_performance_credit</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformation" type="date" required="true" uuid="02736ac0-e9fe-4e56-b5d1-8a2dde0a5bde">
+        <orm-attributes>
+          <attribute name="column">date_of_information</attribute>
+        </orm-attributes>
+      </field>
+      <field name="performanceAndCredit" type="float" uuid="8ff95059-0fec-46a0-ad01-ec93043445cf">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">performance_and_credit</attribute>
+        </orm-attributes>
+      </field>
+      <field name="returnOnEquity" type="float" uuid="ee995f3f-c5ce-4cd8-819b-182ed323e8b0">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">return_on_equity</attribute>
+        </orm-attributes>
+      </field>
+      <field name="returnOnAsset" type="float" uuid="dacc44a8-7486-4dff-a7b8-5aeb405414c8">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">return_on_asset</attribute>
+        </orm-attributes>
+      </field>
+      <field name="riskAdjustedReturnOnCapital" type="float" uuid="1e66d38f-6261-478c-9874-0bfed7e4fff3">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">risk_adjusted_return_on_capital</attribute>
+        </orm-attributes>
+      </field>
+      <field name="grossMargin" type="float" uuid="a9143192-3a51-4d2a-86ac-0b85c80be565">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">gross_margin</attribute>
+        </orm-attributes>
+      </field>
+      <field name="profitMargin" type="float" uuid="04110ec8-2f5a-4624-91b9-69e713c9d816">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">profit_margin</attribute>
+        </orm-attributes>
+      </field>
+      <field name="ebitdaMargin" type="float" uuid="bdc1be8f-ed7a-4986-aa1e-ca14b97a5922">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">ebitda_margin</attribute>
+        </orm-attributes>
+      </field>
+      <field name="quickRatio" type="float" uuid="61a3615b-7e80-4e60-b0d2-aca9d3bcf04c">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">quick_ratio</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_company" uuid="6de8a547-642e-4b42-ade1-5127a1200f50"/>
+      <index name="IDX_1DD8E9929122A03F">
+        <index-field name="id_company"/>
+      </index>
+      <index name="id_company_date_of_information" unique="true">
+        <index-field name="id_company"/>
+        <index-field name="dateOfInformation"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">performance_and_credit</attribute>
+        <attribute name="export-file-name">PerformanceAndCredit.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\PerformanceAndCredit" to="\Company" owner-alias="" inverse-alias="idCompany" many-owner="true" many-inverse="false" uuid="2e0cbf9b-0f26-4208-9c2b-3b5d99acb4c2">
+      <association-field from="id_company" to="idCompany"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\PopulationDistribution" local-name="PopulationDistribution" namespace="\" uuid="01fc9bbf-9019-42dc-a8d6-1fc194164f76">
+      <field name="idPopulationDistribution" type="integer" required="true" primary="true" uuid="ed3d80f4-1ae0-43ca-8e67-cabb6411e80a">
+        <orm-attributes>
+          <attribute name="column">id_population_distribution</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="gender" type="string" required="true" uuid="30423f7a-2c0c-4c49-89d4-7a956d3bcb15">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformation" type="date" required="true" uuid="94b45eb0-9f2f-4137-acb3-018fcf93289c">
+        <orm-attributes>
+          <attribute name="column">date_of_information</attribute>
+        </orm-attributes>
+      </field>
+      <field name="urbanisationRate" type="float" uuid="53679adc-2fd7-4bb6-9520-9c851517814f">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">urbanisation_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="activityRate" type="float" uuid="2de8efc2-b21b-4785-be1e-672f804fbcb7">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">activity_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="unemploymentRate" type="float" uuid="f0411f69-7ff1-440c-84bd-208ea09b2fcd">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">unemployment_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="qualificationLevel" type="float" uuid="f08ffe52-26cd-4f93-babb-3eaba884d286">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">qualification_level</attribute>
+        </orm-attributes>
+      </field>
+      <field name="lifeExpectancy" type="float" uuid="da47f799-c9c9-471f-89f7-bbc537482736">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">life_expectancy</attribute>
+        </orm-attributes>
+      </field>
+      <field name="mortalityRate" type="float" uuid="55fa87ab-8ea4-4081-8c8d-86dd8ed597fe">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">mortality_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="birthRate" type="float" uuid="dcf708e0-5ff7-418c-997c-9addff3d5954">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">birth_rate</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_age_range" uuid="227dec47-9c10-4557-9299-a962b05051a4"/>
+      <index name="IDX_F6FE3E7486F9E0F8">
+        <index-field name="id_age_range"/>
+      </index>
+      <index name="id_age_range_gender_date_of_information" unique="true">
+        <index-field name="id_age_range"/>
+        <index-field name="gender"/>
+        <index-field name="dateOfInformation"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">population_distribution</attribute>
+        <attribute name="export-file-name">PopulationDistribution.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\PopulationDistribution" to="\AgeRange" owner-alias="" inverse-alias="idAgeRange" many-owner="true" many-inverse="false" uuid="5925badc-0405-4755-99c5-3f64788732c0">
+      <association-field from="id_age_range" to="idAgeRange"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\PopulationParameter" local-name="PopulationParameter" namespace="\" uuid="f5127484-93c9-4b27-b42f-30c0f6c8b9c1">
+      <field name="idPopulationParameter" type="integer" required="true" primary="true" uuid="1b588552-7613-4855-b3c6-dc7037bbcc7f">
+        <orm-attributes>
+          <attribute name="column">id_population_parameter</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="dateOfInformation" type="integer" required="true" uuid="af48c6e2-d99c-4b06-8207-b83d55571804">
+        <orm-attributes>
+          <attribute name="column">date_of_information</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="typeLocality" type="string" uuid="9a20cc3e-3b61-4809-a8b2-bd2fc1e6c214">
+        <orm-attributes>
+          <attribute name="column">type_locality</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+            <attribute name="comment">pays, province, region,...</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="literacyRate" type="float" uuid="b0a89aa4-da86-445a-901e-38aadfd6d72f">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">literacy_rate</attribute>
+          <attribute name="options">
+            <attribute name="comment">taux alphabet</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="population" type="float" uuid="39b0a817-df56-4af5-a67c-a2fa1e58859e">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="options">
+            <attribute name="comment">nbre d'habitants de la localit&#xE9;</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="averageWealth" type="float" uuid="9fb79245-4ed3-49a0-aa9a-1cbcefcebd43">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">average_wealth</attribute>
+          <attribute name="options">
+            <attribute name="comment">niveau moyen revenu</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="density" type="float" uuid="d876c06c-0890-454e-ada2-0da0f83ba94d">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="fecondityRate" type="float" uuid="e987ce8b-5dda-4758-bad5-412d43db664a">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+          <attribute name="column">fecondity_rate</attribute>
+          <attribute name="options">
+            <attribute name="comment">taux de fecondite</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_locality" uuid="b696aa38-2401-471e-b1c6-0b4cc36b3d42"/>
+      <field name="id_population_distribution" uuid="dd44e7a3-7909-4930-8191-63fcc21ae63e"/>
+      <index name="FK_population_parameter_population_distribution">
+        <index-field name="id_population_distribution"/>
+      </index>
+      <index name="IDX_72904060B10D5473">
+        <index-field name="id_locality"/>
+      </index>
+      <index name="id_locality_date_of_information" unique="true">
+        <index-field name="id_locality"/>
+        <index-field name="dateOfInformation"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">population_parameter</attribute>
+        <attribute name="export-file-name">PopulationParameter.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\PopulationParameter" to="\Collectivity" owner-alias="" inverse-alias="idLocality" many-owner="true" many-inverse="false" uuid="3c537987-a1cb-4c8a-8c6a-4184821edde2">
+      <association-field from="id_locality" to="idCollectivity"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\PopulationParameter" to="\PopulationDistribution" owner-alias="" inverse-alias="idPopulationDistribution" many-owner="true" many-inverse="false" uuid="c672f979-3e8d-40f5-b0b6-55034f06fd8c">
+      <association-field from="id_population_distribution" to="idPopulationDistribution"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\ProposedServices" local-name="ProposedServices" namespace="\" uuid="9d501475-ebf6-4621-b4f3-088bd0b31bd3">
+      <field name="idService" type="integer" required="true" primary="true" uuid="48d8a40d-2101-4a20-8468-a52ce8255aff">
+        <orm-attributes>
+          <attribute name="column">id_service</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="serviceName" type="string" size="100" required="true" uuid="e242e069-219e-4313-ae64-061c26a8fb54">
+        <orm-attributes>
+          <attribute name="column">service_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="price" type="float" required="true" uuid="1fd8b3dd-bee5-4779-b105-39c2526266dc">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="description" type="text" size="65535" uuid="8e59dd6b-f624-4bc6-9fd5-db3010d99bfa">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">proposed_services</attribute>
+        <attribute name="export-file-name">ProposedServices.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\ResourceCollectivity" local-name="ResourceCollectivity" namespace="\" uuid="2e99d6f9-b27a-40f6-b0a6-27c1f35a6b75">
+      <field name="idResourceCollec" type="integer" required="true" primary="true" uuid="92157039-25ea-4abf-a2fa-f7d77e70f3df">
+        <orm-attributes>
+          <attribute name="column">id_resource_collec</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="quantity" type="float" uuid="5b471578-dc5e-420f-acea-4ce6a55d53fb">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_collectivity" uuid="a7750071-7455-426a-aeb6-45e926318a8d"/>
+      <field name="id_resource" uuid="a995229b-c23c-44bb-8cf0-fb6012ca79ad"/>
+      <index name="FK_resource_collectivity_collectivity">
+        <index-field name="id_collectivity"/>
+      </index>
+      <index name="IDX_5EC4DF08EC4A1883">
+        <index-field name="id_resource"/>
+      </index>
+      <index name="id_resource_id_collectivity" unique="true">
+        <index-field name="id_resource"/>
+        <index-field name="id_collectivity"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">resource_collectivity</attribute>
+        <attribute name="export-file-name">ResourceCollectivity.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\ResourceCollectivity" to="\Collectivity" owner-alias="" inverse-alias="idCollectivity" many-owner="true" many-inverse="false" uuid="71ee23aa-44e0-428d-9eba-a08129c6814c">
+      <association-field from="id_collectivity" to="idCollectivity"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\ResourceCollectivity" to="\Ressource" owner-alias="" inverse-alias="idResource" many-owner="true" many-inverse="false" uuid="e5baa838-3c18-46ee-a676-2e9e3b36ffa3">
+      <association-field from="id_resource" to="idRessource"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\Ressource" local-name="Ressource" namespace="\" uuid="751919c2-3926-4b9d-91e4-e9efaa407f49">
+      <field name="idRessource" type="integer" required="true" primary="true" uuid="c81920e4-6a8f-4bd9-8919-63cc1242ead8">
+        <orm-attributes>
+          <attribute name="column">id_ressource</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="ressourceName" type="string" size="50" required="true" uuid="9d6d5151-f91e-4dff-b357-2769d390b04f">
+        <orm-attributes>
+          <attribute name="column">ressource_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_ressource_categorie" uuid="ab43c730-ed33-4dfb-ad05-f7d8413d5542"/>
+      <index name="FK_ressource_ressource_categorie">
+        <index-field name="id_ressource_categorie"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">ressource</attribute>
+        <attribute name="export-file-name">Ressource.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\Ressource" to="\RessourceCategorie" owner-alias="" inverse-alias="idRessourceCategorie" many-owner="true" many-inverse="false" uuid="480aa57d-4a0f-4833-acf3-72b99f9bba78">
+      <association-field from="id_ressource_categorie" to="idRessourceCategorie"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\RessourceCategorie" local-name="RessourceCategorie" namespace="\" uuid="fc9c440a-1d1e-4824-b88f-2cccaef71c5a">
+      <field name="idRessourceCategorie" type="integer" required="true" primary="true" uuid="428dbb7c-1c99-4469-85cb-1857e9620dc1">
+        <orm-attributes>
+          <attribute name="column">id_ressource_categorie</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="categoryRessource" type="string" size="50" required="true" uuid="ea98eb43-6ad0-4141-a8d3-8de8e59a3e62">
+        <orm-attributes>
+          <attribute name="column">category_ressource</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">ressource_categorie</attribute>
+        <attribute name="export-file-name">RessourceCategorie.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\ServiceLevelAgreement" local-name="ServiceLevelAgreement" namespace="\" uuid="721a9b6a-aaa4-4cee-add0-0959699c42aa">
+      <field name="idSla" type="integer" required="true" primary="true" uuid="5d14f941-59d4-4144-a7d8-c3b8ee1fe13b">
+        <orm-attributes>
+          <attribute name="column">id_sla</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="serviceStartedDate" type="date" required="true" uuid="df842410-2614-4c6f-91b2-6aae20c4a979">
+        <orm-attributes>
+          <attribute name="column">service_started_date</attribute>
+        </orm-attributes>
+      </field>
+      <field name="serviceEndedDate" type="date" required="true" uuid="c2810a39-0531-430f-aa17-925ac136573d">
+        <orm-attributes>
+          <attribute name="column">service_ended_date</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_service" uuid="068b68bf-7bcc-4b04-868e-e68f601cc456"/>
+      <field name="id_user" uuid="adf5aa71-ba96-4ddd-8d97-5d6c1aad5a4a"/>
+      <index name="FK_service_level_agreement_proposed_services">
+        <index-field name="id_service"/>
+      </index>
+      <index name="IDX_8A3A51B16B3CA4B">
+        <index-field name="id_user"/>
+      </index>
+      <index name="id_user_id_service_service_started_date_service_ended_date" unique="true">
+        <index-field name="id_user"/>
+        <index-field name="id_service"/>
+        <index-field name="serviceStartedDate"/>
+        <index-field name="serviceEndedDate"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">service_level_agreement</attribute>
+        <attribute name="export-file-name">ServiceLevelAgreement.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\ServiceLevelAgreement" to="\ProposedServices" owner-alias="" inverse-alias="idService" many-owner="true" many-inverse="false" uuid="c6a60e45-45f2-4acc-998f-2abf9abfd2cf">
+      <association-field from="id_service" to="idService"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\ServiceLevelAgreement" to="\User" owner-alias="" inverse-alias="idUser" many-owner="true" many-inverse="false" uuid="41e50376-2dd4-41de-86cd-a04f8805ff28">
+      <association-field from="id_user" to="idUser"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\StakeholdersRelationship" local-name="StakeholdersRelationship" namespace="\" uuid="12cec941-a15f-4316-b576-a7e6fa3eb765">
+      <field name="idContainer" type="integer" required="true" primary="true" uuid="4f6a7d59-cf99-4bad-9c0e-45b8872e3030">
+        <orm-attributes>
+          <attribute name="column">id_container</attribute>
+          <attribute name="options">
+            <attribute name="comment">id entreprise ou id actionnaire</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="typeContainer" type="string" size="50" required="true" uuid="572aefa8-7fea-412a-87e1-50d41f458f66">
+        <orm-attributes>
+          <attribute name="column">type_container</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+            <attribute name="comment">USER une personne importante de l'entreprise, et COMP pour company</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="pourcentage" type="float" uuid="660db85e-7251-48e9-b5e2-2e936a023d3f">
+        <orm-attributes>
+          <attribute name="precision">10</attribute>
+          <attribute name="scale">0</attribute>
+        </orm-attributes>
+      </field>
+      <field name="startedDate" type="date" required="true" uuid="308b3b4f-dac1-43fb-8b7a-244a396beb2d">
+        <orm-attributes>
+          <attribute name="column">started_date</attribute>
+        </orm-attributes>
+      </field>
+      <field name="endedDate" type="date" uuid="9be7ed35-bcc3-4943-ae13-3e812755b28c">
+        <orm-attributes>
+          <attribute name="column">ended_date</attribute>
+        </orm-attributes>
+      </field>
+      <field name="id_company" unique="true" uuid="504878df-8cf2-4fd9-89b0-5989f5c23684"/>
+      <field name="motclef_id" type="integer" uuid="404eba4f-c32a-4ad1-9595-c3af85472cc3"/>
+      <index name="FK_stakeholders_relationship_company">
+        <index-field name="id_company"/>
+      </index>
+      <index name="id_container_id_company_type_container" unique="true">
+        <index-field name="idContainer"/>
+        <index-field name="id_company"/>
+        <index-field name="typeContainer"/>
+      </index>
+      <orm-attributes>
+        <attribute name="table">stakeholders_relationship</attribute>
+        <attribute name="export-file-name">StakeholdersRelationship.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\StakeholdersRelationship" to="\Company" owner-alias="" inverse-alias="idCompany" many-owner="false" many-inverse="false" uuid="f7f5306a-adc2-41f5-8e2f-02fea2261e84">
+      <association-field from="id_company" to="idCompany"/>
+      <orm-attributes>
+        <attribute name="side-owning">
+          <attribute name="cascade"/>
+          <attribute name="orphan-removal">false</attribute>
+        </attribute>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\StakeholdersRelationship" to="\Heebari\dataBundle\Entity\Motclef" caption="Motclef StakeholdersRelationship" owner-alias="stakeholdersRelationship" inverse-alias="motclef" many-owner="true" many-inverse="false" uuid="0726a1da-5f99-49db-9395-25a2d389e3ea">
+      <association-field from="motclef_id" to="id"/>
+    </association>
+    <entity name="\User" local-name="User" namespace="\" uuid="4c2cd37f-72dd-464b-ae4d-b17f86763521">
+      <field name="idUser" type="integer" required="true" primary="true" uuid="6ca96676-98ea-4348-b350-43b8ede52e09">
+        <orm-attributes>
+          <attribute name="column">id_user</attribute>
+          <attribute name="options"/>
+          <attribute name="generator">
+            <attribute name="strategy">IDENTITY</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="idCountry" type="integer" uuid="d35cde7f-4ce5-4fd0-8f0d-afa1dacd61ca">
+        <orm-attributes>
+          <attribute name="column">id_country</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="userName" type="integer" uuid="dfd7a260-31d3-4365-ac6b-f210c584b943">
+        <orm-attributes>
+          <attribute name="column">user_name</attribute>
+          <attribute name="options"/>
+        </orm-attributes>
+      </field>
+      <field name="firstName" type="string" size="50" required="true" uuid="bfea00a2-d1f0-402d-b978-984c580169ea">
+        <orm-attributes>
+          <attribute name="column">first_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="lastName" type="string" size="50" required="true" uuid="18204348-ca28-4773-858b-51599a90121b">
+        <orm-attributes>
+          <attribute name="column">last_name</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="birthDate" type="date" required="true" uuid="42fc688c-d0d5-4bc3-9f9e-74ed5223b809">
+        <orm-attributes>
+          <attribute name="column">birth_date</attribute>
+        </orm-attributes>
+      </field>
+      <field name="emailAdress" type="string" size="50" required="true" uuid="40dd7957-8f59-41ca-be00-8a0538fef14e">
+        <orm-attributes>
+          <attribute name="column">email_adress</attribute>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="profession" type="string" size="50" required="true" uuid="89f5e0c8-07af-45ef-8474-78c8c6b8dd6f">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="password" type="string" size="26" required="true" uuid="6e5993db-4876-4c89-86cf-ab75d2103902">
+        <orm-attributes>
+          <attribute name="options">
+            <attribute name="fixed">false</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <orm-attributes>
+        <attribute name="table">user</attribute>
+        <attribute name="export-file-name">User.orm.yml</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\Heebari\dataBundle\Entity\Motclef" local-name="Motclef" namespace="\Heebari\dataBundle\Entity" local-namespace="Heebari\dataBundle\Entity" uuid="6491dced-706f-4e5f-b879-4c07679dcea1">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="8c670ebe-79f0-4f76-9e1e-0c4785b2e290"/>
+      <field name="value" type="string" size="255" uuid="04ae4544-27cc-4516-a468-123fab4fde21"/>
+      <field name="groupemotclef_id" type="integer" uuid="47d14c3b-d872-4b3f-98f4-3639c7332212"/>
+    </entity>
+    <association from="\Heebari\dataBundle\Entity\Motclef" to="\Heebari\dtatBundle\Entity\Groupemotclef" caption="Groupemotclef Motclef" owner-alias="motclef" inverse-alias="groupemotclef" many-owner="true" many-inverse="false" uuid="2eb0925d-7c99-442b-ae93-2951a1bcba3a">
+      <association-field from="groupemotclef_id" to="id"/>
+    </association>
+    <entity name="\Heebari\dtatBundle\Entity\Groupemotclef" local-name="Groupemotclef" namespace="\Heebari\dtatBundle\Entity" local-namespace="Heebari\dtatBundle\Entity" uuid="c3279bc6-fa3f-4c0d-a83e-a9025b16d696">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="0ed0a6a4-5792-4bf5-814d-90cd563d2b24"/>
+      <field name="Value" uuid="2182cad0-6456-48f2-a6ab-d18495b35417"/>
+    </entity>
+  </module>
+  <visual-data>
+    <entity uuid="01fc9bbf-9019-42dc-a8d6-1fc194164f76" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="904" position-y="910" size-x="0" size-x2="154" size-y="0" size-y2="171"/>
+    <entity uuid="0f21f609-a8ec-4c8a-b5cf-19cc329cf50d" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="258" position-y="475" size-x="0" size-x2="137" size-y="0" size-y2="45"/>
+    <entity uuid="12cec941-a15f-4316-b576-a7e6fa3eb765" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="700" position-y="1345" size-x="0" size-x2="126" size-y="0" size-y2="101"/>
+    <entity uuid="171f6f56-ea26-4640-9d73-35b29cd848ee" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1117" position-y="40" size-x="0" size-x2="163" size-y="0" size-y2="101"/>
+    <entity uuid="2e99d6f9-b27a-40f6-b0a6-27c1f35a6b75" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1570" position-y="910" size-x="0" size-x2="130" size-y="0" size-y2="73"/>
+    <entity uuid="3c0ebef0-ad5b-4627-b311-8e1951d51f79" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="680" position-y="910" size-x="0" size-x2="165" size-y="0" size-y2="171"/>
+    <entity uuid="3cbb2f85-e7d2-424d-9584-7cd03d3cdda5" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="20" position-y="475" size-x="0" size-x2="178" size-y="0" size-y2="171"/>
+    <entity uuid="4c2cd37f-72dd-464b-ae4d-b17f86763521" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="921" position-y="1345" size-x="0" size-x2="120" size-y="0" size-y2="143"/>
+    <entity uuid="57e3be1c-b25e-4e01-aa39-f3fd1100332b" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="25" position-y="910" size-x="0" size-x2="168" size-y="0" size-y2="157"/>
+    <entity uuid="6491dced-706f-4e5f-b879-4c07679dcea1" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1250" position-y="1170" size-x="0" size-x2="154" size-y="0" size-y2="59"/>
+    <entity uuid="6686abda-5a7c-4957-a02e-824fb4a9e587" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="244" position-y="910" size-x="0" size-x2="165" size-y="0" size-y2="171"/>
+    <entity uuid="721a9b6a-aaa4-4cee-add0-0959699c42aa" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="482" position-y="1345" size-x="0" size-x2="126" size-y="0" size-y2="87"/>
+    <entity uuid="72567319-9b1a-41b0-836e-15e58fc9934b" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="494" position-y="910" size-x="0" size-x2="101" size-y="0" size-y2="45"/>
+    <entity uuid="751919c2-3926-4b9d-91e4-e9efaa407f49" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="42" position-y="1345" size-x="0" size-x2="134" size-y="0" size-y2="59"/>
+    <entity uuid="7a47b0ad-90bd-41c7-9330-43b93804ed18" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1339" position-y="475" size-x="0" size-x2="155" size-y="0" size-y2="395"/>
+    <entity uuid="7b539ba1-fd33-43c7-bdee-cefa18ad87c6" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="306" position-y="155" size-x="0" size-x2="112" size-y="0" size-y2="45"/>
+    <entity uuid="81df58f0-f250-4c66-8cc1-c82edca60895" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1138" position-y="475" size-x="0" size-x2="121" size-y="0" size-y2="59"/>
+    <entity uuid="851f31bb-1188-4dae-b3aa-ad26c4945c07" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="906" position-y="40" size-x="0" size-x2="149" size-y="0" size-y2="45"/>
+    <entity uuid="9cb9e2d7-1acf-489d-bd9b-27444cce26de" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="490" position-y="475" size-x="0" size-x2="110" size-y="0" size-y2="115"/>
+    <entity uuid="9d501475-ebf6-4621-b4f3-088bd0b31bd3" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1353" position-y="910" size-x="0" size-x2="128" size-y="0" size-y2="73"/>
+    <entity uuid="adebcd30-fb02-4b09-8f7d-d55b0add487c" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="697" position-y="475" size-x="0" size-x2="131" size-y="0" size-y2="45"/>
+    <entity uuid="b41f1695-deb7-4ec3-a407-a63e3562fb51" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="483" position-y="40" size-x="0" size-x2="123" size-y="0" size-y2="101"/>
+    <entity uuid="c3279bc6-fa3f-4c0d-a83e-a9025b16d696" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1188" position-y="1441" size-x="0" size-x2="184" size-y="0" size-y2="45"/>
+    <entity uuid="cb80c343-487c-4909-aab9-8b5e0161f862" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="703" position-y="40" size-x="0" size-x2="119" size-y="0" size-y2="73"/>
+    <entity uuid="dcd2e182-d169-4c4a-b9bc-4d84aa3a4d92" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="919" position-y="475" size-x="0" size-x2="124" size-y="0" size-y2="73"/>
+    <entity uuid="de401295-4869-4e76-a9ed-2c5ccf5a4397" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1333" position-y="40" size-x="0" size-x2="167" size-y="0" size-y2="157"/>
+    <entity uuid="e6afdb79-108d-4ae3-ae8b-31088c4892d7" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="259" position-y="40" size-x="0" size-x2="136" size-y="0" size-y2="45"/>
+    <entity uuid="f178d4ae-b636-433b-b65e-10631ee96e7c" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1558" position-y="475" size-x="0" size-x2="153" size-y="0" size-y2="171"/>
+    <entity uuid="f5127484-93c9-4b27-b42f-30c0f6c8b9c1" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1123" position-y="910" size-x="0" size-x2="151" size-y="0" size-y2="157"/>
+    <entity uuid="f548b523-10a9-454b-8c61-4f08e374527d" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1567" position-y="40" size-x="0" size-x2="135" size-y="0" size-y2="73"/>
+    <entity uuid="fc9c440a-1d1e-4824-b88f-2cccaef71c5a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="252" position-y="1345" size-x="0" size-x2="149" size-y="0" size-y2="45"/>
+    <module uuid="7bb28e93-b45c-4682-8e72-4e0516271669" bg-color="#EAE4F1" size-x="0" size-x2="1744" size-y="0" size-y2="1760"/>
+  </visual-data>
+</skipper>
