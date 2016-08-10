@@ -1,2 +1,6 @@
 {# src/Heebari/dataBundle/Resources/views/layout.html.twig #}
 {% extends "@template/reponse.html.twig" %}
+{% block Script %} 
+    <script src="{{ asset('bundles/Heebaridata/Script/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/Heebaridata/Script/scripts.js') }}" type="text/javascript"></script>
+{% endblock Script %}

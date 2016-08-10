@@ -1,0 +1,30 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="ressource",
+ *     indexes={@ORM\Index(name="FK_ressource_ressource_categorie", columns={"id_ressource_categorie"})}
+ * )
+ */
+class Ressource
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_ressource", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idRessource;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="ressource_name", options={"fixed":false})
+     */
+    private $ressourceName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="RessourceCategorie", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_ressource_categorie", referencedColumnName="id_ressource_categorie")
+     */
+    private $idRessourceCategorie;
+}

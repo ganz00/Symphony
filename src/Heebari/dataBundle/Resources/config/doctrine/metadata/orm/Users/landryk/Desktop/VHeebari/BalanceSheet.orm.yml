@@ -1,0 +1,50 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="balance_sheet",
+ *     indexes={
+ *         @ORM\Index(name="FK_balance_sheet_balance_elements", columns={"id_element"}),
+ *         @ORM\Index(name="IDX_194A20B09122A03F", columns={"id_company"})
+ *     },
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_company_sheet_date_id_element", columns={"id_company","sheet_date","id_element"})}
+ * )
+ */
+class BalanceSheet
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_balance_sheet", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idBalanceSheet;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="sheet_date", options={"comment":"date du bilan"})
+     */
+    private $sheetDate;
+
+    /**
+     * @ORM\Column(type="string", nullable=false, name="element_type", options={"fixed":false})
+     */
+    private $elementType;
+
+    /**
+     * @ORM\Column(type="float", nullable=false, precision=10, scale=0)
+     */
+    private $amount;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="BalanceElements", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_element", referencedColumnName="id_element")
+     */
+    private $idElement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Company", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company", referencedColumnName="id_company")
+     */
+    private $idCompany;
+}

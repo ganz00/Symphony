@@ -1,0 +1,32 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="collectivity", indexes={@ORM\Index(name="FK_collectivity_country", columns={"id_country"})})
+ */
+class Collectivity
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_collectivity", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCollectivity;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="collectivity_name", options={"fixed":false})
+     */
+    private $collectivityName;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="type_collectivity", options={"fixed":false})
+     */
+    private $typeCollectivity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Country", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_country", referencedColumnName="id_country")
+     */
+    private $idCountry;
+}

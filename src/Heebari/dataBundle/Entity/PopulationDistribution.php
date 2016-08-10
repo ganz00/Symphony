@@ -62,12 +62,20 @@ class PopulationDistribution
      * @ORM\Column(name="qualification_level", type="float", precision=10, scale=0, nullable=true)
      */
     private $qualificationLevel;
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="banking_penetration_rate", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $bankingPenetrationRate;
+    
     /**
      * @var float
      *
      * @ORM\Column(name="life_expectancy", type="float", precision=10, scale=0, nullable=true)
      */
+    
     private $lifeExpectancy;
 
     /**
@@ -93,9 +101,7 @@ class PopulationDistribution
      * })
      */
     private $idAgeRange;
-
-
-
+    
     /**
      * Get idPopulationDistribution
      *
@@ -344,5 +350,29 @@ class PopulationDistribution
     public function getIdAgeRange()
     {
         return $this->idAgeRange;
+    }
+
+    /**
+     * Set bankingPenetrationRate
+     *
+     * @param float $bankingPenetrationRate
+     *
+     * @return PopulationDistribution
+     */
+    public function setBankingPenetrationRate($bankingPenetrationRate)
+    {
+        $this->bankingPenetrationRate = $bankingPenetrationRate;
+
+        return $this;
+    }
+
+    /**
+     * Get bankingPenetrationRate
+     *
+     * @return float
+     */
+    public function getBankingPenetrationRate()
+    {
+        return $this->bankingPenetrationRate;
     }
 }

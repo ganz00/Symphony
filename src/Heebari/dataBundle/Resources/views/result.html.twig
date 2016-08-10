@@ -12,20 +12,18 @@
                 </div>
                 <br>
                 <br>
-                
+
             </div>
         </div>
         <div class=" title_article"><h4>{% block titre %}    {% endblock titre %}</h4></div>
-                    <div class="row">
-                        {% block resultat %} 
-                        
-                        {% endblock resultat %} 
-                    </div>
-                    <div class="col-xs-12 section_description">
-                      {% block proposition %} 
-                          
-                      {% endblock proposition %}   
-                    </div>
+        <div class="row">
+            {% block resultat %} 
+
+            {% endblock resultat %} 
+        </div>
+        <div class="col-xs-12 section_description">
+            {{ parent()}}
+        </div>
     </div>
 
 {% endblock content %}

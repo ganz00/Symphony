@@ -1,0 +1,31 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="proposed_services")
+ */
+class ProposedServices
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_service", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idService;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=false, name="service_name", options={"fixed":false})
+     */
+    private $serviceName;
+
+    /**
+     * @ORM\Column(type="float", nullable=false, precision=10, scale=0)
+     */
+    private $price;
+
+    /**
+     * @ORM\Column(type="text", length=65535, nullable=true, options={"fixed":false})
+     */
+    private $description;
+}

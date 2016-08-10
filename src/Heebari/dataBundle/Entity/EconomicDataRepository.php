@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class EconomicDataRepository extends EntityRepository {
 
-    public function findMany($country,$debut,$fin) {
+    public function findMany($country, $debut, $fin) {
         $queryBuilder = $this->createQueryBuilder('e');
         $queryBuilder->where('e.idCountry = :country')
                 ->setParameter('country', $country)
@@ -23,57 +23,57 @@ class EconomicDataRepository extends EntityRepository {
 
         // On récupère les résultats à partir de la Query
         $results = $query->getArrayResult();
+        $retour = array(0 => "dateOfInformations", 1 => $results);
+        return $retour;
+    }
 
+    public function Findfirst($country) {
+        $qb = $this->createQueryBuilder('e')
+                ->where('e.idCountry = :country')
+                ->setParameter('country', $country)
+                ->orderBy('e.dateOfInformations', 'DESC')
+                ->setMaxResults(1);
+
+        $results = $qb->getQuery()->getArrayResult();
         return $results;
     }
-
-    public function myFindOne($id) {
-        $qb = $this->createQueryBuilder('a');
-
-        $qb
-                ->where('a.id = :id')
-                ->setParameter('id', $id)
-        ;
-
-        return $qb
-                        ->getQuery()
-                        ->getResult()
-        ;
+    
+       public function findforMany($country, $debut, $fin,$fields) {
+          $querys = 'SELECT (e.idCountry),e.dateOfInformations';
+          foreach ($fields as  $field) {
+              $querys = $querys.', e.'.$field;
+          }
+          $querys = $querys.' FROM HeebaridataBundle:EconomicData e Where e.idCountry = :id';
+         $queryb = $this->_em->createQuery($querys)->setParameter('id', $country);
+         $results = $queryb->getArrayResult();
+         $retour = array(0 => "dateOfInformations", 1 => $results);
+         return $retour;
     }
-
-    public function findByAuthorAndDate($author, $year) {
-        $qb = $this->createQueryBuilder('a');
-
-        $qb->where('a.author = :author')
-                ->setParameter('author', $author)
-                ->andWhere('a.date < :year')
-                ->setParameter('year', $year)
-                ->orderBy('a.date', 'DESC')
-        ;
-
-        $listAdverts = $qb->getQuery()->getArrayResult();
-
-        foreach ($listAdverts as $advert) {
-            // $advert est un tableau
-            // Faire $advert->getContent() est impossible. Vous devez faire :
-            $advert['content'];
+    public function getEconomicIndicator($id,$fields="all", $debut=NULL, $fin=NULL) {
+        if($fields == "all")
+            $querys = 'SELECT e';
+        else{
+          $querys = 'SELECT (e.idEconomicIndicator),e.dateOfInformation';
+          foreach ($fields as  $field) {
+              $querys = $querys.',e.'.$field;
+          }
         }
+          $querys = $querys.' FROM HeebaridataBundle:EconomicIndicator e INNER JOIN e.idEconomicData ed WITH ed.idCountry = :id';
+            if($debut != NULL){
+              $querys = $querys.' and e.dateOfInformation > :debut';
+            }if($fin!=NULL){
+              $querys = $querys.' and e.dateOfInformation < :fin';
+            }
+         $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
+         if($debut != NULL){
+              $queryb->setParameter('debut', $debut);
+          }if($fin!=NULL){
+              $queryb->setParameter('fin', $fin);
+          }
+         $results = $queryb->getArrayResult();
+         return $results;
     }
-      public function getAdverts()
-  {
-    $query = $this->createQueryBuilder('a')
-      // Jointure sur l'attribut image
-      ->leftJoin('a.image', 'i')
-      ->addSelect('i')
-      // Jointure sur l'attribut categories
-      ->leftJoin('a.categories', 'c')
-      ->addSelect('c')
-      ->orderBy('a.date', 'DESC')
-      ->getQuery()
-    ;
+   
 
-    return $query->getResult();
-  }
-
-
+    
 }

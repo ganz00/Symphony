@@ -8,8 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
  * PopulationParameter
  *
  * @ORM\Table(name="population_parameter", uniqueConstraints={@ORM\UniqueConstraint(name="id_locality_date_of_information", columns={"id_locality", "date_of_information"})}, indexes={@ORM\Index(name="FK_population_parameter_population_distribution", columns={"id_population_distribution"}), @ORM\Index(name="IDX_72904060B10D5473", columns={"id_locality"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Heebari\dataBundle\Entity\PopulationParameterRepository")
  */
+
+//TODO add banking penetration rate 
+
 class PopulationParameter
 {
     /**
@@ -22,9 +25,9 @@ class PopulationParameter
     private $idPopulationParameter;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="date_of_information", type="integer", nullable=false)
+     * @ORM\Column(name="date_of_information", type="date", nullable=false)
      */
     private $dateOfInformation;
 
@@ -317,4 +320,6 @@ class PopulationParameter
     {
         return $this->idPopulationDistribution;
     }
+    
+    
 }

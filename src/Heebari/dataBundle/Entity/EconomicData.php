@@ -24,9 +24,9 @@ class EconomicData
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_of_informations", type="date", nullable=false)
+     * @ORM\Column(name="date_of_information", type="date", nullable=false)
      */
-    private $dateOfInformations;
+    private $dateOfInformation;
 
     /**
      * @var float
@@ -222,27 +222,27 @@ class EconomicData
     }
 
     /**
-     * Set dateOfInformations
+     * Set dateOfInformation
      *
-     * @param \DateTime $dateOfInformations
+     * @param \DateTime $dateOfInformation
      *
      * @return EconomicData
      */
-    public function setDateOfInformations($dateOfInformations)
+    public function setDateOfInformation($dateOfInformation)
     {
-        $this->dateOfInformations = $dateOfInformations;
+        $this->dateOfInformation = $dateOfInformation;
 
         return $this;
     }
 
     /**
-     * Get dateOfInformations
+     * Get dateOfInformation
      *
      * @return \DateTime
      */
-    public function getDateOfInformations()
+    public function getDateOfInformation()
     {
-        return $this->dateOfInformations;
+        return $this->dateOfInformation;
     }
 
     /**

@@ -19,83 +19,57 @@ use Symfony\Component\Debug\Exception\UndefinedMethodException;
 
 class SeachController extends Controller {
 
-    private $Generalkey = ["Cross", "series", "per", "growth", "Average", "level", "owning"];
+    private $Generalkey = ["Cross", "series", "per", "growth", "Average", "level", "owning","head"];
     private $populationKey = ["head"];
 
-    public function seachAction($motcle1, $motcle2) {
-        $em = $this->getDoctrine()->getManager();
-        $M = new Motclef();
-        $M2 = new Motclef();
-        $M = $em->getRepository('HeebaridataBundle:Motclef')->find($motcle1);
-        $mot = $M->getField();
-        $group = new Groupemotclef();
-        $group = $M->getGroupemotclef();
-        $entite = $group->getEntity();
-        $M2 = $em->getRepository('HeebaridataBundle:Motclef')->find($motcle2);
-        $mot2 = $M2->getField();
-        $group2 = new Groupemotclef();
-        $group2 = $M2->getGroupemotclef();
-        $entite2 = $group->getEntity();
-        $result = $em->getRepository("HeebaridataBundle:" . $entite)->find();
-        if ($entite != $entite2)
-            $result2 = $em->getRepository("HeebaridataBundle:" . $entite2)->find();
-
-
-
-
-
-        return $this->render('@template/Simpleresult.html.twig', array(
-                    'group1' => $group1,
-                    'group2' => $group2,
-                    'liste' => $data,
-                    'liste2' => $data2
-        ));
-    }
+    
+    public function crosscountryserie($country1,$country2,$name,$debut,$fin) {  }
+   
+    public function crosscountry($country1,$country2,$name,$year) {
+        return $this->render('@template/Simpleresult.html.twig');}
 
     public function goAction() {
-        return $this->render('@template/Seachpage.html.twig');
+        $Gmotclef = $this->container->get('Heebari_data.motclef');
+        $Listemot = $Gmotclef->getMotclefs();
+        return $this->render('@template/Seachpage.html.twig',array("liste" => $Listemot));
     }
 
     public function seachistAction($country, $motcle1, $year) {
+        $Gmotclef = $this->container->get('Heebari_data.motclef');
         $em = $this->getDoctrine()->getManager();
-        $M = new Motclef();
-        $M = $em->getRepository('HeebaridataBundle:Motclef')->findOneBy(array('value' => $motcle1));
-        $group1 = new Groupemotclef();
-        $group1 = $M->getGroupemotclef();
-        $entite = $group1->getEntity();
-        $vmot = $M->getField();
+        $entite = $Gmotclef->getentity($motcle1);
         $debut = new \Datetime($year . '-01-01');
-        $enty = $em->getRepository('HeebaridataBundle:' . $entite);
+        $enty = $em->getRepository('HeebaridataBundle:' . $entite[0]);
         $count = new Country();
         $count = $em->getRepository('HeebaridataBundle:Country')->findOneBy(array('countryName' => $country));
-        $getter = 'get' . $vmot;
+        $getter = 'get' . $entite[1];
         $result = "";
-        if ($entite == "EconomicData") {
-            $id = $count->getIdCountry();
+        $id = $count->getIdCountry();
+        if ($entite[0] == "EconomicData") {
             $donne = $enty->findOneBy(array('idCountry' => $id));
             $result = $donne->$getter();
-        } if($entite == "PopulationParameter") {
             $pop_param = new \Heebari\dataBundle\Entity\PopulationParameter();
+
+        } if($entite[0] == "PopulationParameter") {
              $pop_param = $count->getIdPopulationParameter();
              $result = $pop_param->$getter();
-             $vrai = true;     
             }
-            if ($entite == "PopulationDistribution") {
+            if ($entite[0] == "PopulationDistribution") {
+                 $pop_param = $count->getIdPopulationParameter();
                  $pop_distrib = new \Heebari\dataBundle\Entity\PopulationDistribution();
                  $pop_distrib = $pop_param->getIdPopulationDistribution();                   
                  $result = $pop_distrib->$getter();
-                 
             }
-            if ($entite == "EconomicIndicator") {
-               
+            if ($entite[0] == "EconomicIndicator") {
+                 $ide = $em->getRepository('HeebaridataBundle:EconomicData')
+                         ->findMany($id,new \Datetime($year . '-01-01'),new \Datetime($year . '-12-31')) ;
                  $economic = new \Heebari\dataBundle\Entity\EconomicIndicator();
-                 $economic = $em->getRepository('HeebaridataBundle:EconomicIndicator')->findOneBy(array('idCountry' => $count));                 
-                 $result = $economic->$getter();
-                 
+                 $economic = $enty->findOneBy(array('idEconomicData' => $ide[0]["idEconomicData"]));                 
+                 $result = $economic->$getter();    
             }
-             
+        $Listemot = $Gmotclef->getMotclefs();
 
-        return $this->render('@template/Simpleresult.html.twig', array('group1' => $result, "pays" => $count, "valeur" => $vmot . " au " . $country . " en " . $year));
+        return $this->render('@template/Simpleresult.html.twig', array('group1' => $result, "liste" => $Listemot, "valeur" => $entite[1] . " au " . $country . " en " . $year));
     }
 
     public function seachgraphAction($country, $name, $debut, $fin) {
@@ -110,11 +84,12 @@ class SeachController extends Controller {
         $group = new Groupemotclef();
         $group = $motcle->getGroupemotclef();
         $entite = $group->getEntity();
-        if ($entite == "EconomicData") {
-            $resultat = $em->getRepository("HeebaridataBundle:" . $entite)->findMany($pays->getIdCountry(), $debut, $fin);
+        if ($entite == "EconomicData" || $entite == "EconomicIndicator" ) {
+            $resultat = $em->getRepository("HeebaridataBundle:" . $entite)->findMany($pays->getIdCountry(), $debut, $fin,$em);
             $Res = array();
-            foreach ($resultat as $result) {
-                $date = $result["dateOfInformations"];
+            $filtre = $resultat[0];
+            foreach ($resultat[1] as $result) {  
+                $date = $result[$filtre];
                 $Res[$date->format('Y')] = $result[$mot];
             }
 
@@ -125,5 +100,13 @@ class SeachController extends Controller {
         return $this->render('@template/Bargraphe.html.twig', array('result' => $Res, 'libelle' => $name . " au "
                     . $country . " de " . $debut->format('Y') . " à " . $fin->format('Y')));
     }
+    
+    public function seachpaysAction($pays){
+        $serv = $this->container->get('Heebari_data.country');
+        $data = $serv->getall($pays);
+        return $this->render('@template/Paysresult.html.twig',array("donnee" => $data));
+        
+    }
+    
 
 }

@@ -3,7 +3,7 @@ namespace Heebari\dataBundle\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Heebari\dataBundle\Entity\MotclefRepository")
  */
 class Motclef
 {
@@ -25,9 +25,13 @@ class Motclef
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $field;
+    
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
 
-
-
+  
     /**
      * @ORM\ManyToOne(targetEntity="Heebari\dataBundle\Entity\Groupemotclef", inversedBy="motclef")
      * @ORM\JoinColumn(name="groupemotclef_id", referencedColumnName="id")
@@ -117,4 +121,61 @@ class Motclef
     {
         return $this->field;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Motclef
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->relatedKey = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add relatedKey
+     *
+     * @param \HebbarydataBundle\Entity\RelatedKey $relatedKey
+     *
+     * @return Motclef
+     */
+    public function addRelatedKey(\HebbarydataBundle\Entity\RelatedKey $relatedKey)
+    {
+        $this->relatedKey[] = $relatedKey;
+
+        return $this;
+    }
+
+    /**
+     * Remove relatedKey
+     *
+     * @param \HebbarydataBundle\Entity\RelatedKey $relatedKey
+     */
+    public function removeRelatedKey(\HebbarydataBundle\Entity\RelatedKey $relatedKey)
+    {
+        $this->relatedKey->removeElement($relatedKey);
+    }
+
+   
 }

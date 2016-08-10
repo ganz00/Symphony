@@ -1,0 +1,71 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="performance_and_credit",
+ *     indexes={@ORM\Index(name="IDX_1DD8E9929122A03F", columns={"id_company"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_company_date_of_information", columns={"id_company","date_of_information"})}
+ * )
+ */
+class PerformanceAndCredit
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_performance_credit", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idPerformanceCredit;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date_of_information")
+     */
+    private $dateOfInformation;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="performance_and_credit")
+     */
+    private $performanceAndCredit;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="return_on_equity")
+     */
+    private $returnOnEquity;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="return_on_asset")
+     */
+    private $returnOnAsset;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="risk_adjusted_return_on_capital")
+     */
+    private $riskAdjustedReturnOnCapital;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="gross_margin")
+     */
+    private $grossMargin;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="profit_margin")
+     */
+    private $profitMargin;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="ebitda_margin")
+     */
+    private $ebitdaMargin;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="quick_ratio")
+     */
+    private $quickRatio;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Company", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company", referencedColumnName="id_company")
+     */
+    private $idCompany;
+}

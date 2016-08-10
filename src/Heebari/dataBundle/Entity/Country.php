@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Country
  *
  * @ORM\Table(name="country", indexes={@ORM\Index(name="FK_country_population_parameter", columns={"id_population_parameter"}), @ORM\Index(name="FK_country_currency", columns={"id_currency"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Heebari\dataBundle\Entity\CountryRepository")
  */
 class Country
 {

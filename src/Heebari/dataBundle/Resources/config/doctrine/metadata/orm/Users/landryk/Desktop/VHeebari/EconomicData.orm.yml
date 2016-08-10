@@ -1,0 +1,171 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="economic_data",
+ *     indexes={
+ *         @ORM\Index(name="FK_economic_data_collectivity", columns={"id_collectivity"}),
+ *         @ORM\Index(name="IDX_21E83CB28DEE6016", columns={"id_country"})
+ *     },
+ *     uniqueConstraints={@ORM\UniqueConstraint(
+ *             name="id_country_id_collectivity_date_of_informations",
+ *             columns={"id_country","id_collectivity","date_of_informations"}
+ *         )}
+ * )
+ */
+class EconomicData
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_economic_data", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idEconomicData;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date_of_informations")
+     */
+    private $dateOfInformations;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="private_investment")
+     */
+    private $privateInvestment;
+
+    /**
+     * @ORM\Column(
+     *     type="float",
+     *     nullable=true,
+     *     precision=10,
+     *     scale=0,
+     *     name="public_investment",
+     *     options={"comment":"somme de  foreign_direct_investment et national_investments"}
+     * )
+     */
+    private $publicInvestment;
+
+    /**
+     * @ORM\Column(
+     *     type="float",
+     *     nullable=true,
+     *     precision=10,
+     *     scale=0,
+     *     options={"comment":"somme de id_economic_data et public_investment"}
+     * )
+     */
+    private $investment;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="foreign_direct_investment")
+     */
+    private $foreignDirectInvestment;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="national_investments")
+     */
+    private $nationalInvestments;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="price_index")
+     */
+    private $priceIndex;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="national_price_index")
+     */
+    private $nationalPriceIndex;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="harmonised_price_index")
+     */
+    private $harmonisedPriceIndex;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="debt_level")
+     */
+    private $debtLevel;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="publicly_issued_debt")
+     */
+    private $publiclyIssuedDebt;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="foreign_international_aid")
+     */
+    private $foreignInternationalAid;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="fiscal_revenue")
+     */
+    private $fiscalRevenue;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="public_expenses")
+     */
+    private $publicExpenses;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="average_income_level")
+     */
+    private $averageIncomeLevel;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="minimum_wage_level")
+     */
+    private $minimumWageLevel;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="purchasing_power_parity")
+     */
+    private $purchasingPowerParity;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="average_savings_level")
+     */
+    private $averageSavingsLevel;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, name="top_10_importing_industrie", options={})
+     */
+    private $top10ImportingIndustrie;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, name="top_10_exporting_industrie", options={})
+     */
+    private $top10ExportingIndustrie;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, name="top_10_exported_goods", options={})
+     */
+    private $top10ExportedGoods;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, name="top_10_imported_goods", options={})
+     */
+    private $top10ImportedGoods;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $export;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $import;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Collectivity", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_collectivity", referencedColumnName="id_collectivity")
+     */
+    private $idCollectivity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Country", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_country", referencedColumnName="id_country")
+     */
+    private $idCountry;
+}

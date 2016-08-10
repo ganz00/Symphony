@@ -14,7 +14,23 @@
         graph(arr);
     </script>
     <div class="col-lg-5 col-xs-5">
-        {{ dump(result) }}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>date</th> 
+                    <th>valeur</th>
+                </tr>
+            </thead>
+        <tbody>
+            {% for key,res in result %}
+			<tr>
+	           		<td>{{ key }}</td>
+				<td>{{ res }}</td>
+			</tr>
+							
+	{% endfor %}
+        </tbody>
+        </table>
     </div>
     <div class="col-lg-7 col-xs-7">
             <div id="chart1"> </div>

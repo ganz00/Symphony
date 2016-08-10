@@ -1,10 +1,17 @@
 {# src/Heebari/dataBundle/Resources/views/result.html.twig #}
 {% extends "@template/result.html.twig" %}
 {%block titre %}
-    <h2>{{ valeur | lower }} : {{ group1 | raw }} </h2>
 {% endblock titre %}
 {% block resultat %}
-    
+    {{ donnee["pays"] |upper }}
+    monaie : {{ donnee["monaie"].currency }}
+    données economique
+    {{dump(donnee["economic_indic"])}} 
+     {{dump(donnee["economic_data"])}} 
+    données demographique
+     {{dump(donnee["parametre_population"])}} 
+      {{dump(donnee["distrib_population"])}} 
+     
     
 {% endblock resultat %}
 {% block Script %} 

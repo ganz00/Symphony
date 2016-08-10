@@ -1,0 +1,71 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(
+ *     name="income_statement",
+ *     indexes={@ORM\Index(name="IDX_8740FF829122A03F", columns={"id_company"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="id_company_date_of_information", columns={"id_company","date_of_information"})}
+ * )
+ */
+class IncomeStatement
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_income_statement", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idIncomeStatement;
+
+    /**
+     * @ORM\Column(type="date", nullable=false, name="date_of_information")
+     */
+    private $dateOfInformation;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="income_statement")
+     */
+    private $incomeStatement;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $sales;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="cost_of_good_sold")
+     */
+    private $costOfGoodSold;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="gross_profit")
+     */
+    private $grossProfit;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="selling_administrative")
+     */
+    private $sellingAdministrative;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="depreciation_and_amortization")
+     */
+    private $depreciationAndAmortization;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0)
+     */
+    private $ebit;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, precision=10, scale=0, name="interest_and_financial_charges")
+     */
+    private $interestAndFinancialCharges;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Company", orphanRemoval=false)
+     * @ORM\JoinColumn(name="id_company", referencedColumnName="id_company")
+     */
+    private $idCompany;
+}

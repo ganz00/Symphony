@@ -1,29 +1,29 @@
 heebaridata_homepage:
     path:     /Heebari
     defaults: { _controller: HeebaridataBundle:Default:index }
-    
-heebaridata_graph:
-    path:     /Heebari/seach/{country}+{name}+{debut}+{fin}
-    defaults:  {_controller: HeebaridataBundle:Seach:seachgraph}
-    requirements:
-               debut:   \d{4}
-               fin:   \d{4}
-               
-heebaridata_seachist:
-    path:     /Heebari/seach/{country}+{motcle1}+{year}
-    defaults:  {_controller: HeebaridataBundle:Seach:seachist}
-    requirements:
-               year:   \d{4}
-               
-heebaridata_seachsimple:
-    path:     /Heebari/seach/{motcle1}+{year}
-    defaults: { _controller: HeebaridataBundle:Seach:seach }
-    requirements:
-        year:   \d{4}
         
+heebaridata_crossseach2:
+    path:     /Heebari/seach/{pays1}-{pays2}-{pays3}/{cle}
+    defaults: 
+         _controller: HeebaridataBundle:CrossSeach:Manycountry 
+    requirements:
+        
+heebaridata_crossseach:
+    path:     /Heebari/seach/{pays1}-{pays2}/{cle}
+    defaults: 
+         _controller: HeebaridataBundle:CrossSeach:Manycountry 
+    requirements:
+        
+heebaridata_seachdefault:
+    path:     /Heebari/seach/{chaine}
+    defaults: { _controller: HeebaridataBundle:Default:Seach }
+    
 heebaridata_goseach:
     path:     /Heebari/seach
     defaults: { _controller: HeebaridataBundle:Seach:go }
+    
+    
+    
     
     
 fos_user_security:

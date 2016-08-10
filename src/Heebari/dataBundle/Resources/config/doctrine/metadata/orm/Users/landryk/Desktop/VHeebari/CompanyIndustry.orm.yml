@@ -1,0 +1,21 @@
+<?php
+use Doctrine\ORM\Mapping AS ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="company_industry")
+ */
+class CompanyIndustry
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id_company_industry", options={})
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCompanyIndustry;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false, name="industry_name", options={"fixed":false})
+     */
+    private $industryName;
+}

@@ -25,6 +25,12 @@ class Groupemotclef
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $entity;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $roadto;
 
     /**
      * @ORM\OneToMany(targetEntity="Heebari\dataBundle\Entity\Motclef", mappedBy="groupemotclef",cascade={"persist"})
@@ -128,5 +134,29 @@ class Groupemotclef
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Set roadto
+     *
+     * @param string $roadto
+     *
+     * @return Groupemotclef
+     */
+    public function setRoadto($roadto)
+    {
+        $this->roadto = $roadto;
+
+        return $this;
+    }
+
+    /**
+     * Get roadto
+     *
+     * @return string
+     */
+    public function getRoadto()
+    {
+        return $this->roadto;
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EconomicIndicator
  *
  * @ORM\Table(name="economic_indicator", uniqueConstraints={@ORM\UniqueConstraint(name="id_economic_data_date_of_information", columns={"id_economic_data", "date_of_information"})}, indexes={@ORM\Index(name="IDX_CCCAAEDC9FC0EDD7", columns={"id_economic_data"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Heebari\dataBundle\Entity\EconomicIndicatorRepository")
  */
 class EconomicIndicator
 {
@@ -24,7 +24,7 @@ class EconomicIndicator
     /**
      * @var integer
      *
-     * @ORM\Column(name="date_of_information", type="integer", nullable=false)
+     * @ORM\Column(name="date_of_information", type="date", nullable=false)
      */
     private $dateOfInformation;
 

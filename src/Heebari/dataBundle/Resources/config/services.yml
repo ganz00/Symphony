@@ -1,3 +1,4 @@
+ # src/Heebari/dataBundle/Resources/config/services.yml
 services:
     Heebari_data.user_registration:
         class: Heebari\dataBundle\EventListener\RegisterListener
@@ -9,4 +10,17 @@ services:
         class: Heebari\dataBundle\Form\RegistrationType
         tags:
             - { name: form.type, alias: Heebari_user_registration }
-      
+   
+
+    Heebari_data.motclef:
+        class: Heebari\dataBundle\Motcle\Gmotcle
+        arguments: [ "@doctrine.orm.entity_manager" ]
+        
+        
+    Heebari_data.country:
+        class: Heebari\dataBundle\Motcle\countrydata
+        arguments: [ "@doctrine.orm.entity_manager", "@Heebari_data.motclef"]
+        
+    Heebari_data.gestion:
+        class: Heebari\dataBundle\Motcle\gestion
+        arguments: [ "@doctrine.orm.entity_manager", "@Heebari_data.motclef"]

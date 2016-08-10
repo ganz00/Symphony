@@ -7,6 +7,8 @@ use Heebari\dataBundle\Entity\Motclef;
 use Heebari\dataBundle\Entity\RelatedKey;
 use Heebari\dataBundle\Entity\MotclefRepository;
 use Heebari\dataBundle\Entity;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController extends Controller {
 
@@ -18,9 +20,11 @@ class DefaultController extends Controller {
 
     public function seachAction($chaine) {
         $Gmotclef = $this->container->get('Heebari_data.motclef');
+        $gestion = $this->container->get('Heebari_data.gestion');
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('HeebaridataBundle:Motclef');
         $motclebase = $repo->monfindall();
+        
         if (strlen($chaine) < 3)
             echo 'petit';
         //TODO:donner info sur erreur mot clef in valide
@@ -31,140 +35,109 @@ class DefaultController extends Controller {
         $motcle = preg_split("/[-]+/", $keywords[0]);
         $val = preg_match($pattern, $motcle[0]);
         if ($val == 1) {
-            $motcle = $this->filter($motcle, '/[A-Za-z]{2,}/');
-
+            $motcle = $gestion->filter($motcle, '/[A-Za-z]{2,}/');
             $date = preg_split("/[-]+/", $keywords[1]);
             if (strlen($date[0]) < 4)
                 $date = array();
-            $result = $this->check($motclebase, $motcle);
+            $result = $gestion->check($motclebase, $motcle);
             $valid = $result[0];
-            $valid = $this->remove($valid);
+            $valid = $gestion->remove($valid);
             $teste = $result[1];
-            $teste = $this->remove($teste);
-            $operation = $this->filterkey($teste);
+            $teste = $gestion->remove($teste);
+            $operation = $gestion->filterkey($teste);
             $pays = $Gmotclef->estpays($teste);
-            
+
             if (!$pays)
-                echo 'faux';
-            //TODO:donner info sur erreur au moin un pays pour ce type de recherche
-            //return;
+             {
+                $response = new Response('erreur au moin un pays pour ce type de recherche.', Response::HTTP_NOT_FOUND);
+                return $response;
+            }
             if (sizeof($pays) > 3)
-                echo 'grand  ';
-            //TODO:donner info sur erreur pays < = 3
-            //return;
+             {
+                $response = new Response('3 pays maximum.', Response::HTTP_NOT_FOUND);
+                return $response;
+            }
         }else {
             $date = preg_split("/[-]+/", $keywords[0]);
-            if (sizeof($date > 1))
-                echo 'grand date';
-            //TODO:donner info sur erreur juste une date pour se type de recherche
-            //return;
+            if (sizeof($date > 1)){
+                $response = new Response('erreur juste une date pour se type de recherche.', Response::HTTP_NOT_FOUND);
+                return $response;
+            }
         }
-
-
         return $this->redir($date, $pays, $valid, $operation);
     }
 
-    public function redir($date, $pays, $motcle, $operation) {
+    public function responser($pays, $controller, $motcle = NULL, $date1 = NULL, $date2 = NULL) {
+        if ($date2 == NULL) {
+            return $response = $this->forward($controller, array(
+                'pays' => $pays,
+                'keys' => $motcle,
+                'year' => $date1
+            ));
+        } else {
+            return $response = $this->forward($controller, array(
+                'pays' => $pays,
+                'keys' => $motcle,
+                'debut' => $date1,
+                'fin' => $date2
+           ));
+        }    }
+
+    public function redirpart($b, $c, $date, $pays, $motcle) {
+        if ($b == 0 && $c == 0) {
+            return $this->responser($pays[0], 'HeebaridataBundle:Simpleseach:onecountry');
+        }
+        if ($b > 0 && $c == 0) {
+            return $this->responser($pays[0], 'HeebaridataBundle:Simpleseach:onecountrykeys', $motcle);
+        }
+        if ($b > 0 && $c == 1) {
+            return $this->responser($pays[0], 'HeebaridataBundle:Simpleseach:onecountryKeysdate', $motcle, $date[0]);
+        }
+        //TODO
+        if ($b > 0 && $c > 1) {
+            return $this->responser($pays[0], 'HeebaridataBundle:Simpleseach:onecountryKeysdates', $motcle, $date[0], $date[1]);
+        }
+        //TODO
+        if ($b == 0 && $c == 1) {
+            return $this->responser($pays[0], 'HeebaridataBundle:Simpleseach:onecountrydate',NULL, $date[0]);
+        }
+        if ($b == 0 && $c == 2) {
+            return $this->responser($pays[0], 'HeebaridataBundle:Simpleseach:onecountrydates',NULL, $date[0], $date[1]);
+        }
+        return $this->render('HeebaridataBundle:index:layout.html.twig');
+    }
+
+    public function redir($date, $pays, $motcle) {
         $a = sizeof($pays);
         $b = sizeof($motcle);
         $c = sizeof($date);
+        
         switch ($a) {
             case 1:
-                if ($b == 0 && $c == 0) {
-                    $response = $this->forward('HeebaridataBundle:Simpleseach:onecountry', array(
-                        'pays' => $pays[0]
-                    ));
-                    return $response;
-                }
-                if ($b > 0 && $c==0) {
-                    $response = $this->forward('HeebaridataBundle:Simpleseach:onecountrykeys', array(
-                        'pays' => $pays[0],
-                        'keys' => $motcle
-                    ));
-                    
-                    return $response;
-                }
-                if ($b > 0 && $c==1) {
-                    $response = $this->forward('HeebaridataBundle:Simpleseach:onecountryKeysdate', array(
-                        'pays' => $pays[0],
-                        'keys' => $motcle,
-                        'year' => $date[0]
-                    ));
-                    
-                    return $response;
-                }
-                //TODO
-                if ($b > 0 && $c>1) {
-                    $response = $this->forward('HeebaridataBundle:Simpleseach:onecountryKeysdates', array(
-                        'pays' => $pays[0],
-                        'keys' => $motcle,
-                        'year' => $date
-                    ));
-                    
-                    return $response;
-                }
-                //TODO
-                if ($b == 0 && $c==1) {
-                    $response = $this->forward('HeebaridataBundle:Simpleseach:onecountrydate', array(
-                        'pays' => $pays[0],
-                        'keys' => $motcle,
-                        'year' => $date
-                    ));
-                    
-                    return $response;
-                }
-                if ($b == 0 && $c==1) {
-                    $response = $this->forward('HeebaridataBundle:Simpleseach:onecountrydates', array(
-                        'pays' => $pays[0],
-                        'keys' => $motcle,
-                        'year' => $date
-                    ));
-                    
-                    return $response;
-                }
-                return $this->render('HeebaridataBundle:index:layout.html.twig');
+                return $this->redirpart($b, $c, $date, $pays, $motcle);
+                break;
             case 2:
-                return $this->render('HeebaridataBundle:index:layout.html.twig');
+                $gestion = $this->container->get('Heebari_data.gestion');
+                $session = $this->get('session');
+                $session->set('date' , $date);
+                $session->set('motcle' , $motcle);
+                $session->set('pays' , $pays);
+               return $this->redirect($this->generateUrl('heebaridata_crossseach',
+                        ["pays1" => $pays[0]->getCountryName(),"pays2" => $pays[1]->getCountryName(),'cle' =>  'all']) );
+                break;
             case 3:
+                $gestion = $this->container->get('Heebari_data.gestion');
+                $session = $this->get('session');
+                $session->set('date' , $date);
+                $session->set('pays' , $pays);
+               return $this->redirect($this->generateUrl('heebaridata_crossseach2',
+                        ["pays1" => $pays[0]->getCountryName(),"pays2" => $pays[1]->getCountryName(),"pays3" => $pays[2]->getCountryName(),'cle' =>  'all']) );
+                break;
+            default :
                 return $this->render('HeebaridataBundle:index:layout.html.twig');
-
-        }
-    }
-
-    public function check($array, $url) {
-        $retour = array();
-        $retour2 = array();
-        $trouve = false;
-        foreach ($url as $value) {
-            foreach ($array as $key => $valu) {
-                if ($key == $value) {
-                    array_push($retour, $key);
-                    $trouve = true;
-                } else {
-                    if (in_array($value, $valu, true)) {
-                        array_push($retour, $key);
-                        $trouve = true;
-                    }
-                }
-            }
-            if (!$trouve)
-                array_push($retour2, $value);
-            $trouve = false;
-        }
-
-        return ([$retour, $retour2]);
-    }
-
-    public function filter($param, $pattern) {
-        $retour = array();
-        foreach ($param as $value) {
-            $val = preg_match($pattern, $value, $matches);
-            if ($val == 1 && strlen($matches[0]) > 2)
-                array_push($retour, $matches[0]);
-        }
-        return $retour;
-    }
-
+                break;
+        }    }
+        
     public function format($param) {
         ?>
         <pre>
@@ -172,23 +145,6 @@ class DefaultController extends Controller {
         </pre>
         <?php
     }
-
-    public function remove($param) {
-        $cle = array();
-        foreach ($param as $key => $val) {
-            $cle[$val] = true;
-        }
-        $cle = array_keys($cle);
-        return $cle;
-    }
-
-    public function filterkey($param) {
-        $retour = array();
-        foreach ($param as $value) {
-            if (in_array($value, $this->Generalkey, true))
-                array_push($retour, $value);
-        }
-        return $retour;
-    }
-
 }
+//TOTO verifier NE et Population growth 
+//creer le extension twig pour afficher tableau info

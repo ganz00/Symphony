@@ -57,9 +57,17 @@
                 <div class="aside_item "><a href="#">Historique recherche</a></div>
             </div>
             {% block content %}
-
+               {% if liste is defined %}
+                <h3>Liste des mots clé</h3>
+                <ul>
+                    {% for mot in liste %}
+                        <li>{{ mot.value }}</li>
+                        {% endfor %}
+                </ul> 
+            {% endif %}
             {% endblock content %}
         </div>
+        
     <div class="footer">Copyright Heebari 2016 - all right reserved</div>
 </div>
 {% endblock page_content %}
