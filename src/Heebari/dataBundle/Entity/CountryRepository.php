@@ -39,11 +39,12 @@ class CountryRepository extends EntityRepository {
             }
         }
         $querys = $querys . ' FROM HeebaridataBundle:EconomicData e Where e.idCountry = :id';
-        if ($debut != NULL) {
-            $querys = $querys . ' and e.dateOfInformation > :debut';
-        }if ($fin != NULL) {
-            $querys = $querys . ' and e.dateOfInformation < :fin';
-        }
+        if($fin != NULL){
+              $querys = $querys.' and e.dateOfInformation > :debut';
+              $querys = $querys.' and e.dateOfInformation < :fin';
+            }if($debut!=NULL){
+              $querys = $querys.' and e.dateOfInformation > :debut';
+            }
         $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
         if ($debut != NULL) {
             $queryb->setParameter('debut', $debut);
@@ -93,7 +94,8 @@ class CountryRepository extends EntityRepository {
 
     public function getNE($id, $fields = NULL, $debut = NULL, $fin = NULL) {
         $data = $this->getEconomicData($id, ["import", "export"], $debut, $fin);
-        foreach ($data as $key => $value) {
+        $NE = array();
+        foreach ($data as  $value) {
             $NE[$value["dateOfInformation"]->format('Y')] = $value["export"] - $value["import"];
         }
         return $NE;
@@ -108,10 +110,11 @@ class CountryRepository extends EntityRepository {
           }
         }
           $querys = $querys.' FROM HeebaridataBundle:EconomicIndicator e INNER JOIN e.idEconomicData ed WITH ed.idCountry = :id';
-            if($debut != NULL){
+            if($fin != NULL){
               $querys = $querys.' and e.dateOfInformation > :debut';
-            }if($fin!=NULL){
               $querys = $querys.' and e.dateOfInformation < :fin';
+            }if($debut!=NULL){
+              $querys = $querys.' and e.dateOfInformation > :debut';
             }
          $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
          if($debut != NULL){
@@ -127,14 +130,15 @@ class CountryRepository extends EntityRepository {
         $NE = $this->getNE($id, NULL, $debut, $fin);
         $GE = $this->getEconomicData($id, ["investment", "publicExpenses"], $debut, $fin);
         $cons = $this->getEconomicIndicator($id, ["nationalConsumptionRate"], $debut, $fin);
-        $GE = $GE[0];
-        $cons = $cons[0];
- 
+         isset($GE[0]) ? $GE = $GE[0]:$GE = [];
+         isset($cons[0]) ? $cons = $cons[0]:$cons = [];
+        $retour = [];
         foreach ($NE as $key => $value) {
            
            $retour[$key] = $value + $GE["investment"] + $GE["publicExpenses"] + $cons["nationalConsumptionRate"];
         }
         return $retour;
     }
+    
 
 }

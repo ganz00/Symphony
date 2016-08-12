@@ -45,6 +45,24 @@ class countrydata {
         $pays = $this->em->getRepository("HeebaridataBundle:Country")->findOneBy(array('countryName' => $country));
         return $pays;
     }
+    public function getcountrydata($pays,$debut=null,$fin=null){       
+        $data = $pays->getIdPopulationParameter()->getIdPopulationParameter();
+        $company = $this->em->getRepository("HeebaridataBundle:Country")->getCompany($pays->getIdCountry(),"all",$debut,$fin);
+        $economicdata = $this->em->getRepository("HeebaridataBundle:Country")->getEconomicData($pays->getIdCountry(),"all",$debut,$fin);
+        $economicindic = $this->em->getRepository("HeebaridataBundle:EconomicData")->getEconomicIndicator($pays->getIdCountry(),"all",$debut,$fin);
+        $PopulationParameter = $this->em->getRepository("HeebaridataBundle:Country")->getPopulationParameter($pays->getIdCountry(),"all",$debut,$fin);
+        $populationDistrib = $this->em->getRepository("HeebaridataBundle:PopulationParameter")->getPopulationDistribution($data,"all",$debut,$fin);
+        $Collectivity = $this->em->getRepository("HeebaridataBundle:Country")->getCollectivity($pays->getIdCountry(),"all",$debut,$fin);
+        $Currency = $this->em->getRepository("HeebaridataBundle:Country")->getCurrency($pays->getIdCountry(),"all",$debut,$fin);
+        return array("donnee" => array("pays" => $pays, 
+                                        "monaie" => $Currency,
+                                        "company" =>$company,
+                                        "collectivity" => $Collectivity,
+                                        "parametre_population" => $PopulationParameter,
+                                        "distrib_population" =>$populationDistrib,
+                                        "economic_data" =>$economicdata,
+                                        "economic_indic"=>$economicindic));
+    }
 
     
 

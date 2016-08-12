@@ -14,13 +14,17 @@ heebaridata_crossseach:
          _controller: HeebaridataBundle:CrossSeach:Manycountry 
     requirements:
         
+heebaridata_calculateseach:
+    path:     /Heebari/seach/calculate/{chaine}
+    defaults: { _controller: HeebaridataBundle:calculateseach:oneper}
+    
 heebaridata_seachdefault:
     path:     /Heebari/seach/{chaine}
-    defaults: { _controller: HeebaridataBundle:Default:Seach }
+    defaults: { _controller: HeebaridataBundle:Default:seach }
     
 heebaridata_goseach:
     path:     /Heebari/seach
-    defaults: { _controller: HeebaridataBundle:Seach:go }
+    defaults: { _controller: HeebaridataBundle:Default:go }
     
     
     

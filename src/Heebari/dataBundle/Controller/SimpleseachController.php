@@ -22,44 +22,38 @@ use Symfony\Component\Debug\Exception\UndefinedMethodException;
 //TOTO: creer extention twig pour affichage tableaux
 class SimpleseachController extends Controller {
 
-     public function onecountryAction($pays) {
-         $gestion = $this->container->get('Heebari_data.gestion');
-         $data = $gestion->getcountrydata($pays);
+     public function onecountryAction($pays,$motcle=null,$debut=null,$fin=null) {
+         $gestion = $this->container->get('Heebari_data.country');
+         $data = $gestion->getcountrydata($pays,$debut,$fin);
          return $this->render('@template/Testresult.html.twig', $data);
     }
-    public function onecountrydateAction($pays,$year) {
-        $gestion = $this->container->get('Heebari_data.gestion');
-         $data = $gestion->getcountrydata($pays,$year);
+    public function onecountrydateAction($pays,$motcle=null,$debut=null,$fin=null) {
+        $gestion = $this->container->get('Heebari_data.country');
+         $data = $gestion->getcountrydata($pays,$debut,$fin);
         return $this->render('@template/Testresult.html.twig', $data);
     }
-    public function onecountrydatesAction($pays,$debut,$fin) {
-        $gestion = $this->container->get('Heebari_data.gestion');
+    public function onecountrydatesAction($pays,$motcle=null,$debut=null,$fin=null) {
+        $gestion = $this->container->get('Heebari_data.country');
          $data = $gestion->getcountrydata($pays,$debut,$fin);
         return $this->render('@template/Testresult.html.twig', $data);
     }
 
-    public function onecountrykeysAction($pays, $keys) {
-        $serv = $this->container->get('Heebari_data.country');
-        $debut = new \Datetime((intval(date('Y')) - 10) . '-01-01');
-        $fin = new \Datetime(intval(date('Y')) . '-12-31');
+    public function onecountrykeysAction($pays,$motcle,$debut,$fin) {
         $serv1 = $this->container->get('Heebari_data.motclef');
-        $info = $serv1->getentity($keys);
+        $info = $serv1->getentity($motcle);
         $retour = array();
+        $i = 0;
         foreach ($info as $key => $value) {
             $a = explode(" ", $value[0]);
             $res = $this->responsebuilder($pays,$key,$value[1],$a, $debut, $fin,FALSE);
-            
-            array_push($retour, $res);
+            $retour[$i]= $res;
+            $i++;
         } 
         return $this->render('@template/Testresult.html.twig', array("donnee" => $retour));
        }
-    public function onecountryKeysdateAction($pays, $keys , $year) {
-        
-        $serv = $this->container->get('Heebari_data.country');
-        $debut = new \Datetime($year. '-01-01');
-        $fin = new \Datetime($year. '-12-31');
+    public function onecountryKeysdateAction($pays,$motcle,$debut,$fin) {        
         $serv1 = $this->container->get('Heebari_data.motclef');
-        $info = $serv1->getentity($keys);
+        $info = $serv1->getentity($motcle);
         $retour = array();
         $i = 0;
         foreach ($info as $key => $value) {
@@ -71,12 +65,9 @@ class SimpleseachController extends Controller {
         return $this->render('@template/Testresult.html.twig', array("donnee" => $retour));
     }
 
-public function onecountryKeysdatesAction($pays, $keys , $debut,$fin) {
-        $serv = $this->container->get('Heebari_data.country');
-        $debut = new \Datetime($debut. '-01-01');
-        $fin = new \Datetime($fin. '-12-31');
+public function onecountryKeysdatesAction($pays, $motcle , $debut,$fin) {
         $serv1 = $this->container->get('Heebari_data.motclef');
-        $info = $serv1->getentity($keys);
+        $info = $serv1->getentity($motcle);
         $retour = array();
         $i = 0;
         foreach ($info as $key => $value) {

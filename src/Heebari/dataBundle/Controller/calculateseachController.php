@@ -20,8 +20,16 @@ use Symfony\Component\Security\core\Exception;
 use Symfony\Component\Debug\Exception\UndefinedMethodException;
 //ExceptionHandler::register();
 
-class SeachController extends Controller {
+class calculateseachController extends Controller {
 
-    private $Generalkey = ["Cross", "series", "per", "growth", "Average", "level", "owning"];
-    private $populationKey = ["head"];
+    private $Generalkey = ["per head", "level", "owning","density","vs"];
+    private $nbdate;
+    
+    
+    public function oneperAction($chaine) {
+     $session = $this->get('session');
+     $valeur = $session->get('valeur');  
+     return $this->render('@template/Testresult.html.twig', ["donnee" => $valeur]);
+
+    }
 }

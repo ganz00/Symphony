@@ -23,4 +23,8 @@ services:
         
     Heebari_data.gestion:
         class: Heebari\dataBundle\Motcle\gestion
-        arguments: [ "@doctrine.orm.entity_manager", "@Heebari_data.motclef"]
+        arguments: ["@Heebari_data.motclef"]
+        
+    Heebari_data.Keyrecognitor:
+        class: Heebari\dataBundle\Motcle\Keyrecognitor
+        arguments: ["@Heebari_data.motclef"]

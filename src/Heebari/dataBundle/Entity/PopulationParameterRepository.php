@@ -23,11 +23,12 @@ class PopulationParameterRepository extends EntityRepository {
         }
           $querys = $querys.' FROM HeebaridataBundle:PopulationParameter pp INNER JOIN '
                   . 'pp.idPopulationDistribution PD WITH pp.idPopulationParameter = :id';
-           if($debut != NULL){
+           if($fin != NULL){
               $querys = $querys.' and pp.dateOfInformation > :debut';
-          }if($fin!=NULL){
               $querys = $querys.' and pp.dateOfInformation < :fin';
-          }
+            }if($debut!=NULL){
+              $querys = $querys.' and pp.dateOfInformation > :debut';
+            }
          $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
          if($debut != NULL){
               $queryb->setParameter('debut', $debut);
@@ -38,7 +39,9 @@ class PopulationParameterRepository extends EntityRepository {
          return $results;
     }
      public function getPopulationgrowth($id,$fields=NULL, $debut=NULL, $fin=NULL) {
+         
         $data = $this->getPopulationDistribution($id, ["mortalityRate","birthRate"], $debut, $fin);
+        $pg = array();
         foreach ($data as $key => $value) {
            $pg[$key] = $value["birthRate"]-$value["mortalityRate"];
         }
