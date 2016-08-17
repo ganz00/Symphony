@@ -23,8 +23,8 @@ class Gmotcle {
     }
 
     public function getentity($names) {
+        $retour = array();
         if (is_array($names)) {
-            $retour = array();
             foreach ($names as $name) {
                 $motcle = $this->em->getRepository("HeebaridataBundle:Motclef")->findOneBy(array('value' => $name));
                 $field = $motcle->getField();
@@ -33,7 +33,7 @@ class Gmotcle {
                 $rouato = $group->getRoadto();
                 array_push($retour, [$field, $entite, $rouato]);
             }
-            $retour = $this->classer($retour);
+            
         } else {
             $motcle = $this->em->getRepository("HeebaridataBundle:Motclef")->findOneBy(array('value' => $names));
             $field = $motcle->getField();
@@ -42,8 +42,14 @@ class Gmotcle {
             $rouato = $group->getRoadto();
             $retour = [$field, $entite, $rouato];
         }
-
+        $retour = $this->classer($retour);
         return $retour;
+    }
+    
+    public function getfield($names) {
+            $motcle = $this->em->getRepository("HeebaridataBundle:Motclef")->findOneBy(array('value' => $names));
+            return $motcle->getField();
+           
     }
 
     public function exist($name) {

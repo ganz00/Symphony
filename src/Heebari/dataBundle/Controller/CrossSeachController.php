@@ -30,8 +30,9 @@ class CrossSeachController extends Controller {
                 $retour[$key][$pays[2]->getCountryName()] = $res3;
             }
             //vider la session apres
+            $retour = ["donnee" => $retour];
         }
-        return $this->render('@template/Testresult.html.twig',["donnee" => $retour]);
+        return $this->render('@template/Testresult.html.twig',$retour);
     }
     
      public function ManycountryAction($pays1,$pays2,$pays3=NULL) {
@@ -59,18 +60,15 @@ class CrossSeachController extends Controller {
         $pay2 = $gestion->getcountrydata($country[1],$debut,$fin);
         $pay1 = $pay1['donnee'];
         $pay2 = $pay2['donnee'];
-        $pay3 = array();
         if ($nb == 3) {
+        $pay3 = array();
         $pay3 = $gestion->getcountrydata($country[2],$debut,$fin);
         $pay3 = $pay3['donnee'];
         }
-        foreach ($pay1 as $key => $value) {
-            $retour[$key] = [$pays1 => $value,$pays2=>$pay2[$key]];
-            if ($pays3!=NULL) {
-                    $retour[$key][$pays3] = $pay3[$key];
-                }
-        }
-        return $this->render('@template/Testresult.html.twig',["donnee" => $retour]);
+        
+        $serv = $this->container->get('Heebari_data.gestion');
+        $retour = $serv->formatmany($pay1,$pay2,$pay3);
+        return $this->render('@template/Testresult.html.twig',["donnee"=>$retour]);
     }
                 
                 
@@ -79,7 +77,6 @@ class CrossSeachController extends Controller {
         $em = $this->getDoctrine()->getManager();
         switch ($roadto) {
             case 'F':
-                //$resultat = $em->getRepository("HeebaridataBundle:" . $table)->findforMany($pays->getIdCountry(), $debut, $fin, $keys);
                 $getter = 'get'.$table;
                 $resultat = $em->getRepository("HeebaridataBundle:Country")->$getter($pays->getIdCountry(), $keys,$debut, $fin );
                 $Res = array();

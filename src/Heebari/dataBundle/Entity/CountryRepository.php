@@ -28,6 +28,16 @@ class CountryRepository extends EntityRepository {
         $results = $queryb->getArrayResult();
         return $results;
     }
+    public function getcountryname() {
+        $query = "SELECT c.countryName FROM HeebaridataBundle:country c";
+        $querys = $this->_em->createQuery($query);
+        $results = $querys->getArrayResult();
+        $retour = array();
+        foreach ($results as $value) {
+            array_push($retour, $value["countryName"]);
+        }
+        return $retour;
+    }
 
     public function getEconomicData($id, $fields = "all", $debut = NULL, $fin = NULL) {
         if ($fields == "all")
@@ -59,7 +69,7 @@ class CountryRepository extends EntityRepository {
 
     public function getPopulationParameter($id, $fields = "all", $debut = NULL, $fin = NULL) {
         if ($fields == "all")
-            $querys = 'SELECT p.dateOfInformation';
+            $querys = 'SELECT p.dateOfInformation,p.population,p.averageWealth,p.density,p.fecondityRate,p.literacyRate';
         else {
             $querys = 'SELECT p.dateOfInformation';
             foreach ($fields as $field) {
@@ -84,7 +94,7 @@ class CountryRepository extends EntityRepository {
 
     //TODO:rajouter fiel a la main
     public function getCurrency($id, $fields = NULL, $debut = NULL, $fin = NULL) {
-        $querys = 'SELECT cu.idCurrency';
+        $querys = 'SELECT cu.idCurrency,cu.currency,cu.currencyCode';
         $querys = $querys . ' FROM HeebaridataBundle:Country c INNER JOIN c.idCurrency cu'
                 . ' WITH c.idCountry = :id';
         $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
@@ -95,8 +105,9 @@ class CountryRepository extends EntityRepository {
     public function getNE($id, $fields = NULL, $debut = NULL, $fin = NULL) {
         $data = $this->getEconomicData($id, ["import", "export"], $debut, $fin);
         $NE = array();
-        foreach ($data as  $value) {
-            $NE[$value["dateOfInformation"]->format('Y')] = $value["export"] - $value["import"];
+        foreach ($data as $key => $value) {
+            $NE[$key]["NE"] = $value["export"] - $value["import"];
+            $NE[$key]["dateOfInformation"] = $value["dateOfInformation"];
         }
         return $NE;
     }
@@ -129,15 +140,31 @@ class CountryRepository extends EntityRepository {
     public function getGDP($id, $fields = NULL, $debut = NULL, $fin = NULL) {
         $NE = $this->getNE($id, NULL, $debut, $fin);
         $GE = $this->getEconomicData($id, ["investment", "publicExpenses"], $debut, $fin);
+        
         $cons = $this->getEconomicIndicator($id, ["nationalConsumptionRate"], $debut, $fin);
          isset($GE[0]) ? $GE = $GE[0]:$GE = [];
          isset($cons[0]) ? $cons = $cons[0]:$cons = [];
         $retour = [];
         foreach ($NE as $key => $value) {
-           
-           $retour[$key] = $value + $GE["investment"] + $GE["publicExpenses"] + $cons["nationalConsumptionRate"];
+           $retour[$key]["dateOfInformation"] = $value["dateOfInformation"];
+           $retour[$key]["GDP"] = $value["NE"] + $GE["investment"] + $GE["publicExpenses"] + $cons["nationalConsumptionRate"];
         }
         return $retour;
+    }
+    public function getbankingRateperhead($id, $fields = NULL, $debut = NULL, $fin = NULL) {
+        $query  ="SELECT pp.population,pd.bankingPenetrationRate FROM HeebaridataBundle:Country c INNER JOIN c.idPopulationParameter pp "
+                . " inner join pp.idPopulationDistribution pd "
+                . " WHERE c.idCountry = :id AND pp.idPopulationDistribution = pd.idPopulationDistribution";
+        $queryb = $this->_em->createQuery($query)->setParameter('id', $id);
+        $results = $queryb->getArrayResult();
+        return ["bankingRate_per_head" => $results[0]["bankingPenetrationRate"]/$results[0]["population"]];
+        
+    }
+    public function getgdpperhead($id, $fields = NULL, $debut = NULL, $fin = NULL) {
+       $gdp = $this->getGDP($id, $fields, $debut, $fin);
+    }
+    public function getNEperhead($id, $fields = NULL, $debut = NULL, $fin = NULL) {
+        
     }
     
 

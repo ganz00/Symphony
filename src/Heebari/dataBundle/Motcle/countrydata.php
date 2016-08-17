@@ -31,6 +31,7 @@ class countrydata {
         $pop_param = $pays->getIdPopulationParameter();
         $pop_distrib = new PopulationDistribution();
         $pop_distrib = $pop_param->getIdPopulationDistribution();
+        $pop_distrib = $this->em->getRepository("HeebaridataBundle:PopulationDistribution")->findOneBy(array('IdPopulationDistribution' => $pop_distrib));
         $economicdata = $this->em->getRepository('HeebaridataBundle:EconomicData')->Findfirst($pays->getIdCountry());
         $economicindic = new EconomicIndicator();
         $economicindic = $this->em->getRepository('HeebaridataBundle:EconomicIndicator')->findOneBy(array('idEconomicData' => $economicdata[0]["idEconomicData"]));
@@ -54,14 +55,20 @@ class countrydata {
         $populationDistrib = $this->em->getRepository("HeebaridataBundle:PopulationParameter")->getPopulationDistribution($data,"all",$debut,$fin);
         $Collectivity = $this->em->getRepository("HeebaridataBundle:Country")->getCollectivity($pays->getIdCountry(),"all",$debut,$fin);
         $Currency = $this->em->getRepository("HeebaridataBundle:Country")->getCurrency($pays->getIdCountry(),"all",$debut,$fin);
-        return array("donnee" => array("pays" => $pays, 
+        $gdp = $this->em->getRepository("HeebaridataBundle:Country")->getGDP($pays->getIdCountry(),NULL,$debut,$fin);
+        $NE = $this->em->getRepository("HeebaridataBundle:Country")->getNE($pays->getIdCountry(),null,$debut,$fin);
+        $populatiogrowth  = $this->em->getRepository("HeebaridataBundle:PopulationParameter")->getPopulationgrowth($data,null,$debut,$fin);
+        return array("donnee" => array("pays" => $pays->getcountryName(), 
                                         "monaie" => $Currency,
                                         "company" =>$company,
                                         "collectivity" => $Collectivity,
                                         "parametre_population" => $PopulationParameter,
                                         "distrib_population" =>$populationDistrib,
                                         "economic_data" =>$economicdata,
-                                        "economic_indic"=>$economicindic));
+                                        "economic_indic"=>$economicindic,
+                                        "PIB" => $gdp,
+                                        "Net Export" => $NE,
+                                        "population growth"=> $populatiogrowth));
     }
 
     

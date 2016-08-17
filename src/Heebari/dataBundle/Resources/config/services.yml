@@ -28,3 +28,9 @@ services:
     Heebari_data.Keyrecognitor:
         class: Heebari\dataBundle\Motcle\Keyrecognitor
         arguments: ["@Heebari_data.motclef"]
+        
+    app.twig_extension:
+        class: Heebari\dataBundle\Twig\AppExtension
+        public: false
+        tags:
+            - { name: twig.extension }

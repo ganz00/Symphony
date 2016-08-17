@@ -14,7 +14,9 @@ class PopulationParameterRepository extends EntityRepository {
 
     public function getPopulationDistribution($id,$fields="all", $debut=NULL, $fin=NULL) {
         if($fields == "all")
-            $querys = 'SELECT PD.idPopulationDistribution';
+            $querys = 'SELECT PD.idPopulationDistribution,PD.dateOfInformation,PD.urbanisationRate,PD.activityRate,'
+                . 'PD.unemploymentRate,PD.qualificationLevel,PD.bankingPenetrationRate'
+                . ',PD.lifeExpectancy,PD.mortalityRate,PD.birthRate';
         else{
           $querys = 'SELECT (pp.idPopulationParameter),pp.dateOfInformation';
           foreach ($fields as  $field) {
@@ -39,11 +41,11 @@ class PopulationParameterRepository extends EntityRepository {
          return $results;
     }
      public function getPopulationgrowth($id,$fields=NULL, $debut=NULL, $fin=NULL) {
-         
         $data = $this->getPopulationDistribution($id, ["mortalityRate","birthRate"], $debut, $fin);
         $pg = array();
         foreach ($data as $key => $value) {
-           $pg[$key] = $value["birthRate"]-$value["mortalityRate"];
+           $pg[$key]["Populationgrowth"] = $value["birthRate"]-$value["mortalityRate"];
+           $pg[$key]["dateOfInformation"] = $value["dateOfInformation"];
         }
         
         return $pg;

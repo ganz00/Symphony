@@ -12,22 +12,25 @@ use Doctrine\ORM\EntityManager;
 class Keyrecognitor {
 
     private $G;
-    private $Generalkey = ["per", "head", "level", "owning", "density", "vs"];
+    private $Generalkey = ["per", "head", "level", "owning", "vs"];
+    private $field1 = ["bankingRateperhead","gdpperhead","NEperhead"];
 
     public function __construct(Gmotcle $G) {
         $this->G = $G;
     }
 
     public function seachin($chaine, $chainetab) {
-        $val = $this->findoccur($chainetab);
+        $val = $this->findoccur($chainetab,  $this->Generalkey);
         if (sizeof($val) == 0)
             return false;
         $liste = [];
+        $matches=[];
         foreach ($val as $value) {
             preg_match_all($this->createregex($value), $chaine[0], $matches, PREG_OFFSET_CAPTURE);
             $liste[$value] = $matches[0];
         }
         $last = [];
+        $retenu = [];
         foreach ($liste as $key => $value) {
             foreach ($value as  $value2) {
                 $motcle = preg_split("/[-]+/", $value2[0]);
@@ -38,9 +41,9 @@ class Keyrecognitor {
         return $last;
     }
 
-    public function findoccur($chainetab) {
+    public function findoccur($chainetab,$tab) {
         $retour = array();
-        foreach ($this->Generalkey as $key => $value) {
+        foreach ($tab as $key => $value) {
             $toto = array_search($value, $chainetab);
             if ($toto)
                 array_push($retour, $value);
@@ -56,7 +59,7 @@ class Keyrecognitor {
         $retour = array();
         foreach ($param as $value) {
             if (in_array($value, $this->Generalkey, true))
-                array_push($retour, $value);
+                array_push($retour , $value);
         }
         return $retour;
     }

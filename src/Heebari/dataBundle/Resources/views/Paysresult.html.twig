@@ -3,19 +3,97 @@
 {%block titre %}
 {% endblock titre %}
 {% block resultat %}
-    {{ donnee["pays"] |upper }}
-    monaie : {{ donnee["monaie"].currency }}
-    données economique
-    {{dump(donnee["economic_indic"])}} 
-     {{dump(donnee["economic_data"])}} 
-    données demographique
-     {{dump(donnee["parametre_population"])}} 
-      {{dump(donnee["distrib_population"])}} 
-     
-    
+    <div class="well">
+        <h4>{{ donnee["pays"]|upper }}</h4>
+        <p>Monaie :&nbsp;{{ donnee["monaie"][0]["currency"]}}</p>
+        <p>Population en {{ donnee["parametre_population"][0]["dateOfInformation"]}}&nbsp;:{{ donnee["parametre_population"][0]["population"]}}  </p>
+        <p>Pib  en   {{ donnee["PIB"][0]["dateOfInformation"]}}&nbsp;:{{ donnee["PIB"][0]["GDP"]}} </p>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="well">
+                <h4>pib par habitant</h4>
+                <p></p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="well">
+                <h4>Total investissements</h4>
+                <p>{{donnee["economic_data"][0]["investment"]}} </p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="well">
+                <h4>Imports</h4>
+                <p>{{donnee["economic_data"][0]["import"]}} </p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="well">
+                <h4>Export</h4>
+                <p>{{donnee["economic_data"][0]["export"]}} </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>Evolution PIB</h4>
+                <div id="mychart" style="height: 250px;"></div>
+                <p></p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>Evolution Export net</h4>
+                <div id="mychart2" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">   
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>revenu fiscal</h4>
+                <div id="mychart3" style="height: 250px;"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>repartition investissement</h4>
+                <p>{{ donnee["economic_data"][0]["publicInvestment"] }}</p>
+                <p>{{ donnee["economic_data"][0]["foreignDirectInvestment"] }}</p>
+                <div id="mychart4" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">   
+        <div class="col-sm-6">
+              <div class="well">
+                <h4>Evolution inflation</h4>
+                <div id="mychart5" style="height: 250px;"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+              <div class="well">
+                <h4>Evolution inflation</h4>
+                <div id="mychart6" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
 {% endblock resultat %}
 {% block Script %} 
-    <script src="{{ asset('bundles/Heebaridata/Script/jquery.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/Heebaridata/Script/scripts.js') }}" type="text/javascript"></script>
+    {{ parent() }}
+    {% javascripts 'bundles/Heebaridata/Script/morrisjs/morris.min.js'
+                    'bundles/Heebaridata/Script/raphael/raphael-min.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        {% set chart3 =  donnee["economic_data"]| one('dateOfInformation','fiscalRevenue') %}
+        {% set chart4 =  donnee["economic_data"]| one('dateOfInformation','privateInvestment') %}
+        dessine("{{chart3|json_encode()}}",'dateOfInformation','fiscalRevenue','mychart3','L')
+        dessine("{{donnee["PIB"]|json_encode()}}",'dateOfInformation','GDP','mychart','L')
+        dessine("{{donnee["Net Export"] | json_encode()}}",'dateOfInformation','NE','mychart2','L')
+        dessine("{{chart4 | json_encode()}}",'dateOfInformation','privateInvestment','mychart4','D')
+    </script>
 {% endblock Script %}
 
