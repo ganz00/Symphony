@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 class EconomicDataRepository extends EntityRepository {
-
+    
     public function findMany($country, $debut, $fin) {
         $queryBuilder = $this->createQueryBuilder('e');
         $queryBuilder->where('e.idCountry = :country')
@@ -64,6 +64,7 @@ class EconomicDataRepository extends EntityRepository {
             }if($fin!=NULL){
               $querys = $querys.' and e.dateOfInformation < :fin';
             }
+           $querys = $querys." ORDER BY e.dateOfInformation DESC ";
          $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
          if($debut != NULL){
               $queryb->setParameter('debut', $debut);

@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 class CountryRepository extends EntityRepository {
+    public $order1 = " ORDER BY ";
+    public $order2 = ".dateOfInformation DESC";
 
     public function getCompany($id, $fields = "all", $debut = NULL, $fin = NULL) {
         if ($fields == "all")
@@ -55,6 +57,7 @@ class CountryRepository extends EntityRepository {
             }if($debut!=NULL){
               $querys = $querys.' and e.dateOfInformation > :debut';
             }
+        $querys = $querys." ORDER BY e.dateOfInformation DESC ";
         $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
         if ($debut != NULL) {
             $queryb->setParameter('debut', $debut);
@@ -78,6 +81,7 @@ class CountryRepository extends EntityRepository {
         }
         $querys = $querys . ' FROM HeebaridataBundle:Country c INNER JOIN c.idPopulationParameter p'
                 . ' WITH c.idCountry = :id ';
+        $querys = $querys." ORDER BY p.dateOfInformation DESC ";
         $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
         $results = $queryb->getArrayResult();
         return $results;
@@ -127,6 +131,7 @@ class CountryRepository extends EntityRepository {
             }if($debut!=NULL){
               $querys = $querys.' and e.dateOfInformation > :debut';
             }
+            $querys = $querys." ORDER BY e.dateOfInformation DESC ";
          $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
          if($debut != NULL){
               $queryb->setParameter('debut', $debut);
@@ -150,22 +155,6 @@ class CountryRepository extends EntityRepository {
            $retour[$key]["GDP"] = $value["NE"] + $GE["investment"] + $GE["publicExpenses"] + $cons["nationalConsumptionRate"];
         }
         return $retour;
-    }
-    public function getbankingRateperhead($id, $fields = NULL, $debut = NULL, $fin = NULL) {
-        $query  ="SELECT pp.population,pd.bankingPenetrationRate FROM HeebaridataBundle:Country c INNER JOIN c.idPopulationParameter pp "
-                . " inner join pp.idPopulationDistribution pd "
-                . " WHERE c.idCountry = :id AND pp.idPopulationDistribution = pd.idPopulationDistribution";
-        $queryb = $this->_em->createQuery($query)->setParameter('id', $id);
-        $results = $queryb->getArrayResult();
-        return ["bankingRate_per_head" => $results[0]["bankingPenetrationRate"]/$results[0]["population"]];
-        
-    }
-    public function getgdpperhead($id, $fields = NULL, $debut = NULL, $fin = NULL) {
-       $gdp = $this->getGDP($id, $fields, $debut, $fin);
-    }
-    public function getNEperhead($id, $fields = NULL, $debut = NULL, $fin = NULL) {
-        
-    }
-    
+    }    
 
 }

@@ -92,7 +92,7 @@ class SimpleseachController extends Controller {
         if($res!= NULL)
             array_push($retour, $res);
         //TODO : Faire l'operation et ajouter au tableau de retour faire l'operation partout avant le return
-        return $this->render('@template/Paysresult.html.twig', array("donnee" => $retour));
+        return $this->render('@template/testresult.html.twig', array("donnee" => $retour));
     }
 
     public function responsebuilder($pays, $table, $roadto, $keys, $debut, $fin, $boul) {

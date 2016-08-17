@@ -10,7 +10,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class PopulationParameterRepository extends EntityRepository {
     
-        //TODO:rajouter fiel a la main
 
     public function getPopulationDistribution($id,$fields="all", $debut=NULL, $fin=NULL) {
         if($fields == "all")
@@ -31,6 +30,7 @@ class PopulationParameterRepository extends EntityRepository {
             }if($debut!=NULL){
               $querys = $querys.' and pp.dateOfInformation > :debut';
             }
+            $querys = $querys." ORDER BY pp.dateOfInformation DESC ";
          $queryb = $this->_em->createQuery($querys)->setParameter('id', $id);
          if($debut != NULL){
               $queryb->setParameter('debut', $debut);
