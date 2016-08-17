@@ -1,0 +1,29 @@
+
+#userInfo{
+    height: 59px;
+    width: 60px;
+}
+
+.main-block .content .article #infosTitle{
+    font-size: 1.6vw;
+    font-family: robotoThin;
+    color:#f18b10;
+    display: inline-block;
+    margin-left: 20px;
+}
+.main-block .content .article  form :nth-child(3),.main-block .content .article  form :nth-child(5),.main-block .content .article  form :nth-child(7)
+{
+    margin-top: 20px;
+}
+.main-block .content .article   textarea{
+    font-size: 1.1vw;
+    margin-top: 15px;
+    width: 96%;
+    margin-left: 2%;
+}
+.main-block .header_nav{
+    text-align: center;
+    font-family: robotoThin;
+    color: #000000;
+    font-size: 2.5vw;
+}

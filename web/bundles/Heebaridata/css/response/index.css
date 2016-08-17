@@ -1,0 +1,13 @@
+
+.main-block .header_nav{
+    text-align: center;
+    font-family: robotoThin;
+    color: #f18b10;
+    font-size: 2.5vw;
+    
+}
+.main-block .navbar .navbar-nav .nav_logo{
+    width: 50%;
+    border: none;
+}
+
