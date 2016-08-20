@@ -1,9 +1,5 @@
 heebaridata:
     resource: "@HeebaridataBundle/Resources/config/routing.yml"
-
-ganz_test:
-    resource: "@GanzTestBundle/Resources/config/routing.yml"
-    prefix:   /platform
     
 user_bundle:
    resource: "@HeebaridataBundle/Resources/config/routing.yml"

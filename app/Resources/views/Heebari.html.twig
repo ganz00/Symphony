@@ -3,27 +3,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            <link  href="{{ asset('bundles/framework/css/connection.css') }}" rel="stylesheet"/>
+            <link  href="{{ asset('bundles/Heebaridata/css/response/connection.css') }}" rel="stylesheet"/>
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        {% endblock %}
+        {% endblock stylesheets%}
     </head>
     <body>
-        {% block nav_content %}              
-        {% endblock nav_content %}
-        {% if app.request.hasPreviousSession %}
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="flash-{{ type }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
         {% block page_content %}
                         
         {% endblock page_content %}
     </body>
+{% block Script %}    
+    
+{% endblock Script %}
 </html>

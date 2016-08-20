@@ -1,6 +1,46 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+
+
 <div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+    <div class="row">
+                <div class="col-lg-7">
+                    <img src="{{ asset('account.png') }}" id="userInfo" style="height: 100px" />
+                </div>
+                <div class="col-lg-1">&nbsp;</div>
+                <div class="col-lg-4"> 
+                </div>
+            </div>
+                    <br>
+                    <br>
+            <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                    <form class="col-lg-6 col-xs-3 col-sm-6">
+                         <label for="text"> {{ 'form.first_name'|trans }} </label>
+                         <input id="text" type="text" disabled="true" class="disabled form-control " placeholder="{{ user.FirstName }}">
+                         <label for="text">{{ 'form.last_name'|trans }} </label>
+                         <input id="text" type="text" disabled="true" class="form-control" placeholder="{{ user.LastName }}">
+                         <label for="text">Date de naissance : </label>
+                         <input id="text" type="text" disabled="true" class="form-control" placeholder="{{ user.birthDate |date('d-M-Y') }}">
+                    </form>
+                    <form  class="col-lg-6 col-xs-3 col-sm-6">
+                        <div class="form-group">
+                            <label for="text">{{ 'form.profession'|trans }} </label>
+                            <input id="text" disabled="true" type="text" class="form-control" placeholder="{{ user.profession }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="text">{{ 'profile.show.username'|trans }} </label>
+                            <input id="text" disabled="true" type="text" class="form-control" placeholder=" {{ user.username }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="text">{{ 'profile.show.email'|trans }} </label>
+                            <input id="text" disabled="true" type="text" class="form-control" placeholder=" {{ user.email }} ">
+                        </div>
+                        
+                    </form>
+                </div>
+                <div class="col-lg-1"></div>   
+        </div>
+
+
 </div>

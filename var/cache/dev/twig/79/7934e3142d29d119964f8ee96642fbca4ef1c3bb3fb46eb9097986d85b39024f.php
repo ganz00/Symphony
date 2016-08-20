@@ -1,0 +1,126 @@
+<?php
+
+/* @css/jquery.jqplot/plugins/jqplot.mobile.js */
+class __TwigTemplate_dcb8d2e6f39b1fb15797fca00981b6be845cde1d5e8de63e359b307766cb4251 extends Twig_Template
+{
+    public function __construct(Twig_Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->parent = false;
+
+        $this->blocks = array(
+        );
+    }
+
+    protected function doDisplay(array $context, array $blocks = array())
+    {
+        $__internal_d03019f038f832812a7e361d536c30cf7085a9ffaecd04c337f5fea09267454b = $this->env->getExtension("native_profiler");
+        $__internal_d03019f038f832812a7e361d536c30cf7085a9ffaecd04c337f5fea09267454b->enter($__internal_d03019f038f832812a7e361d536c30cf7085a9ffaecd04c337f5fea09267454b_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "@css/jquery.jqplot/plugins/jqplot.mobile.js"));
+
+        // line 1
+        echo "/**
+ * jqplot.jquerymobile plugin
+ * jQuery Mobile virtual event support.
+ *
+ * Version: 1.0.9
+ * Revision: d96a669
+ *
+ * Copyright (c) 2011 Takashi Okamoto
+ * jqPlot is currently available for use in all personal or commercial projects 
+ * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL 
+ * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can 
+ * choose the license that best suits your project and use it accordingly. 
+ *
+ * Although not required, the author would appreciate an email letting him 
+ * know of any substantial use of jqPlot.  You can reach the author at: 
+ * chris at jqplot dot com or see http://www.jqplot.com/info.php .
+ *
+ * If you are feeling kind and generous, consider supporting the project by
+ * making a donation at: http://www.jqplot.com/donate.php .
+ *
+ */
+(function(\$) {
+    function postInit(target, data, options){
+        this.bindCustomEvents = function() {
+            this.eventCanvas._elem.bind('vclick', {plot:this}, this.onClick);
+            this.eventCanvas._elem.bind('dblclick', {plot:this}, this.onDblClick);
+            this.eventCanvas._elem.bind('taphold', {plot:this}, this.onDblClick);
+            this.eventCanvas._elem.bind('vmousedown', {plot:this}, this.onMouseDown);
+            this.eventCanvas._elem.bind('vmousemove', {plot:this}, this.onMouseMove);
+            this.eventCanvas._elem.bind('mouseenter', {plot:this}, this.onMouseEnter);
+            this.eventCanvas._elem.bind('mouseleave', {plot:this}, this.onMouseLeave);
+            if (this.captureRightClick) {
+                this.eventCanvas._elem.bind('vmouseup', {plot:this}, this.onRightClick);
+                this.eventCanvas._elem.get(0).oncontextmenu = function() {
+                    return false;
+                };
+            }
+            else {
+                this.eventCanvas._elem.bind('vmouseup', {plot:this}, this.onMouseUp);
+            }
+        };
+        this.plugins.mobile = true;
+    }
+    \$.jqplot.postInitHooks.push(postInit);
+})(jQuery);";
+        
+        $__internal_d03019f038f832812a7e361d536c30cf7085a9ffaecd04c337f5fea09267454b->leave($__internal_d03019f038f832812a7e361d536c30cf7085a9ffaecd04c337f5fea09267454b_prof);
+
+    }
+
+    public function getTemplateName()
+    {
+        return "@css/jquery.jqplot/plugins/jqplot.mobile.js";
+    }
+
+    public function getDebugInfo()
+    {
+        return array (  22 => 1,);
+    }
+}
+/* /***/
+/*  * jqplot.jquerymobile plugin*/
+/*  * jQuery Mobile virtual event support.*/
+/*  **/
+/*  * Version: 1.0.9*/
+/*  * Revision: d96a669*/
+/*  **/
+/*  * Copyright (c) 2011 Takashi Okamoto*/
+/*  * jqPlot is currently available for use in all personal or commercial projects */
+/*  * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL */
+/*  * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can */
+/*  * choose the license that best suits your project and use it accordingly. */
+/*  **/
+/*  * Although not required, the author would appreciate an email letting him */
+/*  * know of any substantial use of jqPlot.  You can reach the author at: */
+/*  * chris at jqplot dot com or see http://www.jqplot.com/info.php .*/
+/*  **/
+/*  * If you are feeling kind and generous, consider supporting the project by*/
+/*  * making a donation at: http://www.jqplot.com/donate.php .*/
+/*  **/
+/*  *//* */
+/* (function($) {*/
+/*     function postInit(target, data, options){*/
+/*         this.bindCustomEvents = function() {*/
+/*             this.eventCanvas._elem.bind('vclick', {plot:this}, this.onClick);*/
+/*             this.eventCanvas._elem.bind('dblclick', {plot:this}, this.onDblClick);*/
+/*             this.eventCanvas._elem.bind('taphold', {plot:this}, this.onDblClick);*/
+/*             this.eventCanvas._elem.bind('vmousedown', {plot:this}, this.onMouseDown);*/
+/*             this.eventCanvas._elem.bind('vmousemove', {plot:this}, this.onMouseMove);*/
+/*             this.eventCanvas._elem.bind('mouseenter', {plot:this}, this.onMouseEnter);*/
+/*             this.eventCanvas._elem.bind('mouseleave', {plot:this}, this.onMouseLeave);*/
+/*             if (this.captureRightClick) {*/
+/*                 this.eventCanvas._elem.bind('vmouseup', {plot:this}, this.onRightClick);*/
+/*                 this.eventCanvas._elem.get(0).oncontextmenu = function() {*/
+/*                     return false;*/
+/*                 };*/
+/*             }*/
+/*             else {*/
+/*                 this.eventCanvas._elem.bind('vmouseup', {plot:this}, this.onMouseUp);*/
+/*             }*/
+/*         };*/
+/*         this.plugins.mobile = true;*/
+/*     }*/
+/*     $.jqplot.postInitHooks.push(postInit);*/
+/* })(jQuery);*/

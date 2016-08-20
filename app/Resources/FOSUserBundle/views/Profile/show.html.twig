@@ -1,5 +1,8 @@
-{% extends "HeebaridataBundle::layout.html.twig" %}
+{% extends "@template/accueil.html.twig" %}
 
-{% block page_content %}
+{% block result_content %}
+    <br/>
+    <br/>
+    <br/>
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}
-{% endblock page_content %}
+{% endblock result_content %}

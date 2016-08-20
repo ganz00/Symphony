@@ -1,5 +1,4 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
-
-{% block fos_user_content %}
+{% extends "@template/accueil.html.twig" %}
+{% block result_content %}
 {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
-{% endblock fos_user_content %}
+{% endblock result_content %}
