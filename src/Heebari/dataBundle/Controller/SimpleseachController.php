@@ -24,55 +24,16 @@ use Symfony\Component\Debug\Exception\UndefinedMethodException;
 //TOTO: creer extention twig pour affichage tableaux
 class SimpleseachController extends Controller {
 
-    public function onecountryAction($pays, $motcle = null, $debut = null, $fin = null) {
-        $countrydata = $this->container->get('Heebari_data.country');
-        $data = $countrydata->getcountrydata($pays, $debut, $fin);
-        return $this->render('@template/Testresult.html.twig', $data);
-    }
-
-    public function onecountrydateAction($pays, $motcle = null, $debut = null, $fin = null) {
-        $countrydata = $this->container->get('Heebari_data.country');
-        $data = $countrydata->getcountrydata($pays, $debut, $fin);
-        return $this->render('@template/Testresult.html.twig', $data);
-    }
 
     public function onecountrydatesAction($pays, $motcle = null, $debut = null, $fin = null) {
         $countrydata = $this->container->get('Heebari_data.country');
         $data = $countrydata->getcountrydata($pays, $debut, $fin);
+        if($debut->format('Y') == $fin->format('Y'))
+            $template = '@template/Paysresult.html.twig';
+        else
+           $template = '@template/Paysresult.html.twig';
         $serv1 = $this->container->get('Heebari_data.gestion');
-
-        return $this->render('@template/Paysresult.html.twig', $serv1->formatone($data));
-    }
-
-    public function onecountrykeysAction($pays, $motcle, $debut, $fin) {
-        $serv1 = $this->container->get('Heebari_data.motclef');
-        $gestion = $this->container->get('Heebari_data.gestion');
-        $info = $serv1->getentity($motcle);
-        $retour = array();
-        $i = 0;
-        foreach ($info as $key => $value) {
-            $a = explode(" ", $value[0]);
-            $res = $this->responsebuilder($pays, $key, $value[1], $a, $debut, $fin, FALSE);
-            $retour[$i] = $res;
-            $i++;
-        }
-        return $this->render('@template/Testresult.html.twig', array("donnee" => $retour));
-    }
-
-    public function onecountryKeysdateAction($pays, $motcle, $debut, $fin) {
-        $serv1 = $this->container->get('Heebari_data.gestion');
-        $gestion = $this->container->get('Heebari_data.gestion');
-        $info = $serv1->getentity($motcle);
-        $retour = array();
-        $i = 0;
-        foreach ($info as $key => $value) {
-            $a = explode(" ", $value[0]);
-            $res = $this->responsebuilder($pays, $key, $value[1], $a, $debut, $fin, false);
-            $retour[$i] = $res;
-            $i++;
-        }
-        $Lretour = $gestion->getsimpleres($retour);
-        return $this->render('@template/Testresult.html.twig', array("donnee" => $Lretour));
+        return $this->render($template, $serv1->formatone($data));
     }
 
     public function onecountryKeysdatesAction($pays, $motcle, $debut, $fin) {
@@ -83,36 +44,25 @@ class SimpleseachController extends Controller {
         $i = 0;
         foreach ($info as $key => $value) {
             $a = explode(" ", $value[0]);
-            $res = $this->responsebuilder($pays, $key, $value[1], $a, $debut, $fin, false);
-            $retour[$i] = $res;
-            $i++;
+            $res = $this->responsebuilder($pays, $key, $value[1], $a, $debut, $fin);
+            $retour[$key] = $gestion->formatdate($res);
         }
         $Lretour = $gestion->getsimpleres($retour);
         $res = $this->traitecalcul($Lretour);
         if($res!= NULL)
-            array_push($retour, $res);
+           $retour[$res[0]] = $res[1];
         //TODO : Faire l'operation et ajouter au tableau de retour faire l'operation partout avant le return
-        return $this->render('@template/testresult.html.twig', array("donnee" => $retour));
+        return $this->render('@template/onecountryGraphe.html.twig', array("donnee" => $retour , "pays" => $pays->getCountryName()));
     }
 
-    public function responsebuilder($pays, $table, $roadto, $keys, $debut, $fin, $boul) {
+    public function responsebuilder($pays, $table, $roadto, $keys, $debut, $fin) {
         $em = $this->getDoctrine()->getManager();
         switch ($roadto) {
             case 'F':
-                //$resultat = $em->getRepository("HeebaridataBundle:" . $table)->findforMany($pays->getIdCountry(), $debut, $fin, $keys);
                 $getter = 'get' . $table;
                 $resultat = $em->getRepository("HeebaridataBundle:Country")->$getter($pays->getIdCountry(), $keys, $debut, $fin);
                 $Res = array();
-                if ($boul) {
-                    $filtre = "dateOfInformation";
-                    foreach ($resultat as $result) {
-                        $date = $result[$filtre];
-                        unset($result[$filtre]);
-                        $Res[$date->format('Y')] = $result;
-                    }
-                } else {
-                    $Res = $resultat;
-                }
+                $Res = $resultat;
                 json_encode($Res);
                 return $Res;
             case 'PopulationParameter':
@@ -165,16 +115,17 @@ class SimpleseachController extends Controller {
             }
         }
         $cle = array_keys($data);
+        $id = $cle[0]."per".$cle[1];
         foreach ($data[$cle[0]] as $mot1 => $val) {
-            $date = $val["dateOfInformation"]->format('Y');
+                $date = $val["dateOfInformation"];
                 foreach ($data[$cle[1]] as $mot2 => $value) {
-                    if ($value["dateOfInformation"]->format('Y')==$date){
-                        $id = $cle[0]."per".$cle[1];
-                        $res[$date] = [$id => $this->calcul($val[$cle[0]], $value[$cle[1]], "per")];
+                    if ($value["dateOfInformation"]){
+                        array_push($res,["dateOfInformation" => $date, $id => $this->calcul($val[$cle[0]], $value[$cle[1]], "per")]);
                     }
-                   }
+              }
         }
-        return $res;
+         $result = array_values(array_unique($res, SORT_REGULAR));
+        return [$id ,$result];
     }
     public function calcul($var1,$var2,$opp) {
         if($opp=="per")

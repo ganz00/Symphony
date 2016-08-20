@@ -15,13 +15,15 @@ class DefaultController extends Controller {
 
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('HeebaridataBundle:Motclef');
+        $motclebase = $repo->monfindall();
         $repo = $em->getRepository('HeebaridataBundle:Country');
         $session = $this->get('session');
         if ($session->get("nompays") == NULL) {
             $data = $repo->getcountryname();
             $session->set('nompays', $data);
         }
-        return $this->render('HeebaridataBundle:index:layout.html.twig');
+        return $this->render('HeebaridataBundle:index:layout.html.twig',array('liste' => $motclebase));
     }
 
     public function goAction(Request $request) {
@@ -30,7 +32,9 @@ class DefaultController extends Controller {
         $page = $request->query->get('seach');
         if ($page == NULL || $page == "")
             return $this->render('@template/Template.html.twig', array("liste" => $Listemot));
-
+        unset($_SESSION["Typechar"]);
+         $session = $this->get('session');
+        $session->set("Typechar",$Gmotclef->gettypechar($page));
         $pages = preg_split("/[\\s]{1,}/", $page);
         $chaine = "";
         $date = "";
@@ -60,8 +64,8 @@ class DefaultController extends Controller {
         $motclebase = $repo->monfindall();
 
         if (strlen($chaine) < 3) {
-            $response = new Response('erreur recherche invalide.', Response::HTTP_NOT_FOUND);
-            return $response;
+            //$response = new Response('erreur recherche invalide.', Response::HTTP_NOT_FOUND);
+            return $this->render('@template/ErrorResult.html.twig',["code"=>"recherche invalide"]);
         }
 
         $keywords = preg_split("/[+]+/", $chaine);
@@ -101,16 +105,16 @@ class DefaultController extends Controller {
             $pays = $Gmotclef->estpays($teste);
             
             if (!$pays) {
-                $response = new Response('erreur aucun pays trouvé.', Response::HTTP_NOT_FOUND);
-                return $response;
+                //$response = new Response('erreur aucun pays trouvé.', Response::HTTP_NOT_FOUND);
+                return $this->render('@template/ErrorResult.html.twig',["code"=>"entrer le nom d'un pays "]);
             }
             if (sizeof($pays) > 3) {
-                $response = new Response('3 pays maximum.', Response::HTTP_NOT_FOUND);
-                return $response;
+                //$response = new Response('3 pays maximum.', Response::HTTP_NOT_FOUND);
+               return $this->render('@template/ErrorResult.html.twig',["code"=>"3 pays maximum."]);
             }
         } else {
-                $response = new Response('erreur au moins un pays.', Response::HTTP_NOT_FOUND);
-                return $response;
+                //$response = new Response('erreur au moins un pays.', Response::HTTP_NOT_FOUND);
+                 return $this->render('@template/ErrorResult.html.twig',["code"=>"au moins un pays."]);
             
         }
         return $this->redir($date, $pays, $valid);
