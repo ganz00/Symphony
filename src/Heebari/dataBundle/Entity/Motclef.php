@@ -153,29 +153,8 @@ class Motclef
         $this->relatedKey = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add relatedKey
-     *
-     * @param \HebbarydataBundle\Entity\RelatedKey $relatedKey
-     *
-     * @return Motclef
-     */
-    public function addRelatedKey(\HebbarydataBundle\Entity\RelatedKey $relatedKey)
-    {
-        $this->relatedKey[] = $relatedKey;
 
-        return $this;
-    }
-
-    /**
-     * Remove relatedKey
-     *
-     * @param \HebbarydataBundle\Entity\RelatedKey $relatedKey
-     */
-    public function removeRelatedKey(\HebbarydataBundle\Entity\RelatedKey $relatedKey)
-    {
-        $this->relatedKey->removeElement($relatedKey);
-    }
+ 
 
    
 }

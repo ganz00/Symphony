@@ -1,0 +1,20 @@
+{# src/Heebari/dataBundle/Resources/views/result.html.twig #}
+{% extends "@template/result.html.twig" %}
+{%block titre %}
+    <h1>Erreur dans la requête...</h1>
+{% endblock titre %}
+
+{% block resultat %}
+    <p> {{ code }}</p>
+{% endblock resultat %}
+{% block Script %} 
+    {{ parent() }}
+    {% javascripts 'bundles/Heebaridata/Script/morrisjs/morris.min.js'
+                    'bundles/Heebaridata/Script/raphael/raphael-min.js'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+{% endblock Script %}              
+ 
+   
+        

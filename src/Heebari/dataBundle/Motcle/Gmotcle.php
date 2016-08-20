@@ -104,5 +104,16 @@ class Gmotcle {
         }
         return $fin;
     }
-
+  public function gettypechar($page) {
+        $posL = strpos($page, "LINE");
+        $posB = strpos($page, "BAR");
+        $posC = strpos($page, "CAM");
+        if($posL != false)
+            return "L";
+        if($posB !=false)
+            return "B";
+        if($posC !=false)
+            return "D";
+        return 'L' ;
+    }
 }

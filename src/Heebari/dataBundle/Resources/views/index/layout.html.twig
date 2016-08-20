@@ -1,5 +1,74 @@
 {# src/Heebari/dataBundle/Resources/views/layout.html.twig #}
 {% extends "@template/Template.html.twig" %}
+
+{% block content %}
+
+    <h4>bonjour {{ app.user }}</h4>
+
+    <div class="row">
+        <h5>paramètres globales</h5>  
+        <h7> pour toutes les requêtes vous pouvez afficher:</h7>  
+
+        <ul>
+            <li>Un ou plusieurs pays :  <a class="lien">nigeria</a>,<a class="lien">cameroun  et nigeria</a></li>
+            <li>Un ou plusieurs pays avec a une date precise :  <a class="lien">cameroun en 1994</a> , <a class="lien">cameroun et senegal ect en 1994</a></li>
+            <li>Un ou plusieurs pays avec a un intervalle de date :  <a class="lien">cameroun en de 1994 a 2015</a> </li>
+        </ul>    
+    </div>
+    <div class="row">
+        <h5>Requêtes précises</h5>   
+        <ul>
+            <li>Un ou plusieurs pays avec une ou plusieurs valeurs à afficher:  
+                <a class="lien">cameroun inflation...</a>,<a class="lien">inflation au nigeria et au  senegal  </a></li>
+            <li>pareil avec une date ou des intervale de date </li>
+        </ul>    
+    </div>
+    <div class="row">
+        <h5>Requêtes calculées</h5>   
+        vous pouvez utiliser le mot clé "per" pour representer l'evolution d'une variable par rapport a une autre par exemple :
+        <a class="lien">cameroun pib per population...</a>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <h5>Voici une liste non exhaustive des mot clef utilisable </h5>   
+        <ul>
+            <div class="col-lg-3">
+                {% set a = 0 %}
+                {% for key in liste|keys %}
+                    {% if a < 6 %}
+                        {% if key == 'ge' %}
+                            <li>{{ key }} : Government Expenditures</li>
+                            {% else %}
+                            {% if key == 'ne' %}
+                            <li>{{ key }} : Net Exports</li>
+                            {% else %}
+                            <li>{{ key }}</li>
+                            {% endif %}
+                            {% endif %}
+                            {% set a = a + 1%}
+                        {%else%}
+                    </div>
+                    <div class="col-lg-3">
+                        {% set a = 0%}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
+
+
+
+{% endblock content %}
+
 {% block Script %} 
     {{parent()}}
+    <script>
+        $(".lien").click(function (ev) {
+            var url = ev.currentTarget.innerHTML
+            $("#seach").val(url);
+            $("#send").trigger("click");
+        });
+
+    </script>
 {% endblock Script %}

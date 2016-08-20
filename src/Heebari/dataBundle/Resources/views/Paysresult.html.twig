@@ -2,37 +2,32 @@
 {% extends "@template/result.html.twig" %}
 {%block titre %}
 {% endblock titre %}
-{% block resultat %}
-    <style>
-        .panel-body{
-            text-align: center;
-            background-color: #f5f5f5;
-            border-bottom-color: #f5f5f5;
-        }
-        .panel-heading{
-            padding-left: 4px !important;
-        }
+{% set economic =  donnee["economic_data"]| default([]) %}
 
-    </style>
-    {% set now =  donnee["economic_data"][0]["dateOfInformation"] %}
+{% block resultat %}
+    {% set now =  donnee["economic_data"][0]["dateOfInformation"]| default('no data') %}
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h4>{{ donnee["pays"]|upper }}</h4>
         </div>
-        <div class="panel-body">               
+        <div class="panel-body">  
+             {% set valeur = donnee["PIB"][0] | default([]) %}
             <p>Monnaie :&nbsp;{{ donnee["monaie"][0]["currency"]}}</p>
             <p>Population en {{ donnee["parametre_population"][0]["dateOfInformation"]}}&nbsp;:{{ donnee["parametre_population"][0]["population"]}}</p>
-            <p>Pib  en   {{ donnee["PIB"][0]["dateOfInformation"]}}&nbsp;:{{ donnee["PIB"][0]["GDP"]}} </p>
+            <p>Pib  en   {{ valeur["dateOfInformation"]|default('NA')}}&nbsp;:{{ valeur["GDP"]|default('NA')}} </p>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h5>PIB par habitant {{ donnee["PIB"][0]["dateOfInformation"] }}</h5>
+                    {% set valeur = donnee["PIB"][0] | default([]) %}
+                    <h5>PIB par habitant {{ valeur["dateOfInformation"] | default("NA") }}</h5>
                 </div>
                 <div class="panel-body">
-                    <p>{{ donnee["PIB"][0]["GDP"]/donnee["parametre_population"][0]["population"]}}</p>
+                    {% if donnee["parametre_population"][0] is defined %}
+                        <p>{{ valeur["GDP"]|default(0)/donnee["parametre_population"][0]["population"]}}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -42,17 +37,20 @@
                     <h5>Coissance PIB {{ now }} </h5>
                 </div>
                 <div class="panel-body">
-                    <p>{{donnee["economic_indic"][0]["gdpGrowth"]}} </p>
+                     {% set valeur = donnee["economic_indic"][0] | default([]) %}
+                    <p>{{valeur["gdpGrowth"]| default("NA")}} </p>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h5>Croissance population {{ donnee["population growth"][0]["dateOfInformation"] }}</h5>
+                    {% set valeur = donnee["population growth"][0] | default([]) %}
+                    <h5>Croissance population {{ valeur["dateOfInformation"]| default("NA") }}</h5>
                 </div>
                 <div class="panel-body">
-                    <p>{{donnee["population growth"][0]["Populationgrowth"]}}</p>
+                    {% set valeur = donnee["population growth"][0] | default([]) %}
+                    <p>{{valeur["Populationgrowth"] |default("NA")}}</p>
                 </div>
             </div>
         </div>
@@ -62,7 +60,8 @@
                     <h5>Densité population {{ now }}</h5>
                 </div>
                 <div class="panel-body">
-                    <p>{{donnee["parametre_population"][0]["density"]}}</p>
+                    {% set valeur = donnee["parametre_population"][0] | default([]) %}
+                    <p>{{valeur["density"]|default("NA")}}</p>
                 </div>
             </div>
         </div>
@@ -128,22 +127,20 @@
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <script>
+        
+        {% set sign = donnee["monaie"][0]["currencyCode"]%}
         {% for data in donnee["economic_data"] %}
             {% set vari =  data | donot('publicInvestment','privateInvestment','foreignDirectInvestment') %}
                 dessine("{{vari[0] | json_encode()}}", 'publicInvestment', 'privateInvestment', 'var{{ loop.index }}', 'D')
         {% endfor %}
 
-        {% set chart7 =  donnee["economic_data"]| one('dateOfInformation','investment') %}
-        {% set chart3 =  donnee["economic_data"]| one('dateOfInformation','fiscalRevenue') %}
-        {% set chart4 =  donnee["economic_data"]| donot('publicInvestment','privateInvestment','foreignDirectInvestment') %}
-        {% set chart6 =  donnee["economic_data"]| bar(donnee["economic_indic"],'dateOfInformation','priceIndex','gdpGrowth') %}
-        {% set chart5 =  donnee["economic_data"]| one('dateOfInformation','priceIndex') %}
-            dessine("{{chart3|json_encode()}}", 'dateOfInformation', 'fiscalRevenue', 'mychart3', 'L')
-            dessinebar("{{chart6|json_encode()}}", 'dateOfInformation', 'priceIndex', 'gdpGrowth', 'Inflation', 'gdpGrowth', 'mychart6')
-            dessine("{{chart7|json_encode()}}", 'dateOfInformation', 'investment', 'mychart7', 'L')
-            dessine("{{chart5|json_encode()}}", 'dateOfInformation', 'priceIndex', 'mychart5', 'L')
-            dessine("{{donnee["PIB"]|json_encode()}}", 'dateOfInformation', 'GDP', 'mychart', 'L')
-            dessine("{{donnee["Net Export"] | json_encode()}}", 'dateOfInformation', 'NE', 'mychart2', 'L')
+        {% set chart6 =  economic| bar(donnee["economic_indic"],'dateOfInformation','priceIndex','gdpGrowth') %}
+            dessine("{{economic|json_encode()}}", 'dateOfInformation', 'fiscalRevenue', 'mychart3', 'L','{{ sign }}')
+         dessinebar("{{chart6|json_encode()}}", 'dateOfInformation', 'priceIndex', 'gdpGrowth', 'Inflation', 'gdpGrowth', 'mychart6')
+            dessine("{{economic|json_encode()}}", 'dateOfInformation', 'investment', 'mychart7', 'L','{{ sign }}')
+            dessine("{{economic|json_encode()}}", 'dateOfInformation', 'priceIndex', 'mychart5', 'L','{{ sign }}')
+            dessine("{{donnee["PIB"]|json_encode()}}", 'dateOfInformation', 'GDP', 'mychart', 'L','{{ sign }}')
+            dessine("{{donnee["Net Export"] | json_encode()}}", 'dateOfInformation', 'NE', 'mychart2', 'L','{{ sign }}')
 
     </script>
 {% endblock Script %}

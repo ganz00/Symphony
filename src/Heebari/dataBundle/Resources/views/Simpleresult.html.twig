@@ -1,14 +1,53 @@
 {# src/Heebari/dataBundle/Resources/views/result.html.twig #}
 {% extends "@template/result.html.twig" %}
 {%block titre %}
-    <h2>{{ valeur | lower }} : {{ group1 | raw }} </h2>
 {% endblock titre %}
+
 {% block resultat %}
-    
+    {% for key,item in donnee %}
+        <div class="row">
+             {% set add = '' %}
+            {% if  key == 'EconomicData' or key == 'GDP' or key == 'NE' %}
+                {% set add = 'USD' %}
+            {% endif %}  
+            {% if item | length == 2%}
+                    {% set class = "col-lg-6" %}
+                {% else%}
+                    {% set class = "col-lg-4" %}
+                {% endif %}
+            {% for ke , data in item %}
+                <div class="{{ class }}">
+                    <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {% set head  = key %}
+                        {% if  key == 'NE'  %}
+                            {% set head = 'Export net' %}
+                         {% endif %}  
+                         {% if  head == 'GDP'  %}
+                            {% set head = 'PIB' %}
+                         {% endif %}
+                    <h5>{{ ke ~" "~head~" "~data.dateOfInformation }}</h5>
+                </div>
+                <div class="panel-body">
+                    {% for field , val in data if field != 'dateOfInformation' and field != '1' %}
+                        {% set champ  = field %}
+                        {% if  field == 'NE'  %}
+                            {% set champ = 'Export net' %}
+                         {% endif %}  
+                         {% if  field == 'GDP'  %}
+                            {% set champ = 'PIB' %}
+                         {% endif %}
+                    <p>{{champ~" : "~val~" "~add}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
     
 {% endblock resultat %}
 {% block Script %} 
-    <script src="{{ asset('bundles/Heebaridata/Script/jquery.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/Heebaridata/Script/scripts.js') }}" type="text/javascript"></script>
+    {{ parent() }}
 {% endblock Script %}
 

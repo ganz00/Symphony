@@ -1,0 +1,205 @@
+{# src/Heebari/dataBundle/Resources/views/result.html.twig #}
+{% extends "@template/result.html.twig" %}
+{%block titre %}
+{% endblock titre %}
+{% block resultat %}
+
+
+    {% if donnee | length == 2%}
+        {% set now =  [donnee[0]["economic_indic"][0]["dateOfInformation"]| default("NA"),donnee[1]["economic_indic"][0]["dateOfInformation"]| default("NA")] %}
+        {% set class = "col-lg-6" %}
+    {% else%}
+        {% set class = "col-lg-4" %}
+        {% set now =  [donnee[0]["economic_indic"][0]["dateOfInformation"]| default("NA"),donnee[1]["economic_indic"][0]["dateOfInformation"]| default("NA"),donnee[2]["economic_indic"][0]["dateOfInformation"] | default("NA")] %}
+    {% endif %}
+    <div class="row">
+        {% for data in donnee %}
+            <div class="{{ class }}">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4>{{ data['pays']|upper }}</h4>
+                    </div>
+                    <div class="panel-body">               
+                        <p>Monnaie :&nbsp;{{ data["monaie"][0]["currency"] | default("NA")}}</p>
+                        <p>Population en {{ data["parametre_population"][0]["dateOfInformation"]| default("NA")}}&nbsp;:{{ data["parametre_population"][0]["population"]| default("NA")}}</p>
+                        <p>Pib  en   {{ data["PIB"][0]["dateOfInformation"] | default("NA")}}&nbsp;:{{ data["PIB"][0]["GDP"]| default("NA")}} </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h5>PIB par habitant </h5>
+                </div>
+                <div class="panel-body">
+                    {% for data in donnee %}
+                        <p>{{ data['pays']|upper }} {{now[loop.index-1]}} </strong> :
+                            {% if data["PIB"][0]  is defined and data["parametre_population"][0] is defined %}
+                                {{ data["PIB"][0]["GDP"]/data["parametre_population"][0]["population"]| default("NA")}}
+                            {% else%}
+                                NA
+                            {% endif %}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h5>Coissance PIB </h5>
+                </div>
+                <div class="panel-body">
+
+                    {% for data in donnee %}
+                        <p>{{ data['pays']|upper }} {{now[loop.index-1]}} </strong> : 
+                            {% if data["economic_indic"][0] is defined %}
+                                {{ data["economic_indic"][0]["gdpGrowth"]| default("NA")}}
+                            {% else%}
+                                NA
+                            {% endif %}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h5>Croissance population </h5>
+                </div>
+                <div class="panel-body">
+                    {% for data in donnee %}
+                        <p>{{ data['pays']|upper }} 
+                            {% if data["population growth"][0] is defined %}
+                                {{data["population growth"][0]["dateOfInformation"]|default('NA')}}  :
+                                {{ data["population growth"][0]["Populationgrowth"]| default("NA")}}
+                            {% else%}
+                                NA
+                            {% endif %}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h5>Densité population </h5>
+                </div>
+                <div class="panel-body">
+                    {% for data in donnee %}
+                        <p>{{ data['pays']|upper }} 
+                            {% if data["parametre_population"][0] is defined %}
+                                {{data["parametre_population"][0]["dateOfInformation"]|default('NA')}} :
+                                {{ data["parametre_population"][0]["density"]| default("NA")}}
+                            {% else%}
+                                NA
+                            {% endif %}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>Evolution PIB</h4>
+                <div id="evpib" style="height: 250px;"></div>
+                <p></p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>Evolution Export net</h4>
+                <div id="evexportnet" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">   
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>Evolution revenu fiscal</h4>
+                <div id="evfixcal" style="height: 250px;"></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well">
+                <h4>Evolution inflation</h4>
+                <div id="evinflation" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="well">
+            <h4>Evolution investissement</h4>
+            <div id="evinvestmen" style="height: 250px;"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="well">
+            <h4>Evolution inflation et PIB</h4>
+            <div id="evinfl_pib" style="height: 250px;"></div>
+        </div>
+    </div>
+
+    {% for item in donnee %}
+        <div class="row">
+            {% set pays = item["pays"]%}
+            {% for data in item["economic_data"] %}
+                {% if item["economic_data"] | length == 2%}
+                    {% set class = "col-lg-6" %}
+                {% else%}
+                    {% set class = "col-lg-4" %}
+                {% endif %}
+                <div class="{{ class }}">
+                    <div class="well">
+                        <h4>Repartition investissement {{ pays ~ ' ' ~ data['dateOfInformation'] }}</h4>
+                        <div id="{{pays ~ loop.index}}" style="height: 250px;"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endblock resultat %}
+{% block Script %} 
+    {{ parent() }}
+    {% javascripts 'bundles/Heebaridata/Script/morrisjs/morris.min.js'
+                    'bundles/Heebaridata/Script/raphael/raphael-min.js'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+
+        {% if donnee | length == 2%}
+            {% set pays = [donnee[0]["pays"],donnee[1]["pays"],null] %}
+        {% else%}
+            {% set pays = [donnee[0]["pays"],donnee[1]["pays"],donnee[2]["pays"]] %}
+        {% endif %}
+
+        {% for item in donnee %}
+            {% set p = item["pays"]%}
+            {% for data in item["economic_data"] %}
+                {% set vari =  data | donot('publicInvestment','privateInvestment','foreignDirectInvestment') %}
+                    dessine("{{vari[0] | json_encode()}}", 'publicInvestment', 'privateInvestment', '{{ p  ~ loop.index}}', 'D')
+            {% endfor %}
+        {% endfor %}
+
+        {% set evinfl_pib = donnee | Manybar('PIB','economic_data','GDP','priceIndex','dateOfInformation')  %}  
+        {% set evpib = donnee | two('PIB','dateOfInformation','GDP')  %}
+        {% set evexportnet = donnee | two('Net Export','dateOfInformation','NE') %}
+        {% set evfixcal = donnee | two('economic_data','dateOfInformation','fiscalRevenue')   %}
+        {% set evinflation = donnee | two('economic_data','dateOfInformation','priceIndex')   %}
+        {% set evinvestmen = donnee | two('economic_data','dateOfInformation','investment')  %}
+            dessineMany("{{evpib|json_encode()}}", 'dateOfInformation',{{ pays |json_encode()|raw }} , 'evpib', 'L')
+                    dessineMany("{{evinvestmen|json_encode()}}", 'dateOfInformation',{{ pays |json_encode()|raw }} , 'evinvestmen', 'L')
+                    dessineMany("{{evinflation|json_encode()}}", 'dateOfInformation',{{ pays |json_encode()|raw }} , 'evinflation', 'L')
+                    dessineMany("{{evfixcal|json_encode()}}", 'dateOfInformation',{{ pays |json_encode()|raw }} , 'evfixcal', 'L')
+                    dessineMany("{{evexportnet | json_encode()}}", 'dateOfInformation',{{ pays |json_encode()|raw }} , 'evexportnet', 'L')
+                    dessinebardeux("{{evinfl_pib[0] | json_encode()}}", 'dateOfInformation', {{ evinfl_pib[1] |json_encode()|raw }}, 'evinfl_pib')
+    </script>
+{% endblock Script %}              

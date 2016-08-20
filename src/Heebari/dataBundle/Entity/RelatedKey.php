@@ -22,7 +22,7 @@ class RelatedKey
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Heebari\dataBundle\Entity\Motclef", inversedBy="relatedKey")
+     * @ORM\ManyToOne(targetEntity="Heebari\dataBundle\Entity\Motclef")
      * @ORM\JoinColumn(name="motclef_id", referencedColumnName="id")
      */
     private $motclef;

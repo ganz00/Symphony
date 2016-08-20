@@ -1,0 +1,117 @@
+{# src/Heebari/dataBundle/Resources/views/result.html.twig #}
+{% extends "@template/result.html.twig" %}
+{%block titre %}
+{% endblock titre %}
+
+
+
+{% set type = app.session.get('Typechar') | default("L")%}
+    {% set graph = []%}
+    {% set simple = []  %}
+    {% set break = false %}
+    {% for key,data in donnee %}
+            {% if data.1 is defined  %}
+                {% set graph =  graph|merge([key , data])%}
+            {% else %}
+                {% set simple = simple|merge([key , data])  %}
+            {% endif %}
+        {% set break = false %}
+    {% endfor %}
+{% block resultat %}
+    {% if simple is not empty %}
+        {% for key,item in simple if key is even %}
+            <div class="row">
+                {% set add = '' %}
+                {% if  item == 'EconomicData' or item == 'GDP' or item == 'NE' %}
+                    {% set add = 'USD' %}
+                {% endif %}  
+                {% for ke , data in simple[key + 1] %}
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                {% set head  = item %}
+                                {% if  item == 'NE'  %}
+                                    {% set head = 'Export net' %}
+                                {% endif %}  
+                                {% if  head == 'GDP'  %}
+                                    {% set head = 'PIB' %}
+                                {% endif %}
+                                <h5>{{ pays ~" "~head~" "~data.dateOfInformation }}</h5>
+                            </div>
+                            <div class="panel-body">
+                                {% for field , val in data if field != 'dateOfInformation' and field != '1' %}
+                                    {% set champ  = field %}
+                                    {% if  field == 'NE'  %}
+                                        {% set champ = 'Export net' %}
+                                    {% endif %}  
+                                    {% if  field == 'GDP'  %}
+                                        {% set champ = 'PIB' %}
+                                    {% endif %}
+                                    <p>{{champ~" : "~val~" "~add}}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %} 
+    {% if graph is not empty %}
+        {% set break = false %}
+        {% for key,item in graph if key is even %}
+            {% set element =  graph[key + 1]%}
+            <div class="row">
+                {% for data in element if not break %}
+                    <div class="well">
+                        {% set head  = item %}
+                        {% if  head == 'NE'  %}
+                            {% set head = 'Export net' %}
+                        {% endif %}  
+                        {% if  head == 'GDP'  %}
+                            {% set head = 'PIB' %}
+                        {% endif %}
+                        <h4>Evolution {{ head }}</h4>
+                        <div id="{{item}}" style="height: 250px;"></div>
+                    </div>
+                    {% set break = true %}
+                {% endfor %}
+               
+            </div>
+             {% set break = false %}
+        {% endfor %}
+    {% endif %} 
+
+{% endblock resultat %}
+{% block Script %} 
+    {{ parent() }}
+    {% javascripts 'bundles/Heebaridata/Script/morrisjs/morris.min.js'
+                    'bundles/Heebaridata/Script/raphael/raphael-min.js'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        {% if graph is not empty %}
+            {% for key,item in graph if key is even %}
+                {% set element =  graph[ key + 1]%}
+                {% if type == 'L' or  type == 'D' %}
+                    {% set data = element | Line %}
+                        {% set ordo =  [] %}
+                   {% for key in data[0]|keys if key != "dateOfInformation" %}
+                        {% set ordo = ordo|merge([key]) %}
+                    {% endfor %}
+                        dessineMany("{{data|json_encode()}}", 'dateOfInformation',{{ ordo |json_encode()|raw }} , {{item}} , 'L')
+                {% endif %}
+                {% if type == 'B' %}
+                    {% set data = element | Line %}
+                        {% set ordo =  [] %}
+                   {% for key in data[0]|keys if key != "dateOfInformation" %}
+                        {% set ordo = ordo|merge([key]) %}
+                    {% endfor %}
+                        dessinebardeux("{{data|json_encode()}}", 'dateOfInformation',{{ ordo |json_encode()|raw }} , {{item}})
+                {% endif %}
+            {% endfor %}
+              
+              
+        {% endif %}
+    </script>
+{% endblock Script %}              
+ 
+   
+        

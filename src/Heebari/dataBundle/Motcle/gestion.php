@@ -10,7 +10,7 @@ use Heebari\dataBundle\Motcle\Gmotcle;
 class gestion {
 
     private $G;
-    public $data= [];
+    public $data = [];
 
     public function __construct(Gmotcle $G) {
         $this->G = $G;
@@ -95,26 +95,64 @@ class gestion {
         }
         return $data;
     }
+
+    public function formatdate($data) {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                if (isset($value["dateOfInformation"])) {
+                    $data[$key]["dateOfInformation"] = $value["dateOfInformation"]->format('Y');
+                }
+            }
+        }
+        return $data;
+    }
+
+    public function correctTable($array) {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                if (sizeof($value) == 1) {
+                    if (isset($value[0]))
+                        $array[$key] = $value[0];
+                    else{
+                        $la = array_keys($value);
+                        $array[$key][$la[0]] = $this->getsimple($value);
+                    }
+                }else {
+                    foreach ($value as $k => $val) {
+                        $array[$key][$k] = $this->getsimple($val);
+                    }
+                }
+            }
+        }
+        return $array;
+    }
+
+    public function getsimple($param) {
+        if (sizeof($param) == 1 && isset($param[0])) {
+            $param = $param[0];
+        }
+        return $param;
+    }
+
 //regroupe les information des 2 pays
     public function formatmany($pays, $pays1, $pays2 = NULL) {
         $fin = array();
-      
+
         foreach ($pays as $field => $value) {
             if (is_array($value)) {
                 foreach ($value as $annee => $donnee) {
                     if (is_array($donnee)) {
                         foreach ($donnee as $champ => $val) {
-                            if($champ == "dateOfInformation"){
+                            if ($champ == "dateOfInformation") {
                                 $fin[$field][$annee]["date"] = $val->format('Y');
-                            }else
-                                $fin[$field][$annee][$champ] = $this->put($val,$field,$pays1,$pays2,$annee,$champ);
+                            } else
+                                $fin[$field][$annee][$champ] = $this->put($val, $field, $pays1, $pays2, $annee, $champ);
                         }
                     } else {
-                        $fin[$field][$annee] = $this->put($donnee,$field,$pays1,$pays2,$annee);
-                        
+                        $fin[$field][$annee] = $this->put($donnee, $field, $pays1, $pays2, $annee);
                     }
                 }
-            }else {
+            } else {
                 $fin[$field] = [$value, $pays1[$field]];
                 if ($pays2 != NULL)
                     $fin[$field][2] = $pays2[$field];
@@ -133,15 +171,15 @@ class gestion {
         return $data;
     }
 
-    public function put($donnee,$field, $pays1, $pays2, $annee,$champ=NULL) {
-        if($champ == null){
-        $ret = [$donnee, $this->testval($pays1[$field], $annee)];
-        if ($pays2 != NULL)
-            $ret[2] = $this->testval($pays2[$field], $annee);
-        }else{
-            $ret = [$donnee, $this->testval($pays1[$field], $annee,$champ)];
-        if ($pays2 != NULL)
-            $ret[2] = $this->testval($pays2[$field], $annee,$champ);
+    public function put($donnee, $field, $pays1, $pays2, $annee, $champ = NULL) {
+        if ($champ == null) {
+            $ret = [$donnee, $this->testval($pays1[$field], $annee)];
+            if ($pays2 != NULL)
+                $ret[2] = $this->testval($pays2[$field], $annee);
+        }else {
+            $ret = [$donnee, $this->testval($pays1[$field], $annee, $champ)];
+            if ($pays2 != NULL)
+                $ret[2] = $this->testval($pays2[$field], $annee, $champ);
         }
         return $ret;
     }
@@ -177,23 +215,25 @@ class gestion {
     public function jedump($param) {
         ?>
         <pre>
-        <?php print_r($param); ?>
+            <?php print_r($param); ?>
         </pre>
         <?php
     }
-    private function simpl($tab,$prec){
-    if (is_array($tab)) {
-        foreach ($tab as $key => $val) {
-            $this->simpl($val,$tab);
+
+    private function simpl($tab, $prec) {
+        if (is_array($tab)) {
+            foreach ($tab as $key => $val) {
+                $this->simpl($val, $tab);
+            }
+        } else {
+            array_push($this->data, $prec);
+            return;
         }
-    }else{
-        array_push($this->data,$prec);
-        return;
     }
-    }
-    public function getsimpleres($tab){
+
+    public function getsimpleres($tab) {
         $this->simpl($tab, []);
-        $result = array_unique($this->data,SORT_REGULAR);
+        $result = array_unique($this->data, SORT_REGULAR);
         $this->data = [];
         return $result;
     }
